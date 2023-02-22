@@ -1,0 +1,102 @@
+2022-05-21 11:31:16.839  INFO 7572 --- [restartedMain] com.policy.PolicyApplication             : Starting PolicyApplication using Java 15 on DESKTOP-QBUPK11 with PID 7572 (D:\workspace-spring-tool-suite-4-4.8.1.RELEASE\policy\target\classes started by User in D:\workspace-spring-tool-suite-4-4.8.1.RELEASE\policy)
+2022-05-21 11:31:16.839  INFO 7572 --- [restartedMain] com.policy.PolicyApplication             : No active profile set, falling back to default profiles: default
+2022-05-21 11:31:17.060  INFO 7572 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-21 11:31:17.104  INFO 7572 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 43 ms. Found 21 JPA repository interfaces.
+2022-05-21 11:31:17.193  INFO 7572 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
+2022-05-21 11:31:17.194  INFO 7572 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-05-21 11:31:17.194  INFO 7572 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2022-05-21 11:31:17.204  INFO 7572 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-05-21 11:31:17.204  INFO 7572 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 363 ms
+2022-05-21 11:31:17.233  INFO 7572 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2022-05-21 11:31:17.233  WARN 7572 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2022-05-21 11:31:17.247  INFO 7572 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2022-05-21 11:31:17.254  INFO 7572 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-21 11:31:17.258  INFO 7572 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
+2022-05-21 11:31:17.516  INFO 7572 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-21 11:31:17.517  INFO 7572 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-21 11:31:18.326  WARN 7572 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-21 11:31:18.363  INFO 7572 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-21 11:31:18.407  INFO 7572 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-05-21 11:31:18.506  INFO 7572 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
+2022-05-21 11:31:18.507  INFO 7572 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-05-21 11:31:18.508  INFO 7572 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-05-21 11:31:18.512  INFO 7572 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-05-21 11:31:18.583  INFO 7572 --- [restartedMain] com.policy.PolicyApplication             : Started PolicyApplication in 1.765 seconds (JVM running for 441.758)
+2022-05-21 11:31:18.585  INFO 7572 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-05-21 11:31:22.732  INFO 7572 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-21 11:31:22.732  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-05-21 11:31:22.733  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-05-21 11:31:29.090 ERROR 7572 --- [http-nio-8083-exec-1] com.policy.service.TestService           : java.lang.Exception: Error :
+2022-05-21 11:33:26.392  INFO 7572 --- [Thread-36] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-21 11:33:26.394  INFO 7572 --- [Thread-36] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2022-05-21 11:33:26.429  INFO 7572 --- [Thread-36] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2022-05-21 11:33:26.673  INFO 7572 --- [restartedMain] com.policy.PolicyApplication             : Starting PolicyApplication using Java 15 on DESKTOP-QBUPK11 with PID 7572 (D:\workspace-spring-tool-suite-4-4.8.1.RELEASE\policy\target\classes started by User in D:\workspace-spring-tool-suite-4-4.8.1.RELEASE\policy)
+2022-05-21 11:33:26.673  INFO 7572 --- [restartedMain] com.policy.PolicyApplication             : No active profile set, falling back to default profiles: default
+2022-05-21 11:33:27.035  INFO 7572 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-21 11:33:27.116  INFO 7572 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 81 ms. Found 21 JPA repository interfaces.
+2022-05-21 11:33:27.301  INFO 7572 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
+2022-05-21 11:33:27.302  INFO 7572 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-05-21 11:33:27.302  INFO 7572 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2022-05-21 11:33:27.320  INFO 7572 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-05-21 11:33:27.320  INFO 7572 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 645 ms
+2022-05-21 11:33:27.377  INFO 7572 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+2022-05-21 11:33:27.378  WARN 7572 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2022-05-21 11:33:27.396  INFO 7572 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+2022-05-21 11:33:27.405  INFO 7572 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-21 11:33:27.412  INFO 7572 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
+2022-05-21 11:33:27.793  INFO 7572 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-21 11:33:27.793  INFO 7572 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-21 11:33:28.515  WARN 7572 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-21 11:33:28.567  INFO 7572 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-21 11:33:28.644  INFO 7572 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-05-21 11:33:28.769  INFO 7572 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
+2022-05-21 11:33:28.770  INFO 7572 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-05-21 11:33:28.771  INFO 7572 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-05-21 11:33:28.775  INFO 7572 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-05-21 11:33:28.865  INFO 7572 --- [restartedMain] com.policy.PolicyApplication             : Started PolicyApplication in 2.252 seconds (JVM running for 572.04)
+2022-05-21 11:33:28.867  INFO 7572 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-05-21 11:33:29.985  INFO 7572 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-21 11:33:29.985  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-05-21 11:33:29.987  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-05-21 11:33:30.350 ERROR 7572 --- [http-nio-8083-exec-1] com.policy.service.TestService           : java.lang.Exception: Error :
+2022-05-21 11:33:35.329  INFO 7572 --- [RMI TCP Connection(13)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2022-05-21 11:33:35.345  INFO 7572 --- [RMI TCP Connection(13)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-21 11:33:35.345  INFO 7572 --- [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
+2022-05-21 11:33:35.353  INFO 7572 --- [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
+2022-05-21 11:33:41.346  INFO 14804 --- [restartedMain] com.policy.PolicyApplication             : Starting PolicyApplication using Java 15 on DESKTOP-QBUPK11 with PID 14804 (D:\workspace-spring-tool-suite-4-4.8.1.RELEASE\policy\target\classes started by User in D:\workspace-spring-tool-suite-4-4.8.1.RELEASE\policy)
+2022-05-21 11:33:41.348  INFO 14804 --- [restartedMain] com.policy.PolicyApplication             : No active profile set, falling back to default profiles: default
+2022-05-21 11:33:41.378  INFO 14804 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in D:\MAVEN_REPO\com\oracle\database\jdbc\ojdbc8\21.1.0.0\ojdbc8-21.1.0.0.jar referenced one or more files that do not exist: file:/D:/MAVEN_REPO/com/oracle/database/jdbc/ojdbc8/21.1.0.0/oraclepki.jar
+2022-05-21 11:33:41.378  INFO 14804 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in D:\MAVEN_REPO\com\oracle\ojdbc\orai18n\19.3.0.0\orai18n-19.3.0.0.jar referenced one or more files that do not exist: file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-mapping.jar,file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-utility.jar,file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-collation.jar,file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-translation.jar,file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-net.jar,file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-servlet.jar,file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-lcsd.jar,file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-tools.jar,file:/D:/MAVEN_REPO/com/oracle/ojdbc/orai18n/19.3.0.0/gdk_custom.jar
+2022-05-21 11:33:41.379  INFO 14804 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-05-21 11:33:41.379  INFO 14804 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-05-21 11:33:41.974  INFO 14804 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-05-21 11:33:42.057  INFO 14804 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 77 ms. Found 21 JPA repository interfaces.
+2022-05-21 11:33:42.493  INFO 14804 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
+2022-05-21 11:33:42.501  INFO 14804 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-05-21 11:33:42.501  INFO 14804 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2022-05-21 11:33:42.561  INFO 14804 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-05-21 11:33:42.561  INFO 14804 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1182 ms
+2022-05-21 11:33:42.662  INFO 14804 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-05-21 11:33:42.665  WARN 14804 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2022-05-21 11:33:42.855  INFO 14804 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-05-21 11:33:42.892  INFO 14804 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-05-21 11:33:42.928  INFO 14804 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2022-05-21 11:33:43.034  INFO 14804 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-05-21 11:33:43.121  INFO 14804 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
+2022-05-21 11:33:43.984  INFO 14804 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-05-21 11:33:43.991  INFO 14804 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-05-21 11:33:44.712  WARN 14804 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-05-21 11:33:44.808  INFO 14804 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-05-21 11:33:44.906  INFO 14804 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-05-21 11:33:45.051  INFO 14804 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
+2022-05-21 11:33:45.052  INFO 14804 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2022-05-21 11:33:45.067  INFO 14804 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2022-05-21 11:33:45.085  INFO 14804 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2022-05-21 11:33:45.229  INFO 14804 --- [restartedMain] com.policy.PolicyApplication             : Started PolicyApplication in 4.158 seconds (JVM running for 4.767)
+2022-05-21 11:33:47.904  INFO 14804 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-05-21 11:33:47.905  INFO 14804 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-05-21 11:33:47.906  INFO 14804 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-05-21 11:33:48.351 ERROR 14804 --- [http-nio-8083-exec-1] com.policy.service.TestService           : java.lang.Exception: Error :
+2022-05-21 11:34:19.172  INFO 14804 --- [Thread-6] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-05-21 11:34:19.175  INFO 14804 --- [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-05-21 11:34:19.186  INFO 14804 --- [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
