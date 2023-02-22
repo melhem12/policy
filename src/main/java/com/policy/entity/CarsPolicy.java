@@ -403,6 +403,55 @@ private String  policyBlackListedReason ;
 
 	private String policyBatchNum;
 
+
+
+	@Column(name = "POLICY_HOLDER_ID")
+
+	private String policyHolderId;
+
+	@Column(name = "POLICY_HOLDER_CODE")
+	private String policyHolderCode;
+
+	@Column(name = "POLICY_HOLDER_NAME")
+	private String policyHolderName;
+
+	@Column(name = "POLICY_HOLDER_PHONE")
+
+	private String policyHolderPhone;
+
+
+	public String getPolicyHolderId() {
+		return policyHolderId;
+	}
+
+	public void setPolicyHolderId(String policyHolderId) {
+		this.policyHolderId = policyHolderId;
+	}
+
+	public String getPolicyHolderCode() {
+		return policyHolderCode;
+	}
+
+	public void setPolicyHolderCode(String policyHolderCode) {
+		this.policyHolderCode = policyHolderCode;
+	}
+
+	public String getPolicyHolderName() {
+		return policyHolderName;
+	}
+
+	public void setPolicyHolderName(String policyHolderName) {
+		this.policyHolderName = policyHolderName;
+	}
+
+	public String getPolicyHolderPhone() {
+		return policyHolderPhone;
+	}
+
+	public void setPolicyHolderPhone(String policyHolderPhone) {
+		this.policyHolderPhone = policyHolderPhone;
+	}
+
 	public String getPolicyBatchNum() {
 		return policyBatchNum;
 	}

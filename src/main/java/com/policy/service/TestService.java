@@ -166,15 +166,15 @@ Optional<CarsInsurance> carsInsurance = db.carsInsuranceRepository.findById(insu
 						if (carsPolicyToSearchList != null && !carsPolicyToSearchList.isEmpty()) {
 
 							policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-									brokerId, SublineId, carsPolicyToSearchList, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString());
+									brokerId, SublineId, carsPolicyToSearchList, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 
 						} else {
 							if(carsPolicyToSearchList2.size()>0){
 								policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-										brokerId, SublineId, carsPolicyToSearchList2, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString());
+										brokerId, SublineId, carsPolicyToSearchList2, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 							}else
 							{policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-									broker.getBrokerId(), SublineId, insuranceCode,policy.getSysID().toString(),policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString());
+									broker.getBrokerId(), SublineId, insuranceCode,policy.getSysID().toString(),policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 
 							}
 						}
@@ -697,7 +697,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 	public void validateBrokerBlackList(String brokerCode, String brokerId, String brokerInsuranceId, String brokerName,
 			String brokerPhoneNumber, String reason, String note, String setOn,String setBy) {
 
-		Collection<CarsBlackList> carsBlackListList = db.carsBlackListRepository
+		List<CarsBlackList> carsBlackListList = db.carsBlackListRepository
 				.findByBlInsuranceIdAndClientNum(brokerInsuranceId, brokerCode);
 
 		if (carsBlackListList.size() ==0) {
@@ -864,6 +864,8 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		CarsPolicyCar carsPolicyCar = new CarsPolicyCar();
 		carsPolicyCar.setCarId(UUID.randomUUID().toString());
 
+
+
 		if(Utility.isEmpty(vehicles.getCertificateNo())&&vehicles.getCertificateNo()!=null){
 			carsPolicyCar.setCarObjectNumber(Integer.valueOf(vehicles.getCertificateNo()));
 
@@ -871,6 +873,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsPolicyCar.setCarObjectNumber(0);
 
 		}
+
 
 
 		if (!Utility.isEmpty(vehicles.getCarYear())) {
@@ -1099,13 +1102,19 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 	}
 
 	public String insertPolicyCar(PolicyVehicle policyVehicle, String productId, String branchId, String clientId,
-			String brokerId, String subLine, String insuranceId,String sysId,String subLineCode,boolean blackListed ,String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes  , String endorsementSubTypeCode ,String policyRootId ,String policyId,String certifID) throws Exception {
+			String brokerId, String subLine, String insuranceId,String sysId,String subLineCode,boolean blackListed ,String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes  , String endorsementSubTypeCode ,String policyRootId ,String policyId,String certifID,String insuredID,String insuredFirstName  ,String insuredCode1,String insuredPhoneNumber) throws Exception {
 
 		CarsPolicy carsPolicy = new CarsPolicy();
 		carsPolicy.setPolicyId(UUID.randomUUID().toString());
 		carsPolicy.setPolicyRootId(policyRootId);
 		carsPolicy.setPolicyFleetId(policyId);
 		carsPolicy.setPolicyCertIfID(certifID);
+
+		carsPolicy.setPolicyHolderId(insuredID);
+		carsPolicy.setPolicyHolderPhone(insuredPhoneNumber);
+		carsPolicy.setPolicyHolderCode(insuredCode1);
+		carsPolicy.setPolicyHolderName(insuredFirstName);
+
 		if(blackListed){
 			carsPolicy.setPolicyBlackListed("Y");
 		}else {
@@ -1405,7 +1414,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 	}
 
 	public String updatePolicyCar(PolicyVehicle policyVehicle, String productId, String branchId, String clientId,
-			String brokerId, String subLine, Collection<CarsPolicy> carsPolicyToSearchList, String insuranceId,String subLineCode ,boolean blackListed,String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes  , String endorsementSubTypeCode,String policyRootId ,String policyId,String certifID)
+			String brokerId, String subLine, Collection<CarsPolicy> carsPolicyToSearchList, String insuranceId,String subLineCode ,boolean blackListed,String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes  , String endorsementSubTypeCode,String policyRootId ,String policyId,String certifID,String insuredID,String insuredFirstName  ,String insuredCode1,String insuredPhoneNumber)
 			throws Exception {
 		CarsPolicy carsPolicyLoad = carsPolicyToSearchList.iterator().next();
 
@@ -1457,7 +1466,6 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 
 
 
-
 		carsPolicyToSave.setPolicySumInsCurrencyRate(policyVehicle.getPolicy().getsIExchangeRate());
 		curr = validatePremiumCurrency(policyVehicle.getPolicy().getPremCurrency(),
 				policyVehicle.getPolicy().getPremCurrencyDescription(),
@@ -1479,6 +1487,10 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		carsPolicyToSave.setPolicyRootId(policyRootId);
 		carsPolicyToSave.setPolicyFleetId(policyId);
 		carsPolicyToSave.setPolicyCertIfID(certifID);
+		carsPolicyToSave.setPolicyHolderName(insuredFirstName);
+		carsPolicyToSave.setPolicyHolderCode(insuredCode);
+		carsPolicyToSave.setPolicyHolderId(insuredID);
+		carsPolicyToSave.setPolicyHolderPhone(insuredPhoneNumber);
 //		String actionTypeOriginale = DataTransferHeaderFileFactory.getService().getHeaderStateOriginal(
 //				dataTransferPolicyLoaded.getPolicyProduct(), dataTransferPolicyLoaded.getPolicyNumber(),
 //				dataTransferPolicyLoaded.getPolicyAmend(), insuranceId);
