@@ -700,11 +700,12 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		Collection<CarsBlackList> carsBlackListList = db.carsBlackListRepository
 				.findByBlInsuranceIdAndClientNum(brokerInsuranceId, brokerCode);
 
-		if (carsBlackListList == null) {
+		if (carsBlackListList.size() ==0) {
+			System.out.println("new Cars black list");
 			CarsBlackList carsBlackList = new CarsBlackList();
 			carsBlackList.setBlId(UUID.randomUUID().toString());
 			carsBlackList.setBlInsuranceId(brokerInsuranceId);
-			carsBlackList.setBlBrokerId(brokerId);
+			carsBlackList.setBlBrokerId(brokerInsuranceId + "." + brokerCode);
 			carsBlackList.setBlFamilyName(brokerName);
 			carsBlackList.setBlNote(reason + " " + note+" set by "+setBy+" on :"+setOn);
 			carsBlackList.setSysVersionNumber(0);
