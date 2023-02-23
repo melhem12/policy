@@ -15,4 +15,6 @@ public interface CarsPolicyRepository  extends JpaRepository<CarsPolicy,String> 
 
 
     Collection<CarsPolicy> findByPolicyInsuranceIdAndPolicyIdIns(String insuranceId,String policyIdIns);
+
+    Optional<CarsPolicy> findByPolicyCertIfID(String certifId);
 }

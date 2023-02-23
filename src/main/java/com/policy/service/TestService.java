@@ -46,7 +46,7 @@ public class TestService {
 
 	@Autowired
 	public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
-	public static String CREATED_BY_QUARTZ = "Transfer";
+	public static String   CREATED_BY_QUARTZ = "Transfer";
 	public static int i = 0;
 	public static String insuranceCode = "10";
 	String policyNo = null;
@@ -107,7 +107,9 @@ Optional<CarsInsurance> carsInsurance = db.carsInsuranceRepository.findById(insu
 				CarsClient client = validateCarsClient(policy.getInsuredID(), policy.getInsuredCode(), insuranceCode,
 						policy.getPrintName(), policy.getFirstInsuredName(), policy.getFatherInsuredName(),
 						policy.getLastInsuredName(), policy.getInsuredPhoneNumber(), policy.getInsBlacklisted(),
-						policy.getInsBlackReason(), policy.getInsBlackNote(), policy.getPolicyNo(), null);
+						policy.getInsBlackReason(), policy.getInsBlackNote(), policy.getPolicyNo(), null,null);
+
+
 
 //				Collection<CarsPolicy> carsPolicyToSearchList = carsPolicySearchable(policyVehicle);
 //				if (carsPolicyToSearchList != null && !carsPolicyToSearchList.isEmpty()) {
@@ -140,7 +142,9 @@ Optional<CarsInsurance> carsInsurance = db.carsInsuranceRepository.findById(insu
 								vehicle.getCarinsuredfatherName(), vehicle.getCarinsuredlastName(),
 								vehicle.getCarInsuredPhoneNumber(), policy.getInsBlacklisted(),
 								policy.getInsBlackReason(), policy.getInsBlackNote(), policy.getPolicyNo(),
-								vehicle.getCertificateNo());
+								vehicle.getCertificateNo(),vehicle.getCertifID().toString());
+
+
 
 						CarsPolicyCar carsPolicyCarToSearch = new CarsPolicyCar();
 						if (product != null) {
@@ -166,15 +170,15 @@ Optional<CarsInsurance> carsInsurance = db.carsInsuranceRepository.findById(insu
 						if (carsPolicyToSearchList != null && !carsPolicyToSearchList.isEmpty()) {
 
 							policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-									brokerId, SublineId, carsPolicyToSearchList, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
+									brokerId, SublineId, carsPolicyToSearchList, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName()+" "+policy.getFatherInsuredName()+" "+policy.getLastInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 
 						} else {
 							if(carsPolicyToSearchList2.size()>0){
 								policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-										brokerId, SublineId, carsPolicyToSearchList2, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
+										brokerId, SublineId, carsPolicyToSearchList2, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName()+" "+policy.getFatherInsuredName()+" "+policy.getLastInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 							}else
 							{policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-									broker.getBrokerId(), SublineId, insuranceCode,policy.getSysID().toString(),policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
+									broker.getBrokerId(), SublineId, insuranceCode,policy.getSysID().toString(),policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName()+" "+policy.getFatherInsuredName()+" "+policy.getLastInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 
 							}
 						}
@@ -520,8 +524,18 @@ Optional<CarsInsurance> carsInsurance = db.carsInsuranceRepository.findById(insu
 	public CarsClient validateCarsClient(Integer clientId, String clientCode, String clientInsuranceId,
 			String printName, String firstInsuredName, String fatherInsuredName, String lastInsuredName,
 			String insuredPhoneNumber, boolean blackListed, String reason, String note, String policyNo,
-			String certificateNo) throws Exception {
+			String certificateNo,String certifId) throws Exception {
 
+
+
+//		Optional<CarsPolicy> carsPolicy = db.carsPolicyRepository.findByPolicyCertIfID(certifId);
+//	if(	carsPolicy.isPresent()){
+//		carsPolicy.get().setPolicyHolderPhone(insuredPhoneNumber);
+//		carsPolicy.get().setPolicyHolderId(clientId.toString());
+//		carsPolicy.get().setPolicyHolderCode(clientCode);
+//		carsPolicy.get().setPolicyHolderName(firstInsuredName+" "+fatherInsuredName+ ""+ lastInsuredName);
+//		db.carsPolicyRepository.save(carsPolicy.get());
+//	}
 
 //		if (clientId == 0 || clientId==null) {
 //throw new Exception ("Error :");
@@ -611,12 +625,16 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			return null;
 		}
 
-		Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findByBrokerIdAndBrokerInsuranceIdrOrBrokerNum(brokerId,
-				brokerInsuranceId,brokerCode);
+
+//		Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findByBrokerIdAndBrokerInsuranceIdrOrBrokerNum(brokerId,
+//				brokerInsuranceId,brokerCode);
+		Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findById(brokerInsuranceId + "." + brokerCode);
 
 		if (Utility.isEmpty(brokerName)) {
 			brokerName = brokerCode;
 		}
+
+
 		if (!carsBroker.isPresent()) {
 			CarsBroker carsBrokerNew = new CarsBroker();
 			carsBrokerNew.setBrokerId(brokerInsuranceId + "." + brokerCode);
