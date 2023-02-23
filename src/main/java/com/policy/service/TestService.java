@@ -717,8 +717,9 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 
 		List<CarsBlackList> carsBlackListList = db.carsBlackListRepository
 				.findByBlInsuranceIdAndClientNum(brokerInsuranceId, brokerCode);
-
-		if (carsBlackListList.size() ==0) {
+		System.out.println("brokerCode is  "+brokerCode);
+		Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findByBlBrokerId(brokerInsuranceId + "." + brokerCode);
+		if (!carsBroker.isPresent()) {
 			System.out.println("new Cars black list");
 			CarsBlackList carsBlackList = new CarsBlackList();
 			carsBlackList.setBlId(UUID.randomUUID().toString());
@@ -735,7 +736,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 
 		}
 
-		Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findByClientNum(insuranceCode);
+		//Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findByClientNum(insuranceCode);
 		if (carsBroker.isPresent()) {
 
 			carsBroker.get().setBlFamilyName(brokerName);

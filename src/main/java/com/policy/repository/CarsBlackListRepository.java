@@ -20,4 +20,5 @@ public interface CarsBlackListRepository extends JpaRepository<CarsBlackList,Str
 	
 	Optional<CarsBlackList> findByClientNum(String clientNum);
 
+    Optional<CarsBlackList> findByBlBrokerId(String s);
 }
