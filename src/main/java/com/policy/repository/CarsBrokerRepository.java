@@ -19,4 +19,6 @@ public interface CarsBrokerRepository extends JpaRepository<CarsBroker,String> {
 
 
 	Optional<CarsBroker> findByBrokerInsuranceIdOrBrokerNum(String brokerInsuranceId, String brokerCode);
+
+	Optional<CarsBroker> findByBrokerInsuranceIdAndBrokerNum(String brokerInsuranceId, String brokerCode);
 }
