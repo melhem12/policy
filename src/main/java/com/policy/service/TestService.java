@@ -48,7 +48,7 @@ public class TestService {
 	public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
 	public static String   CREATED_BY_QUARTZ = "Transfer";
 	public static int i = 0;
-	public static String insuranceCode = "10";
+	public static String insuranceCode = "18";
 	String policyNo = null;
 	String policyId = null;
 	String policyIdFromJson = null;
@@ -626,16 +626,16 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		}
 
 
-//		Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findByBrokerIdAndBrokerInsuranceIdrOrBrokerNum(brokerId,
-//				brokerInsuranceId,brokerCode);
-		Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findById(brokerInsuranceId + "." + brokerCode);
+		Optional<CarsBroker> carsBroker2 = db.carsBrokerRepository.findByBrokerIdAndBrokerInsuranceIdrOrBrokerNum(brokerId,
+				brokerInsuranceId,brokerCode);
+	//	Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findById(brokerInsuranceId + "." + brokerCode);
 
 		if (Utility.isEmpty(brokerName)) {
 			brokerName = brokerCode;
 		}
 
 
-		if (!carsBroker.isPresent()) {
+		if (!carsBroker2.isPresent()) {
 			CarsBroker carsBrokerNew = new CarsBroker();
 			carsBrokerNew.setBrokerId(brokerInsuranceId + "." + brokerCode);
 			carsBrokerNew.setBrokerDesc(brokerName);
@@ -660,19 +660,19 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		}
 
 		// Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findById(brokerId);
-		if (carsBroker.isPresent()) {
-			carsBroker.get().setBrokerDesc(brokerName);
-			carsBroker.get().setBrokerTelephone(brokerPhoneNumber);
-			carsBroker.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
-			carsBroker.get().setBrokerEmail(brokerMail);
-			carsBroker.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
-			db.carsBrokerRepository.save(carsBroker.get());
+		if (carsBroker2.isPresent()) {
+			carsBroker2.get().setBrokerDesc(brokerName);
+			carsBroker2.get().setBrokerTelephone(brokerPhoneNumber);
+			carsBroker2.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
+			carsBroker2.get().setBrokerEmail(brokerMail);
+			carsBroker2.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+			db.carsBrokerRepository.save(carsBroker2.get());
 		}
 		if (blackListed == true) {
 			validateBrokerBlackList(brokerCode, brokerId, brokerInsuranceId, brokerName, brokerPhoneNumber, reason,
 					note, setOn,setBy);
 		}
-		return carsBroker.get();
+		return carsBroker2.get();
 	}
 
 	public void validateInsuranceBlackList(String insuredCode, String clientInsuranceId, String firstInsuredName,
