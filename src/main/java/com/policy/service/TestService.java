@@ -626,9 +626,9 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		}
 
 
-		Optional<CarsBroker> carsBroker2 = db.carsBrokerRepository.findByBrokerIdAndBrokerInsuranceIdrOrBrokerNum(brokerId,
+		Optional<CarsBroker> carsBroker2 = db.carsBrokerRepository.findByBrokerInsuranceIdOrBrokerNum(
 				brokerInsuranceId,brokerCode);
-	//	Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findById(brokerInsuranceId + "." + brokerCode);
+		Optional<CarsBroker> carsBroker = db.carsBrokerRepository.findById(brokerInsuranceId + "." + brokerCode);
 
 		if (Utility.isEmpty(brokerName)) {
 			brokerName = brokerCode;
