@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -18,6 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -58,6 +63,44 @@ public class TestService {
 	String SublineId = null;
 	String policyRootId = null;
 String   companyName ;
+
+
+
+
+	private SimpleJdbcCall simpleJdbcCall;
+
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	public ResponseEntity<String> deletePolicyFunction(String insuranceId, String policyId, String branchId, String policyNumber,String vehicleId,String amendment,String certificate) {
+
+		simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+				.withFunctionName("PORTAL.FC_POLICY_DELETE")
+				.declareParameters(new SqlParameter("u_id", Types.BIGINT));
+
+		String out = simpleJdbcCall.executeFunction(String.class,
+
+				new MapSqlParameterSource("I_COMPANY", insuranceId)
+						.addValue("I_POLICY_ID", policyId)
+						.addValue("I_BRANCH", branchId)
+						.addValue("I_POLICY_NUMBER", policyNumber)
+						.addValue("I_CAR ", vehicleId)
+						.addValue("I_AMENDMENT",amendment)
+				        .addValue("I_CERTIFICATE",certificate))
+
+		;
+		return new ResponseEntity(out, HttpStatus.OK);
+
+
+	}
+
+
+
+
+
+
+
+
 //	@javax.transaction.Transactional(propagation = Propagation.REQUIRED)
 	@Transactional(rollbackFor = Exception.class)
 	public ResponseEntity<Policies> policyUpload(Policies policies) throws Exception {
@@ -909,7 +952,8 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 //			saveMessage(policyNo, " Car Chassis", "Missing Field", "CARS_POLICY_CAR", insuranceCode, null);
 //		}
 		carsPolicyCar.setCarModelToPrint(vehicles.getModelToPrint());
-		if(vehicles.getCertificateBlacklisted()){
+		//if(vehicles.getBlacklisted()){
+			if(vehicles.getCertificateBlacklisted()){
 			carsPolicyCar.setCarBlackListing("Y");
 
 
@@ -967,14 +1011,20 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		carsPolicyCar.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 		carsPolicyCar.setCarBeneficiaryDesc(vehicles.getCarBeneficiary());
 
-		if(vehicles.getCertificateBlacklisted()){
-			carsPolicyCar.setCarCertifdBlackListed("Y");
+		//if(vehicles.getBlacklisted()){
+			if(vehicles.getCertificateBlacklisted()){
+
+				carsPolicyCar.setCarCertifdBlackListed("Y");
 
 
 		}else {
 			carsPolicyCar.setCarCertifdBlackListed("N");
 
 		}
+//		carsPolicyCar.setCarCertifdBlackListedSetOn(vehicles.getSetOn());
+//		carsPolicyCar.setCarCertifdBlackListedSetBy(vehicles.getSetBy());
+//		carsPolicyCar.setCarCertifdBlackListedReason(vehicles.getReason());
+//		carsPolicyCar.setCarCertifdBlackListedNote(vehicles.getNote());
 		carsPolicyCar.setCarCertifdBlackListedSetOn(vehicles.getCertificateSetOn());
 		carsPolicyCar.setCarCertifdBlackListedSetBy(vehicles.getCertificateSetBy());
 		carsPolicyCar.setCarCertifdBlackListedReason(vehicles.getCertificateReason());
@@ -1005,7 +1055,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		}
 
 
-
+	//	if(vehicles.getBlacklisted()){
 		if(vehicles.getCertificateBlacklisted()){
 			carsPolicyCarToSave.setCarBlackListing("Y");
 
@@ -1023,7 +1073,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 
 
 
-
+	//	if(vehicles.getBlacklisted()){
 		if(vehicles.getCertificateBlacklisted()){
 			carsPolicyCarToSave.setCarCertifdBlackListed("Y");
 
@@ -1032,12 +1082,15 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsPolicyCarToSave.setCarCertifdBlackListed("N");
 
 		}
+//		carsPolicyCarToSave.setCarCertifdBlackListedSetOn(vehicles.getSetOn());
+//		carsPolicyCarToSave.setCarCertifdBlackListedSetBy(vehicles.getSetBy());
+//		carsPolicyCarToSave.setCarCertifdBlackListedReason(vehicles.getReason());
+//		carsPolicyCarToSave.setCarCertifdBlackListedNote(vehicles.getNote());
+
 		carsPolicyCarToSave.setCarCertifdBlackListedSetOn(vehicles.getCertificateSetOn());
 		carsPolicyCarToSave.setCarCertifdBlackListedSetBy(vehicles.getCertificateSetBy());
 		carsPolicyCarToSave.setCarCertifdBlackListedReason(vehicles.getCertificateReason());
 		carsPolicyCarToSave.setCarCertifdBlackListedNote(vehicles.getCertificateNote());
-
-
 
 
 
@@ -2057,6 +2110,9 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			if (!Utility.isEmpty(cover.getCoverDesc())) {
 				desc = cover.getCoverDesc().replace("•", "*");
 			}
+			if (!Utility.isEmpty(cover.getTpaCoverTypeCode())) {
+				carsCoverOpt.get().setCoverType(cover.getTpaCoverTypeCode());
+			}
 			carsCoverOpt.get().setCoverDescription(desc);
 			carsCoverOpt.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
 			carsCoverOpt.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
@@ -2134,6 +2190,9 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 
 		if (carsCoverOpt.isPresent()) {
 			carsCoverOpt.get().setCoverDescription(subCovers.getSubCoverDesc());
+			if (!Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
+				carsCoverOpt.get().setCoverType(subCovers.getTpaSubCoverTypeCode());
+			}
 			carsCoverOpt.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
 			carsCoverOpt.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
 			db.carsCoverRepository.save(carsCoverOpt.get());

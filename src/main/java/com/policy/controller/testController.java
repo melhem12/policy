@@ -17,6 +17,7 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
+import com.policy.bean.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
@@ -51,13 +52,6 @@ import com.policy.entity.CarsSubline;
 import com.policy.repository.DB;
 import com.policy.service.TestService;
 import com.policy.config.Utility;
-import com.policy.bean.Clauses;
-import com.policy.bean.Covers;
-import com.policy.bean.Policies;
-import com.policy.bean.Policy;
-import com.policy.bean.PolicyVehicle;
-import com.policy.bean.SubCovers;
-import com.policy.bean.Vehicles;
 import com.policy.config.SendingMail;
 
 @CrossOrigin("*")
@@ -1612,4 +1606,28 @@ public class testController {
 		}
 
 	}
+
+	@PostMapping("/deletePolicy")
+	public ResponseEntity<String> deletePolicy( @RequestBody PolicyToDelete policyToDelete) throws Exception {
+
+
+		try {
+			logger.info("Inside Validation");
+			return  testService.deletePolicyFunction(policyToDelete.getInsuranceId(),policyToDelete.getPolicyId(),policyToDelete.getBranchId()
+					,policyToDelete.getPolicyNumber(),policyToDelete.getVehicleId(),policyToDelete.getAmendment(),policyToDelete.getCertificate());
+
+		} catch (
+
+				Exception e) {
+			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			String sStackTrace = sw.toString();
+			logger.error("failed",sStackTrace);
+			return new ResponseEntity(sStackTrace, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+
 }

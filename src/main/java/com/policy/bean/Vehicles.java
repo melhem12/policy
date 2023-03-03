@@ -82,6 +82,17 @@ public class Vehicles implements Serializable {
 	private String certificateReason;
 
 	private String certificateNote;
+//
+//	  private Boolean blacklisted ;
+//	private String setOn ;
+//	private String setBy ;
+//
+//	private String reason ;
+//	private String note ;
+
+
+
+
 	@Valid
 	private List<Covers> covers;
 
@@ -334,6 +345,47 @@ public class Vehicles implements Serializable {
 	public void setCertificateNote(String certificateNote) {
 		this.certificateNote = certificateNote;
 	}
+
+
+//	public Boolean getBlacklisted() {
+//		return blacklisted;
+//	}
+//
+//	public void setBlacklisted(Boolean blacklisted) {
+//		this.blacklisted = blacklisted;
+//	}
+//
+//	public String getSetOn() {
+//		return setOn;
+//	}
+//
+//	public void setSetOn(String setOn) {
+//		this.setOn = setOn;
+//	}
+//
+//	public String getSetBy() {
+//		return setBy;
+//	}
+//
+//	public void setSetBy(String setBy) {
+//		this.setBy = setBy;
+//	}
+//
+//	public String getReason() {
+//		return reason;
+//	}
+//
+//	public void setReason(String reason) {
+//		this.reason = reason;
+//	}
+//
+//	public String getNote() {
+//		return note;
+//	}
+//
+//	public void setNote(String note) {
+//		this.note = note;
+//	}
 
 	public List<Covers> getCovers() {
 		return covers;
