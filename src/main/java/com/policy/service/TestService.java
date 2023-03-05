@@ -75,7 +75,7 @@ String   companyName ;
 	public ResponseEntity<String> deletePolicyFunction(String insuranceId, String policyId, String branchId, String policyNumber,String vehicleId,String amendment,String certificate) {
 
 		simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
-				.withFunctionName("PORTAL.FC_POLICY_DELETE")
+				.withFunctionName("FC_POLICY_DELETE")
 				.declareParameters(new SqlParameter("u_id", Types.BIGINT));
 
 		String out = simpleJdbcCall.executeFunction(String.class,
