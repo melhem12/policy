@@ -84,7 +84,7 @@ String   companyName ;
 						.addValue("I_POLICY_ID", policyId)
 						.addValue("I_BRANCH", branchId)
 						.addValue("I_POLICY_NUMBER", policyNumber)
-						.addValue("I_CAR ", vehicleId)
+						.addValue("I_CAR", vehicleId)
 						.addValue("I_AMENDMENT",amendment)
 				        .addValue("I_CERTIFICATE",certificate))
 
@@ -952,7 +952,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 //			saveMessage(policyNo, " Car Chassis", "Missing Field", "CARS_POLICY_CAR", insuranceCode, null);
 //		}
 		carsPolicyCar.setCarModelToPrint(vehicles.getModelToPrint());
-		//if(vehicles.getBlacklisted()){
+//		if(vehicles.getBlacklisted()){
 			if(vehicles.getCertificateBlacklisted()){
 			carsPolicyCar.setCarBlackListing("Y");
 
@@ -1011,7 +1011,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		carsPolicyCar.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 		carsPolicyCar.setCarBeneficiaryDesc(vehicles.getCarBeneficiary());
 
-		//if(vehicles.getBlacklisted()){
+	//	if(vehicles.getBlacklisted()){
 			if(vehicles.getCertificateBlacklisted()){
 
 				carsPolicyCar.setCarCertifdBlackListed("Y");
@@ -1086,7 +1086,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 //		carsPolicyCarToSave.setCarCertifdBlackListedSetBy(vehicles.getSetBy());
 //		carsPolicyCarToSave.setCarCertifdBlackListedReason(vehicles.getReason());
 //		carsPolicyCarToSave.setCarCertifdBlackListedNote(vehicles.getNote());
-
+//
 		carsPolicyCarToSave.setCarCertifdBlackListedSetOn(vehicles.getCertificateSetOn());
 		carsPolicyCarToSave.setCarCertifdBlackListedSetBy(vehicles.getCertificateSetBy());
 		carsPolicyCarToSave.setCarCertifdBlackListedReason(vehicles.getCertificateReason());

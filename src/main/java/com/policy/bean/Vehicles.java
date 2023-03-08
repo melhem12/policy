@@ -72,7 +72,7 @@ public class Vehicles implements Serializable {
 	private List<Clauses> clauses;
 
 	private String mopNote;
-	// To send Policy MOP details as a note
+//	// To send Policy MOP details as a note
 	private Boolean certificateBlacklisted;
 	// boolean
 	private String certificateSetOn;
@@ -82,7 +82,7 @@ public class Vehicles implements Serializable {
 	private String certificateReason;
 
 	private String certificateNote;
-//
+
 //	  private Boolean blacklisted ;
 //	private String setOn ;
 //	private String setBy ;
