@@ -53,7 +53,7 @@ public class TestService {
 	public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
 	public static String   CREATED_BY_QUARTZ = "Transfer";
 	public static int i = 0;
-	public static String insuranceCode = "18";
+	public static String insuranceCode = "10";
 	String policyNo = null;
 	String policyId = null;
 	String policyIdFromJson = null;
@@ -221,7 +221,11 @@ Optional<CarsInsurance> carsInsurance = db.carsInsuranceRepository.findById(insu
 										brokerId, SublineId, carsPolicyToSearchList2, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName()+" "+policy.getFatherInsuredName()+" "+policy.getLastInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 							}else
 							{policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-									broker.getBrokerId(), SublineId, insuranceCode,policy.getSysID().toString(),policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName()+" "+policy.getFatherInsuredName()+" "+policy.getLastInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
+									broker.getBrokerId(), SublineId, insuranceCode,policy.getSysID().toString(),
+									policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),
+									policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),
+									vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName()+" "+policy.getFatherInsuredName()+" "+policy.getLastInsuredName(),
+									policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 
 							}
 						}
@@ -733,6 +737,8 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsBlackList.setBlFatherName(fatherInsuredName);
 			carsBlackList.setBlFamilyName(lastInsuredName);
 			carsBlackList.setBlNote(reason + " " + note);
+			carsBlackList.setBlStatus("IN");
+
 			carsBlackList.setSysVersionNumber(0);
 			carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
 			carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -747,6 +753,8 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsBlackList.get().setBlFirstName(firstInsuredName);
 			carsBlackList.get().setBlFatherName(fatherInsuredName);
 			carsBlackList.get().setBlFamilyName(lastInsuredName);
+			carsBlackList.get().setBlStatus("IN");
+
 			carsBlackList.get().setBlNote(reason + " " + note);
 			carsBlackList.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
 			carsBlackList.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
@@ -769,6 +777,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsBlackList.setBlInsuranceId(brokerInsuranceId);
 			carsBlackList.setBlBrokerId(brokerInsuranceId + "." + brokerCode);
 			carsBlackList.setBlFamilyName(brokerName);
+			carsBlackList.setBlStatus("IN");
 			carsBlackList.setBlNote(reason + " " + note+" set by "+setBy+" on :"+setOn);
 			carsBlackList.setSysVersionNumber(0);
 			carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
@@ -781,7 +790,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 
 		//Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findByClientNum(insuranceCode);
 		if (carsBroker.isPresent()) {
-
+			carsBroker.get().setBlStatus("IN");
 			carsBroker.get().setBlFamilyName(brokerName);
 			carsBroker.get().setBlNote(reason + " " + note+" set by "+setBy+" on :"+setOn);
 			carsBroker.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -1219,10 +1228,10 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		// carsPolicy.setPolicyNumber(policyNumber);
 		carsPolicy.setPolicyNumber(policyVehicle.getPolicy().getPolicyNo());
 		carsPolicy.setPolicyProduct(subLineCode);// ask jean size should be 4
-		String insuredCode = policyVehicle.getVehicle().getCarInsuredCode();
-		if (!Utility.isEmpty(insuredCode)) {
-			insuredCode = insuredCode.replace("-", "");
-			carsPolicy.setPolicyClient(Long.valueOf(insuredCode));
+		String carInsuredCode = policyVehicle.getVehicle().getCarInsuredCode();
+		if (!Utility.isEmpty(carInsuredCode)) {
+			carInsuredCode = carInsuredCode.replace("-", "");
+			carsPolicy.setPolicyClient(Long.valueOf(carInsuredCode));
 		}
 
 		// carsPolicy.setPre
@@ -1512,10 +1521,10 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		}
 		carsPolicyToSave.setPolicyNumberDisplay(policyVehicle.getPolicy().getPolicyNo());
 		carsPolicyToSave.setPolicyNumberSpecialNotes(policyVehicle.getPolicy().getMopNote());
-		String insuredCode = policyVehicle.getVehicle().getCarInsuredCode();
-		if (!Utility.isEmpty(insuredCode)) {
-			insuredCode = insuredCode.replace("-", "");
-			carsPolicyToSave.setPolicyClient(Long.valueOf(insuredCode));
+		String carInsuredCode = policyVehicle.getVehicle().getCarInsuredCode();
+		if (!Utility.isEmpty(carInsuredCode)) {
+			carInsuredCode = carInsuredCode.replace("-", "");
+			carsPolicyToSave.setPolicyClient(Long.valueOf(carInsuredCode));
 		}
 		carsPolicyToSave.setPolicyBrokerNum(policyVehicle.getPolicy().getBrokerCode());
 
@@ -1560,7 +1569,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		carsPolicyToSave.setPolicyFleetId(policyId);
 		carsPolicyToSave.setPolicyCertIfID(certifID);
 		carsPolicyToSave.setPolicyHolderName(insuredFirstName);
-		carsPolicyToSave.setPolicyHolderCode(insuredCode);
+		carsPolicyToSave.setPolicyHolderCode(insuredCode1);
 		carsPolicyToSave.setPolicyHolderId(insuredID);
 		carsPolicyToSave.setPolicyHolderPhone(insuredPhoneNumber);
 //		String actionTypeOriginale = DataTransferHeaderFileFactory.getService().getHeaderStateOriginal(
