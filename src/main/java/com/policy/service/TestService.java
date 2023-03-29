@@ -732,7 +732,9 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsBlackList.setBlFirstName(firstInsuredName);
 			carsBlackList.setBlFatherName(fatherInsuredName);
 			carsBlackList.setBlFamilyName(lastInsuredName);
-			carsBlackList.setBlNote(reason + " " + note);
+			carsBlackList.setBlNote( note);
+			carsBlackList.setBlReason(reason);
+
 			carsBlackList.setBlStatus("IN");
 
 			carsBlackList.setSysVersionNumber(0);
@@ -751,7 +753,8 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsBlackList.get().setBlFamilyName(lastInsuredName);
 			carsBlackList.get().setBlStatus("IN");
 
-			carsBlackList.get().setBlNote(reason + " " + note);
+			carsBlackList.get().setBlNote(  note);
+			carsBlackList.get().setBlReason(reason);
 			carsBlackList.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
 			carsBlackList.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
 			db.carsBlackListRepository.save(carsBlackList.get());
@@ -774,7 +777,11 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsBlackList.setBlBrokerId(brokerInsuranceId + "." + brokerCode);
 			carsBlackList.setBlFamilyName(brokerName);
 			carsBlackList.setBlStatus("IN");
-			carsBlackList.setBlNote(reason + " " + note+" set by "+setBy+" on :"+setOn);
+			carsBlackList.setBlReason(reason);
+			carsBlackList.setBlDate(setOn);
+			carsBlackList.setBlNote(note);
+
+			carsBlackList.setBlSetBy(setBy);
 			carsBlackList.setSysVersionNumber(0);
 			carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
 			carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -789,7 +796,12 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			carsBroker.get().setBlStatus("IN");
 
 			carsBroker.get().setBlFamilyName(brokerName);
-			carsBroker.get().setBlNote(reason + " " + note+" set by "+setBy+" on :"+setOn);
+			carsBroker.get().setBlReason(reason);
+			carsBroker.get().setBlDate(setOn);
+			carsBroker.get().setBlNote(note);
+
+			carsBroker.get().setBlSetBy(setBy);
+
 			carsBroker.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
 			carsBroker.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
 			db.carsBlackListRepository.save(carsBroker.get());
@@ -2283,6 +2295,14 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 		outputSettings.prettyPrint(false);
 		jsoupDoc.outputSettings(outputSettings);
 		jsoupDoc.select("br").before("\\n");
+
+		jsoupDoc.select("*").forEach(e -> {
+			if (e.ownText().equalsIgnoreCase("&amp;nbsp;") || e.ownText().equalsIgnoreCase("&nbsp;")) {
+				e.text(" ");
+			}
+		});
+
+
 		jsoupDoc.select("p").before("\\n");
 //		jsoupDoc.select("\'").before("\'");
 //		jsoupDoc.select("\"").before("\"");
@@ -2312,7 +2332,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			SendingMail sendingMail = new SendingMail();
 			try {
 				sendingMail.run(companyName+ " Policy Upload policy " + policyNo,
-						certificate + field + " is missing \n \nThis Email Is Informative");
+						certificate + field + " is missing \n \nThis Email Is Informative",insuranceCode);
 				carsErrorlogService.insertError(
 						companyName+ " Policy Upload policy " + policyNo + ": " + certificate + field + " is missing",
 						insuranceId, TableName, "Informative Missing");
@@ -2325,7 +2345,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			SendingMail sendingMail = new SendingMail();
 			try {
 				sendingMail.run(companyName+ " Policy Upload policy " + policyNo,
-						certificate + field + " has been added \n \n This Email Is Informative");
+						certificate + field + " has been added \n \n This Email Is Informative",insuranceCode);
 				carsErrorlogService.insertError(
 						companyName+ " Policy Upload policy " + policyNo + ": " + certificate + field + " has been added",
 						insuranceId, TableName, "Informative Addition");
@@ -2339,7 +2359,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 			SendingMail sendingMail = new SendingMail();
 			try {
 				sendingMail.run(companyName+ " Policy Upload policy " + policyNo,
-						field + " is missing \n \n This Email Is Blocking");
+						field + " is missing \n \n This Email Is Blocking",insuranceCode);
 				carsErrorlogService.insertError(
 						companyName+ " Policy Upload policy " + policyNo + ": " + field + " is missing", insuranceId,
 						TableName, "Blocking");
@@ -2836,7 +2856,7 @@ if ( brokerId==null||brokerId.equals("0")||brokerId.equals("null")) {
 
 			SendingMail sendingMail = new SendingMail();
 			try {
-				sendingMail.run(companyName+ " Policy Upload policy " + Identifier, error.toString());
+				sendingMail.run(companyName+ " Policy Upload policy " + Identifier, error.toString(),insuranceCode);
 
 			} catch (Exception e) {
 				e.printStackTrace();

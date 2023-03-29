@@ -52,6 +52,13 @@ public class CarsBlackList {
 	@Column(name = "BL_STATUS")
 	private String blStatus;
 
+	@Column(name = "BL_SET_BY")
+	private String blSetBy;
+
+
+	@Column(name = "BL_REASON")
+	private String blReason;
+
 	@Column(name = "BL_NOTE")
 	private String blNote;
 
@@ -274,4 +281,19 @@ public class CarsBlackList {
 	@Column(name = "SYS_UPDATED_BY")
 	private String sysUpdatedBy;
 
+	public String getBlSetBy() {
+		return blSetBy;
+	}
+
+	public void setBlSetBy(String blSetBy) {
+		this.blSetBy = blSetBy;
+	}
+
+	public String getBlReason() {
+		return blReason;
+	}
+
+	public void setBlReason(String blReason) {
+		this.blReason = blReason;
+	}
 }
