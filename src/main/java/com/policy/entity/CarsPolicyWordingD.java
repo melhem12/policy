@@ -30,7 +30,7 @@ public class CarsPolicyWordingD  {
 	
 	@Column(name = "WORDING_H_ID")
 	private java.lang.String policyWordingHId;
-	
+
 	@Column(name = "SYS_VERSION_NUMBER")
 	private java.lang.Integer sysVersionNumber;
 

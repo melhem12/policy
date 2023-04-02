@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "CARS_BLACK_LIST")
@@ -47,7 +48,7 @@ public class CarsBlackList {
 	private String blAmount;
 
 	@Column(name = "BL_DATE")
-	private String blDate;
+	private java.sql.Timestamp blDate;
 
 	@Column(name = "BL_STATUS")
 	private String blStatus;
@@ -182,11 +183,11 @@ public class CarsBlackList {
 		this.blAmount = blAmount;
 	}
 
-	public String getBlDate() {
+	public Timestamp getBlDate() {
 		return blDate;
 	}
 
-	public void setBlDate(String blDate) {
+	public void setBlDate(Timestamp blDate) {
 		this.blDate = blDate;
 	}
 

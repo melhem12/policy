@@ -420,6 +420,19 @@ private String  policyBlackListedReason ;
 	private String policyHolderPhone;
 
 
+
+	@Column(name = "POLICY_INSURED_BLACKLIST")
+
+	private String policyInsuredBlackList;
+
+	public String getPolicyInsuredBlackList() {
+		return policyInsuredBlackList;
+	}
+
+	public void setPolicyInsuredBlackList(String policyInsuredBlackList) {
+		this.policyInsuredBlackList = policyInsuredBlackList;
+	}
+
 	public String getPolicyHolderId() {
 		return policyHolderId;
 	}

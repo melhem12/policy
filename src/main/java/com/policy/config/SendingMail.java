@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage.RecipientType;
  */
 public class SendingMail {
 
-	public void run(String response, String visaNumber,String companyCode) throws Exception {
+	public void run(String response, String visaNumber) throws Exception {
 
 		int counter = 1;
 		System.out.println("MessageBody -------------> " + visaNumber);
