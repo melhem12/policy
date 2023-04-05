@@ -17,7 +17,7 @@ public class CarsPolicyCover {
 	private java.lang.String policyCoversCover;
 	
 	@Column(name = "POLICY_COVERS_ORDER")
-	private java.lang.Integer policyCoversOrder;
+	private java.lang.Double policyCoversOrder;
 	
 	@Column(name = "POLICY_COVERS_SUM_INSURED")
 	private java.lang.Long policyCoversSumInsured;
@@ -65,7 +65,8 @@ public class CarsPolicyCover {
 
 	@Column(name = "SYS_UPDATED_BY")
 	private java.lang.String sysUpdatedBy;
-	
+
+
 	
 
 	public java.lang.String getPolicyCoversId() {
@@ -84,11 +85,11 @@ public class CarsPolicyCover {
 		this.policyCoversCover = policyCoversCover;
 	}
 
-	public java.lang.Integer getPolicyCoversOrder() {
+	public Double getPolicyCoversOrder() {
 		return policyCoversOrder;
 	}
 
-	public void setPolicyCoversOrder(java.lang.Integer policyCoversOrder) {
+	public void setPolicyCoversOrder(Double policyCoversOrder) {
 		this.policyCoversOrder = policyCoversOrder;
 	}
 

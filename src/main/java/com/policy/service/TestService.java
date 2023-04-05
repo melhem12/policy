@@ -221,7 +221,8 @@ public class TestService {
 								policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
 										brokerId, SublineId, carsPolicyToSearchList2, insuranceCode,policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName()+" "+policy.getFatherInsuredName()+" "+policy.getLastInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 							}else
-							{policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
+							{
+								policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
 									broker.getBrokerId(), SublineId, insuranceCode,policy.getSysID().toString(),policy.getSubLineCode(),policy.getBlacklisted(),policy.getEndorsementTypeDescription(),policy.getEndorsementTypeCode(),policy.getEndorsementSubTypeDescription(),policy.getEndorsementSubTypeCode(),policy.getPolicyRootID().toString() ,policy.getPolicyID().toString(),vehicle.getCertifID().toString(),policy.getInsuredID().toString(),policy.getFirstInsuredName()+" "+policy.getFatherInsuredName()+" "+policy.getLastInsuredName(),policy.getInsuredCode(),policy.getInsuredPhoneNumber());
 
 							}
@@ -279,14 +280,14 @@ public class TestService {
 							// String a = policy.getPolicyID().toString()+"asdasdsd";
 							for (Covers covers : vehicle.getCovers()) {
 								String CarsCover = validateCover(covers, policyNo, vehicle.getCertificateNo());
-								insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null);
+								insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null,vehicle.getCovers().indexOf(covers)+1,0);
 								if (covers.getSubCovers() != null && !covers.getSubCovers().isEmpty()) {
 									for (SubCovers subCovers : covers.getSubCovers()) {
 										String CarsSubCover = validateSubCover(subCovers, covers.getCoverCode(),
 												policyNo, vehicle.getCertificateNo(),covers.getCoverID().toString());
 										// carsDtCoverContractService.insertSubCover(subCovers, vehicle.getPolicyID());
 										insertCarsCover(null, subCovers, subCovers.getSubCoverID().toString(), carId,
-												covers.getCoverCode(), CarsSubCover);
+												covers.getCoverCode(), CarsSubCover,vehicle.getCovers().indexOf(covers), covers.getSubCovers().indexOf(subCovers)+1);
 									}
 								}
 							}
@@ -598,8 +599,13 @@ public class TestService {
 //		}
 //		Optional<CarsClient> carsClient = db.carsClientRepository
 //				.findByClientInsuranceIdAndClientNum1(clientInsuranceId, clientCodeNew);
-		Optional<CarsClient> carsClient = db.carsClientRepository
-				.findByClientInsuranceIdAndClientNum1(clientInsuranceId, clientCode);
+		System.out.println("clientInsuranceId"+clientInsuranceId);
+		System.out.println("clientCode"+clientCode);
+try {
+	Optional<CarsClient> carsClient = db.carsClientRepository
+			.findByClientInsuranceIdAndClientNum1(clientInsuranceId, clientCode);
+
+
 
 		if (!carsClient.isPresent()) {
 
@@ -648,8 +654,15 @@ public class TestService {
 						lastInsuredName, reason, note,insBlackSetOn,insBlackSetBy);
 			}
 			db.carsClientRepository.save(carsClient.get());
+
 			return carsClient.get();
+		}}
+//todo
+		catch(Exception e){
+			System.out.println("exep....."+e.toString());
 		}
+
+
 		return null;
 
 	}
@@ -2018,11 +2031,11 @@ public class TestService {
 
 	public void insertCarsPolicyCover(Covers cover, String carId) {
 
-		int coversOrder = 0;
+	//	int coversOrder = 0;
 		CarsPolicyCover carsPolicyCoverToInsert = new CarsPolicyCover();
 		carsPolicyCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
 		carsPolicyCoverToInsert.setPolicyCoversCover(cover.getCoverCode());
-		carsPolicyCoverToInsert.setPolicyCoversOrder(coversOrder);
+	//	carsPolicyCoverToInsert.setPolicyCoversOrder(coversOrder);
 		if (cover.getSumInsured() > 0) {
 			carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
 		}
@@ -2303,7 +2316,7 @@ public class TestService {
 	}
 
 	public void insertCarsCover(Covers cover, SubCovers subCover, String carCoverCode, String carId, String CoverCode,
-								String subCoverCode) {
+								String subCoverCode,int coverIndex,int subCoverIndex) {
 		if (cover != null) {
 			CarsPolicyCover carsPolicyCoverToInsert = new CarsPolicyCover();
 			carsPolicyCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
@@ -2314,10 +2327,12 @@ public class TestService {
 			if (cover.getSumInsured() > 0) {
 				carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
 			}
+carsPolicyCoverToInsert.setPolicyCoversOrder(((double) coverIndex));
 
 			carsPolicyCoverToInsert.setPolicyCoversDeductible((double) cover.getDeductibleFlatAmount());
-			carsPolicyCoverToInsert.setPolicyCoversLimitClaim((double) cover.getCoverLimitClaim());
-			carsPolicyCoverToInsert.setPolicyCoversCountLimit((double) cover.getCoverCountLimit());
+			carsPolicyCoverToInsert.setPolicyCoversLimitClaim(cover.getCoverLimitClaim());
+			System.out.println("cover limit"+cover.getCoverLimitClaim());
+			carsPolicyCoverToInsert.setPolicyCoversCountLimit( cover.getCoverCountLimit());
 			carsPolicyCoverToInsert.setPolicyCoversDeductible100((double) cover.getDeductiblePercentage());
 			// carsPolicyCoverToInsert.setPolicyCoversPercentage(Float.toString(cover.getDeductiblePercentage()));
 			carsPolicyCoverToInsert.setPolicyCoversPercentage(cover.getDeductibleType());
@@ -2335,6 +2350,8 @@ public class TestService {
 		if (subCover != null) {
 			CarsPolicyCover carsPolicySubCoverToInsert = new CarsPolicyCover();
 			carsPolicySubCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
+			carsPolicySubCoverToInsert.setPolicyCoversOrder(Double.valueOf(coverIndex+"."+subCoverIndex));
+
 			carsPolicySubCoverToInsert.setPolicyCoversCover(CoverCode + "." + subCover.getSubCoverCode());
 			carsPolicySubCoverToInsert.setPolicyCoversCoverId(subCoverCode);
 			if (subCover.getSubCoverSumInsured() > 0) {
@@ -2344,8 +2361,12 @@ public class TestService {
 			carsPolicySubCoverToInsert
 					.setPolicyCoversDeductible100((double) subCover.getSubCoverDeductiblePercentage());
 			// carsPolicySubCoverToInsert.setPolicyCoversPercentage(Float.toString(subCover.getSubCoverDeductiblePercentage()));
-			carsPolicySubCoverToInsert.setPolicyCoversLimitClaim((double) subCover.getSubCoverLimitClaim());
-			carsPolicySubCoverToInsert.setPolicyCoversCountLimit((double) subCover.getSubCoverCountLimit());
+
+
+			carsPolicySubCoverToInsert.setPolicyCoversLimitClaim(subCover.getSubCoverLimitClaim());
+
+
+			carsPolicySubCoverToInsert.setPolicyCoversCountLimit( subCover.getSubCoverCountLimit());
 			carsPolicySubCoverToInsert.setPolicyCoversPercentage(subCover.getSubCoverDeductibleType());
 			carsPolicySubCoverToInsert.setPolicyCoversCarId(carId);
 
@@ -2394,6 +2415,8 @@ public class TestService {
 		// jsoupDoc.select("p").append("br");
 		String str = jsoupDoc.html().replaceAll("\\\\n", "\n");
 		str=	str.replaceAll("&nbsp;"," ");
+		str=	str.replaceAll("&amp;","&");
+
 		String strWithNewLines = Jsoup.clean(str, "", Whitelist.none(), outputSettings);
 		strWithNewLines = strWithNewLines.replaceAll("\\\\r", "");
 		// strWithNewLines = strWithNewLines.replaceAll("\n", "<br>");
