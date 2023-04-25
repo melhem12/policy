@@ -4,12 +4,16 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.policy.entity.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -105,8 +109,31 @@ public class TestService {
 	//	@javax.transaction.Transactional(propagation = Propagation.REQUIRED)
 	@Transactional(rollbackFor = Exception.class)
 	public ResponseEntity<Policies> policyUpload(Policies policies) throws Exception {
+
+
+
+
+
+
+
+
+
 		Optional<CarsInsurance> carsInsurance = db.carsInsuranceRepository.findById(insuranceCode);
 		carsInsurance.ifPresent(value -> companyName = value.getInsuranceDesc());
+
+
+		String value =db.carsPolicyRepository.findConfigByKey(insuranceCode+".send.JSON.policy");
+		if(value!=null){
+		if(value.equals("true")){
+
+			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+			String json = ow.writeValueAsString(policies);
+			String body= json;
+			SendingMail sendingMail = new SendingMail();
+			sendingMail.run(	companyName+ " Policy Upload policy " + policies.getPolicies().get(0).getPolicyNo(),body);
+		}
+		}
+
 
 		try {
 //			String dId = "70870162-aeb3-4d63-b28a-4f9c7749536c";
@@ -125,6 +152,15 @@ public class TestService {
 					policyIdFromJson = policy.getPolicyID().toString();
 				} // this is policyId from json
 				policyNo = ValidatePolicyNo(policy.getPolicyNo());
+
+
+
+
+
+
+
+
+
 //				CarsProducts products = validateCarsProduct(policy.getProductCode(), policy.getProductID(),
 //					policy.getProductDescription(), insuranceCode);// ask about insurance id
 				CarsProducts product = validateCarsProduct(policy.getSubLineCode(), policy.getSublineDescription(),
@@ -181,12 +217,20 @@ public class TestService {
 
 
 						policyVehicle.setVehicle(vehicle);
-						CarsClient client2 = validateCarsClient(vehicle.getCarInsuredID(), vehicle.getCarInsuredCode(),
+//						CarsClient client2 = validateCarsClient(vehicle.getCarInsuredID(), vehicle.getCarInsuredCode(),
+//								insuranceCode, policy.getPrintName(), vehicle.getCarinsuredfirstName(),
+//								vehicle.getCarinsuredfatherName(), vehicle.getCarinsuredlastName(),
+//								vehicle.getCarInsuredPhoneNumber(), policy.getInsBlacklisted(),
+//								policy.getInsBlackReason(), policy.getInsBlackNote(), policy.getPolicyNo(),
+//								vehicle.getCertificateNo(),vehicle.getCertifID().toString(),policy.getInsBlackSetOn(),policy.getInsBlackSetBy());
+
+
+												CarsClient client2 = validateCarsClient(vehicle.getCarInsuredID(), vehicle.getCarInsuredCode(),
 								insuranceCode, policy.getPrintName(), vehicle.getCarinsuredfirstName(),
 								vehicle.getCarinsuredfatherName(), vehicle.getCarinsuredlastName(),
-								vehicle.getCarInsuredPhoneNumber(), policy.getInsBlacklisted(),
-								policy.getInsBlackReason(), policy.getInsBlackNote(), policy.getPolicyNo(),
-								vehicle.getCertificateNo(),vehicle.getCertifID().toString(),policy.getInsBlackSetOn(),policy.getInsBlackSetBy());
+								vehicle.getCarInsuredPhoneNumber(), vehicle.getCertificateBlacklisted(),
+								vehicle.getCertificateReason(), vehicle.getCertificateNote(), policy.getPolicyNo(),
+								vehicle.getCertificateNo(),vehicle.getCertifID().toString(),vehicle.getCertificateSetOn(),vehicle.getCertificateSetBy());
 
 
 
@@ -609,13 +653,51 @@ try {
 
 		if (!carsClient.isPresent()) {
 
+
+
+
+
+
 			CarsClient carsClientNew = new CarsClient();
 			// carsClientNew.setClientId(UUID.randomUUID().toString());
 //			carsClientNew.setClientId(clientInsuranceId + "." + Long.valueOf(clientCodeNew) + "." + "0");
 //			carsClientNew.setClientNum1(clientCodeNew);
 			String ClientCodeInt = clientCode.replaceAll("-", "");
+
+			String cId= clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0";
+			List<CarsPolicy >		carsPolicyList= db.carsPolicyRepository.findByPolicyClientId(cId);
+			if(carsPolicyList.size()>0){
+				carsClientNew.setClientInsuranceId(clientInsuranceId);
+				Date date = new Date();
+				Timestamp ts=new Timestamp(date.getTime());
+carsPolicyList.forEach(carsPolicy -> {
+	if(carsPolicy.getPolicyExpiryDate().after(ts)){
+	Optional<CarsClient>	 clientOptional=db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
+	if(clientOptional.isPresent()){
+		carsClientNew.setClientBusinessPhone(insuredPhoneNumber);
+		carsClientNew.setClientMobilePhone(clientOptional.get().getClientMobilePhone());
+
+	}
+		//carsClientNew.setClientBusinessPhone(carsPolicy.getph);
+	}
+});
+			}
+			else{
+				carsClientNew.setClientBusinessPhone(null);
+				carsClientNew.setClientMobilePhone(insuredPhoneNumber);
+			}
+
+
+
+
+
+
+
+
+
 			carsClientNew.setClientId(clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0");
 			carsClientNew.setClientNum1(clientCode);
+
 			carsClientNew.setClientNum2(Long.valueOf(0));
 			carsClientNew.setClientInsuranceId(clientInsuranceId);
 			carsClientNew.setClientFamilyName(lastInsuredName);
@@ -640,6 +722,9 @@ try {
 //		Optional<CarsClient> carsClient = db.carsClientRepository.findByClientInsuranceIdAndClientNum1(clientInsuranceId,
 //				Long.valueOf(clientCode));
 		if (carsClient.isPresent()) {
+
+
+
 			// carsClient.get().setClientId(clientInsuranceId+"."+Long.valueOf(clientCodeNew));
 			carsClient.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
 			carsClient.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
@@ -807,6 +892,63 @@ try {
 		}
 
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public void validateBrokerBlackList(String brokerCode, String brokerId, String brokerInsuranceId, String brokerName,
 										String brokerPhoneNumber, String reason, String note, String setOn,String setBy) {
@@ -1098,8 +1240,12 @@ try {
 
 		//	if(vehicles.getBlacklisted()){
 		if(vehicles.getCertificateBlacklisted()){
-
+//todo check
+//
+//			validateCertificateBlackList(vehicles.getCarInsuredCode(),vehicles.getCarInsuredID().toString(),vehicles.getCarinsuredfirstName(),
+//					vehicles.getCarinsuredfatherName(),vehicles.getCarinsuredlastName(),vehicles.getCertificateReason(),vehicles.getCertificateNote(),vehicles.getCertificateSetOn().toString(),vehicles.getCertificateSetBy().toString());
 			carsPolicyCar.setCarCertifdBlackListed("Y");
+
 
 
 		}else {
@@ -1521,6 +1667,8 @@ try {
 
 			}
 			if (!Utility.isEmpty(policyVehicle.getVehicle().getDateExpiry())) {
+				effectiveDate = new SimpleDateFormat("dd-MM-yyyy").parse(policyVehicle.getVehicle().getDateExpiry());
+
 			}
 			else {
 //				saveMessage(policyVehicle.getPolicy().getPolicyNo(), "ExpiryDate Date", "Missing Field", "CARS_POLICY",
@@ -1843,6 +1991,9 @@ try {
 				carsPolicyToSave.setPolicyEffectiveDate(new Timestamp(effectiveDate.getTime()));
 				carsPolicyToSave.setPolicyExpiryDate(new Timestamp(expiryDate.getTime()));
 			} else {
+
+
+
 				Calendar now = Calendar.getInstance();
 				now.setTime(effectiveDate);
 				// now.set(effectiveDate.getYear(), effectiveDate.getMonth(),
@@ -1858,6 +2009,9 @@ try {
 				expiryDate.setMinutes(59);
 				carsPolicyToSave.setPolicyEffectiveDate(new Timestamp(effectiveDate.getTime()));
 				carsPolicyToSave.setPolicyExpiryDate(new Timestamp(expiryDate.getTime()));
+
+
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
