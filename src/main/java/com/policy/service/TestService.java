@@ -1667,7 +1667,7 @@ carsPolicyList.forEach(carsPolicy -> {
 
 			}
 			if (!Utility.isEmpty(policyVehicle.getVehicle().getDateExpiry())) {
-				effectiveDate = new SimpleDateFormat("dd-MM-yyyy").parse(policyVehicle.getVehicle().getDateExpiry());
+				expiryDate = new SimpleDateFormat("dd-MM-yyyy").parse(policyVehicle.getVehicle().getDateExpiry());
 
 			}
 			else {
@@ -2653,6 +2653,28 @@ carsPolicyCoverToInsert.setPolicyCoversOrder(((double) coverIndex));
 			carsErrorlogService.insertError(companyName+ " Policy Upload policy " + Identifier + "Sys Id is missing",
 					insuranceCode, "CARS_POLICY", "Blocking");
 		}
+
+
+
+		if (policy.getVehicles().size()==0){
+			blocking = 1;
+			error.append(" vehicles  is missing *This message is Blocking* \n \n");
+
+			carsErrorlogService.insertError(companyName+ " Policy Upload policy " + Identifier + "vehicles  is missing",
+					insuranceCode, "CARS_POLICY", "Blocking");
+		}
+
+
+
+
+
+
+
+
+
+
+
+
 
 		if (Utility.isEmpty(policy.getPolicyNo())) {
 			blocking = 1;
