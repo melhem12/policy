@@ -675,7 +675,10 @@ carsPolicyList.forEach(carsPolicy -> {
 	Optional<CarsClient>	 clientOptional=db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
 	if(clientOptional.isPresent()){
 		carsClientNew.setClientBusinessPhone(insuredPhoneNumber);
-		carsClientNew.setClientMobilePhone(clientOptional.get().getClientMobilePhone());
+		if(clientOptional.get().getClientMobilePhone()!=null){
+			carsClientNew.setClientMobilePhone(clientOptional.get().getClientMobilePhone());
+		}
+
 
 	}
 		//carsClientNew.setClientBusinessPhone(carsPolicy.getph);
@@ -702,9 +705,19 @@ carsPolicyList.forEach(carsPolicy -> {
 			carsClientNew.setClientInsuranceId(clientInsuranceId);
 			carsClientNew.setClientFamilyName(lastInsuredName);
 			carsClientNew.setClientFatherName(fatherInsuredName);
+			if(fatherInsuredName==null){
+				carsClientNew.setClientFatherName("");
+
+			}
+			if(lastInsuredName==null){
+				carsClientNew.setClientFamilyName("");
+			}
+			
+
+
 			carsClientNew.setClientFirstName(firstInsuredName);
 			// insuredPhoneNumber = insuredPhoneNumber.replace("-", "");
-			carsClientNew.setClientMobilePhone(insuredPhoneNumber);
+		//	carsClientNew.setClientMobilePhone(insuredPhoneNumber);
 			carsClientNew.setSysVersionNumber(0);
 			carsClientNew.setSysCreatedBy(CREATED_BY_QUARTZ);
 			carsClientNew.setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -731,6 +744,18 @@ carsPolicyList.forEach(carsPolicy -> {
 			carsClient.get().setClientFamilyName(lastInsuredName);
 			carsClient.get().setClientFatherName(fatherInsuredName);
 			carsClient.get().setClientFirstName(firstInsuredName);
+
+
+			if(fatherInsuredName==null){
+				carsClient.get().setClientFatherName("");
+
+			}
+			if(lastInsuredName==null){
+				carsClient.get().setClientFamilyName("");
+			}
+
+
+
 			carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 			carsClient.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
 			carsClient.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
@@ -832,6 +857,17 @@ carsPolicyList.forEach(carsPolicy -> {
 			carsBlackList.setBlFirstName(firstInsuredName);
 			carsBlackList.setBlFatherName(fatherInsuredName);
 			carsBlackList.setBlFamilyName(lastInsuredName);
+			if(fatherInsuredName==null){
+				carsBlackList.setBlFatherName("");
+
+			}
+			if(lastInsuredName==null){
+				carsBlackList.setBlFamilyName("");
+			}
+
+
+
+
 			carsBlackList.setBlNote( note);
 			carsBlackList.setBlReason(reason);
 			carsBlackList.setBlStatus("IN");
@@ -863,6 +899,15 @@ carsPolicyList.forEach(carsPolicy -> {
 			carsBlackList.get().setBlFirstName(firstInsuredName);
 			carsBlackList.get().setBlFatherName(fatherInsuredName);
 			carsBlackList.get().setBlFamilyName(lastInsuredName);
+
+			if(fatherInsuredName==null){
+				carsBlackList.get().setBlFatherName("");
+
+			}
+			if(lastInsuredName==null){
+				carsBlackList.get().setBlFamilyName("");
+			}
+
 			carsBlackList.get().setBlStatus("IN");
 
 
