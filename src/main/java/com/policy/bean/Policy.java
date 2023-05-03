@@ -62,6 +62,31 @@ public class Policy implements Serializable {
 
 	private Integer policyRootID;
 
+
+
+
+
+
+
+
+
+
+
+
+	private String dateEffective;
+
+	private String dateExpiry;
+
+
+
+
+
+
+
+
+
+
+
 	//@SubLineCodeAnnotation
 	private String subLineCode;
 
@@ -651,6 +676,20 @@ public class Policy implements Serializable {
 	public void setMopNote(String mopNote) {
 		this.mopNote = mopNote;
 	}
-	
 
+	public String getDateEffective() {
+		return dateEffective;
+	}
+
+	public void setDateEffective(String dateEffective) {
+		this.dateEffective = dateEffective;
+	}
+
+	public String getDateExpiry() {
+		return dateExpiry;
+	}
+
+	public void setDateExpiry(String dateExpiry) {
+		this.dateExpiry = dateExpiry;
+	}
 }
