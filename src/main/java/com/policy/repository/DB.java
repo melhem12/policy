@@ -69,4 +69,11 @@ public class DB {
 
 	@Autowired
 	public  CarsInsuranceRepository carsInsuranceRepository;
+
+	@Autowired
+	public  CarsSupplierRepository carsSupplierRepository;
+
+
+	@Autowired
+	public  CarsDtSupplierRepository carsDtSupplierRepository;
 }

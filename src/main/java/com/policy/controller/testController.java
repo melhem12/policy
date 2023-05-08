@@ -1630,4 +1630,28 @@ public class testController {
 	}
 
 
+	@PutMapping("/blackWhiteListing")
+	public ResponseEntity<String> blackWhiteListing( @RequestBody PolicyListhing policyListhing) throws Exception {
+
+
+		try {
+			logger.info("Inside Validation");
+			return  testService.blackWhiteListing(policyListhing);
+
+		} catch (
+
+				Exception e) {
+			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			String sStackTrace = sw.toString();
+			logger.error("failed",sStackTrace);
+			return new ResponseEntity(sStackTrace, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+
+
+
 }

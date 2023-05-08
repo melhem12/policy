@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +22,8 @@ public interface CarsBlackListRepository extends JpaRepository<CarsBlackList,Str
 	Optional<CarsBlackList> findByClientNum(String clientNum);
 
     Optional<CarsBlackList> findByBlBrokerId(String s);
+
+
+	@Query("select b from CarsBlackList b join fetch  b.blSupplier  s   where s.supplierId =?1 and  b.blInsuranceId =?2 ")
+	Optional<CarsBlackList> findByBlSupplierIdAndBlInsuranceId(String profileCode, String insuranceId);
 }

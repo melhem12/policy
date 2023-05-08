@@ -1,9 +1,7 @@
 package com.policy.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.lang.reflect.Type;
 import java.sql.Timestamp;
 
 @Entity
@@ -65,6 +63,26 @@ public class CarsBlackList {
 
 	@Column(name = "BL_BROKER_ID")
 	private String blBrokerId;
+
+
+
+
+
+
+
+
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "BL_SUPPLIER_ID")
+	private CarsSupplier blSupplier;
+
+
+
+
+
+
+
+
 
 	@Column(name = "BL_POLICY_BRANCH")
 	private String blPolicyBranch;
@@ -292,6 +310,14 @@ public class CarsBlackList {
 
 	public String getBlReason() {
 		return blReason;
+	}
+
+	public CarsSupplier getBlSupplier() {
+		return blSupplier;
+	}
+
+	public void setBlSupplier(CarsSupplier blSupplier) {
+		this.blSupplier = blSupplier;
 	}
 
 	public void setBlReason(String blReason) {

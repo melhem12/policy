@@ -73,19 +73,26 @@ public class Policy implements Serializable {
 
 
 
-	private String dateEffective;
+	private String polDateEffective;
 
-	private String dateExpiry;
-
-
+	private String polDateExpiry;
 
 
+	public String getPolDateEffective() {
+		return polDateEffective;
+	}
 
+	public void setPolDateEffective(String polDateEffective) {
+		this.polDateEffective = polDateEffective;
+	}
 
+	public String getPolDateExpiry() {
+		return polDateExpiry;
+	}
 
-
-
-
+	public void setPolDateExpiry(String polDateExpiry) {
+		this.polDateExpiry = polDateExpiry;
+	}
 
 	//@SubLineCodeAnnotation
 	private String subLineCode;
@@ -212,6 +219,9 @@ public class Policy implements Serializable {
 	private String mopNote;
 	@Valid
 	private List<Vehicles> vehicles;
+
+
+
 
 	public BigDecimal getPremExchangeRate() {
 		return premExchangeRate;
@@ -677,19 +687,6 @@ public class Policy implements Serializable {
 		this.mopNote = mopNote;
 	}
 
-	public String getDateEffective() {
-		return dateEffective;
-	}
 
-	public void setDateEffective(String dateEffective) {
-		this.dateEffective = dateEffective;
-	}
 
-	public String getDateExpiry() {
-		return dateExpiry;
-	}
-
-	public void setDateExpiry(String dateExpiry) {
-		this.dateExpiry = dateExpiry;
-	}
 }
