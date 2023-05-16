@@ -4,6 +4,11 @@ public class PolicyListhing {
    private String profileType ;
    private String profileCode ;
 
+
+    private String profileFirstName ;
+    private String profileFatherName ;
+    private String profileLastName;
+
     private Boolean blacklisted;
 
     private String setOn;
@@ -76,5 +81,29 @@ public class PolicyListhing {
 
     public void setInsuranceId(String insuranceId) {
         this.insuranceId = insuranceId;
+    }
+
+    public String getProfileFirstName() {
+        return profileFirstName;
+    }
+
+    public void setProfileFirstName(String profileFirstName) {
+        this.profileFirstName = profileFirstName;
+    }
+
+    public String getProfileFatherName() {
+        return profileFatherName;
+    }
+
+    public void setProfileFatherName(String profileFatherName) {
+        this.profileFatherName = profileFatherName;
+    }
+
+    public String getProfileLastName() {
+        return profileLastName;
+    }
+
+    public void setProfileLastName(String profileLastName) {
+        this.profileLastName = profileLastName;
     }
 }

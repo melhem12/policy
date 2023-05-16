@@ -1,5 +1,6 @@
 package com.policy.repository;
 
+import com.policy.entity.CarsDtParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -76,4 +77,8 @@ public class DB {
 
 	@Autowired
 	public  CarsDtSupplierRepository carsDtSupplierRepository;
+
+
+	@Autowired
+	public CarsDtParamsRepository carsDtParamsRepository;
 }
