@@ -1,7 +1,7 @@
 package com.policy.bean;
 public class PolicyListhing {
    private String insuranceId ;
-   private String profileType ;
+   private String profileTypeId;
    private String profileId;
 
 
@@ -19,12 +19,12 @@ public class PolicyListhing {
 
     private String note;
 
-    public String getProfileType() {
-        return profileType;
+    public String getProfileTypeId() {
+        return profileTypeId;
     }
 
-    public void setProfileType(String profileType) {
-        this.profileType = profileType;
+    public void setProfileTypeId(String profileTypeId) {
+        this.profileTypeId = profileTypeId;
     }
 
     public String getProfileId() {

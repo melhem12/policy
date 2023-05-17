@@ -3037,13 +3037,13 @@ public class TestService {
     public ResponseEntity<String> blackWhiteListing(PolicyListhing policyListhing) {
 
         String response = "";
-        Optional<CarsDtParams>  carsDtParamsOptional=db.carsDtParamsRepository.findByParamsIdAndInsuranceId(policyListhing.getProfileType(),policyListhing.getInsuranceId());
-        carsDtParamsOptional.ifPresent(carsDtParams -> policyListhing.setProfileType(carsDtParams.getParamsCeCode()));
+        Optional<CarsDtParams>  carsDtParamsOptional=db.carsDtParamsRepository.findByParamsIdAndInsuranceId(policyListhing.getProfileTypeId(),policyListhing.getInsuranceId());
+        carsDtParamsOptional.ifPresent(carsDtParams -> policyListhing.setProfileTypeId(carsDtParams.getParamsCeCode()));
 
 
 
         ResponseEntity res=new ResponseEntity(response, HttpStatus.OK);
-        if (policyListhing.getProfileType().equals("BROKER")) {
+        if (policyListhing.getProfileTypeId().equals("BROKER")) {
             Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findTopByBlBrokerIdOrderBySysUpdatedDateDesc(policyListhing.getInsuranceId() + "." + policyListhing.getProfileId());
 
 
@@ -3214,7 +3214,7 @@ public class TestService {
 
 
 
-        else if (policyListhing.getProfileType().equals("INSURED")) {
+        else if (policyListhing.getProfileTypeId().equals("INSURED")) {
             Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(policyListhing.getProfileId(),policyListhing.getInsuranceId());
             if (carsBlackListOptional.isPresent()) {
                 if ((policyListhing.getBlacklisted()&&  carsBlackListOptional.get().getBlStatus().equals("IN"))||(!policyListhing.getBlacklisted()&&  carsBlackListOptional.get().getBlStatus().equals("OU"))) {
@@ -3363,7 +3363,7 @@ public class TestService {
 
 
 
-        else if (policyListhing.getProfileType().equals("TP")) {
+        else if (policyListhing.getProfileTypeId().equals("TP")) {
             Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findTopByBlFirstNameAndBlFatherNameAndBlFamilyNameOrderBySysUpdatedDateDesc(policyListhing.getProfileFirstName().toUpperCase(Locale.ROOT),policyListhing.getProfileFatherName().toUpperCase(Locale.ROOT),policyListhing.getProfileLastName().toUpperCase(Locale.ROOT));
             if (carsBlackListOptional.isPresent()) {
                 if ((policyListhing.getBlacklisted()&&  carsBlackListOptional.get().getBlStatus().equals("IN"))||(!policyListhing.getBlacklisted()&&  carsBlackListOptional.get().getBlStatus().equals("OU"))) {
@@ -3525,7 +3525,7 @@ public class TestService {
 
 
 
-        else if (policyListhing.getProfileType().equals("E")||policyListhing.getProfileType().equals("G")||policyListhing.getProfileType().equals("A")||policyListhing.getProfileType().equals("L")||policyListhing.getProfileType().equals("H")) {
+        else if (policyListhing.getProfileTypeId().equals("E")||policyListhing.getProfileTypeId().equals("G")||policyListhing.getProfileTypeId().equals("A")||policyListhing.getProfileTypeId().equals("L")||policyListhing.getProfileTypeId().equals("H")) {
 
             Optional<CarsDtSupplier> carsDtSupplierOptional = db.carsDtSupplierRepository.findByInsIdAndInsSupplierCode(policyListhing.getInsuranceId(),policyListhing.getProfileId());
             if(carsDtSupplierOptional.isPresent()){
