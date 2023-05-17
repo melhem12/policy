@@ -24,12 +24,21 @@ public class CarsDtParams {
     private java.lang.String paramsCode;
 
 
+
+    @Column(name = "PARAMS_Id")
+    private java.lang.String paramsId;
+
+
     @Column(name = "PARAMS_CE_CODE")
     private java.lang.String paramsCeCode;
 
+    public String getParamsId() {
+        return paramsId;
+    }
 
-
-
+    public void setParamsId(String paramsId) {
+        this.paramsId = paramsId;
+    }
 
     @Column(name = "INS_MODEL_CODE")
     private java.lang.String insuranceModelCode;

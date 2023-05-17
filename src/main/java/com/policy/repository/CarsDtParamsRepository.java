@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 @EnableJpaRepositories
 public interface CarsDtParamsRepository extends JpaRepository<CarsDtParams,String> {
-    Optional<CarsDtParams> findByParamsCodeAndInsuranceId(String code,String insId);
 
+    Optional<CarsDtParams> findByParamsIdAndInsuranceId(String profileType, String insuranceId);
 }
