@@ -1,23 +1,35 @@
 package com.policy.bean;
+
+import io.swagger.annotations.ApiModelProperty;
+
 public class PolicyListhing {
-   private String insuranceId ;
-   private String profileTypeId;
-   private String profileId;
+    @ApiModelProperty(position = 1)
 
+    private String insuranceId ;
+    @ApiModelProperty(position = 2)
 
+    private String profileTypeId;
+    @ApiModelProperty(position = 3)
+    private String profileId;
+
+    @ApiModelProperty(position = 4)
     private String profileFirstName ;
+    @ApiModelProperty(position = 5)
     private String profileFatherName ;
+    @ApiModelProperty(position = 6)
     private String profileLastName;
-
+    @ApiModelProperty(position = 7)
     private Boolean blacklisted;
-
+    @ApiModelProperty(position = 8)
+    private String note;
+    @ApiModelProperty(position = 9)
+    private String reason;
+    @ApiModelProperty(position = 10)
     private String setOn;
-
+    @ApiModelProperty(position = 11)
     private String setBy;
 
-    private String reason;
 
-    private String note;
 
     public String getProfileTypeId() {
         return profileTypeId;
