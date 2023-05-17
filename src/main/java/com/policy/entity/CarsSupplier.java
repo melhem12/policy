@@ -176,44 +176,44 @@ public class CarsSupplier  implements Serializable {
 	
 
 	
-	@Column(name = "SUPPLIER_GRADE_ID")
-	private String supplierGradeId;
+//	@Column(name = "SUPPLIER_GRADE_ID")
+//	private String supplierGradeId;
+//
+//
+//	@Column(name = "SUPPLIER_SHOW_IN_LIST")
+//	private String supplierShowInList;
+//
+//
+//	@Column(name = "SUPPLIER_NAME")
+//	private String supplierName;
+//
+//
+//	@Column(name = "SUPPLIER_OUT_NETWORK")
+//	private String supplierOutNetwork;
+//
+//
+//	@Column(name = "SUPPLIER_FDATE")
+//	private LocalDateTime supplierFdate;
+//
+//
+//	@Column(name = "SUPPLIER_INACTD")
+//	private LocalDateTime supplierInactd;
+//
+//	@Column(name = "SUPPLIER_TYPE")
+//	private String supplierType;
+//
+//
+//	@Column(name = "SUPPLIER_INCLUDE_APP")
+//	private String supplierIncludeApp;
+//
+//
+//	@Column(name = "SUPPLIER_CORE_USER_ID")
+//	private String supplierCoreUserId;
 	
 	
-	@Column(name = "SUPPLIER_SHOW_IN_LIST")
-	private String supplierShowInList;
-	
-	
-	@Column(name = "SUPPLIER_NAME")
-	private String supplierName;
-	
-	
-	@Column(name = "SUPPLIER_OUT_NETWORK")
-	private String supplierOutNetwork;
-	
-	
-	@Column(name = "SUPPLIER_FDATE")
-	private LocalDateTime supplierFdate;
-	
-	
-	@Column(name = "SUPPLIER_INACTD")
-	private LocalDateTime supplierInactd;
-	
-	@Column(name = "SUPPLIER_TYPE")
-	private String supplierType;
-	
-	
-	@Column(name = "SUPPLIER_INCLUDE_APP")
-	private String supplierIncludeApp;
-	
-	
-	@Column(name = "SUPPLIER_CORE_USER_ID")
-	private String supplierCoreUserId;
-	
-	
-	@Column(name = "SUPPLIER_LATITUDE")
-	private String supplierLatitude;
-	
+//	@Column(name = "SUPPLIER_LATITUDE")
+//	private String supplierLatitude;
+//
 	
 //	@Column(name = "SUPPLIER_LONGITUDE")
 //	private String supplierLongitude;
@@ -543,85 +543,85 @@ public class CarsSupplier  implements Serializable {
 		this.supplierId = supplierId;
 	}
 
-	public String getSupplierGradeId() {
-		return supplierGradeId;
-	}
-
-	public void setSupplierGradeId(String supplierGradeId) {
-		this.supplierGradeId = supplierGradeId;
-	}
-
-	public String getSupplierShowInList() {
-		return supplierShowInList;
-	}
-
-	public void setSupplierShowInList(String supplierShowInList) {
-		this.supplierShowInList = supplierShowInList;
-	}
-
-	public String getSupplierName() {
-		return supplierName;
-	}
-
-	public void setSupplierName(String supplierName) {
-		this.supplierName = supplierName;
-	}
-
-	public String getSupplierOutNetwork() {
-		return supplierOutNetwork;
-	}
-
-	public void setSupplierOutNetwork(String supplierOutNetwork) {
-		this.supplierOutNetwork = supplierOutNetwork;
-	}
-
-	public LocalDateTime getSupplierFdate() {
-		return supplierFdate;
-	}
-
-	public void setSupplierFdate(LocalDateTime supplierFdate) {
-		this.supplierFdate = supplierFdate;
-	}
-
-	public LocalDateTime getSupplierInactd() {
-		return supplierInactd;
-	}
-
-	public void setSupplierInactd(LocalDateTime supplierInactd) {
-		this.supplierInactd = supplierInactd;
-	}
-
-	public String getSupplierType() {
-		return supplierType;
-	}
-
-	public void setSupplierType(String supplierType) {
-		this.supplierType = supplierType;
-	}
-
-	public String getSupplierIncludeApp() {
-		return supplierIncludeApp;
-	}
-
-	public void setSupplierIncludeApp(String supplierIncludeApp) {
-		this.supplierIncludeApp = supplierIncludeApp;
-	}
-
-	public String getSupplierCoreUserId() {
-		return supplierCoreUserId;
-	}
-
-	public void setSupplierCoreUserId(String supplierCoreUserId) {
-		this.supplierCoreUserId = supplierCoreUserId;
-	}
-
-	public String getSupplierLatitude() {
-		return supplierLatitude;
-	}
-
-	public void setSupplierLatitude(String supplierLatitude) {
-		this.supplierLatitude = supplierLatitude;
-	}
+//	public String getSupplierGradeId() {
+//		return supplierGradeId;
+//	}
+//
+//	public void setSupplierGradeId(String supplierGradeId) {
+//		this.supplierGradeId = supplierGradeId;
+//	}
+//
+//	public String getSupplierShowInList() {
+//		return supplierShowInList;
+//	}
+//
+//	public void setSupplierShowInList(String supplierShowInList) {
+//		this.supplierShowInList = supplierShowInList;
+//	}
+//
+//	public String getSupplierName() {
+//		return supplierName;
+//	}
+//
+//	public void setSupplierName(String supplierName) {
+//		this.supplierName = supplierName;
+//	}
+//
+//	public String getSupplierOutNetwork() {
+//		return supplierOutNetwork;
+//	}
+//
+//	public void setSupplierOutNetwork(String supplierOutNetwork) {
+//		this.supplierOutNetwork = supplierOutNetwork;
+//	}
+//
+//	public LocalDateTime getSupplierFdate() {
+//		return supplierFdate;
+//	}
+//
+//	public void setSupplierFdate(LocalDateTime supplierFdate) {
+//		this.supplierFdate = supplierFdate;
+//	}
+//
+//	public LocalDateTime getSupplierInactd() {
+//		return supplierInactd;
+//	}
+//
+//	public void setSupplierInactd(LocalDateTime supplierInactd) {
+//		this.supplierInactd = supplierInactd;
+//	}
+//
+//	public String getSupplierType() {
+//		return supplierType;
+//	}
+//
+//	public void setSupplierType(String supplierType) {
+//		this.supplierType = supplierType;
+//	}
+//
+//	public String getSupplierIncludeApp() {
+//		return supplierIncludeApp;
+//	}
+//
+//	public void setSupplierIncludeApp(String supplierIncludeApp) {
+//		this.supplierIncludeApp = supplierIncludeApp;
+//	}
+//
+//	public String getSupplierCoreUserId() {
+//		return supplierCoreUserId;
+//	}
+//
+//	public void setSupplierCoreUserId(String supplierCoreUserId) {
+//		this.supplierCoreUserId = supplierCoreUserId;
+//	}
+//
+//	public String getSupplierLatitude() {
+//		return supplierLatitude;
+//	}
+//
+//	public void setSupplierLatitude(String supplierLatitude) {
+//		this.supplierLatitude = supplierLatitude;
+//	}
 
 //	public String getSupplierLongitude() {
 //		return supplierLongitude;
