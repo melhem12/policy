@@ -3551,11 +3551,12 @@ public class TestService {
                         CarsBlackList carsBlackList = new CarsBlackList();
                         carsBlackList.setBlId(UUID.randomUUID().toString());
                         carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                        carsBlackList.setClientNum(carsBlackListOptional.get(0).getClientNum());
+                      //  carsBlackList.setClientNum(carsBlackListOptional.get(0).getClientNum());
                         carsBlackList.setBlFirstName(carsBlackListOptional.get(0).getBlFirstName());
                         carsBlackList.setBlFatherName(carsBlackListOptional.get(0).getBlFatherName());
                         carsBlackList.setBlFamilyName(carsBlackListOptional.get(0).getBlFamilyName());
-
+                        Optional<CarsSupplier> carsSupplierOptional=db.carsSupplierRepository.findById(carsDtSupplierOptional.get().getCeCode());
+                        carsSupplierOptional.ifPresent(carsBlackList::setBlSupplier);
 
                         carsBlackList.setBlNote(policyListhing.getNote());
                         carsBlackList.setBlReason(policyListhing.getReason());
@@ -3613,10 +3614,10 @@ if(carsSupplierOptional.isPresent()) {
     CarsBlackList carsBlackList = new CarsBlackList();
     carsBlackList.setBlId(UUID.randomUUID().toString());
     carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-    carsBlackList.setClientNum(carsSupplierOptional.get().getSupplierId());
     carsBlackList.setBlFirstName(carsSupplierOptional.get().getSupplierFirstName());
     carsBlackList.setBlFatherName(carsSupplierOptional.get().getSupplierFatherName());
     carsBlackList.setBlFamilyName(carsSupplierOptional.get().getSupplierFamilyName());
+ carsBlackList.setBlSupplier(carsSupplierOptional.get());
 
 
     carsBlackList.setBlNote(policyListhing.getNote());
