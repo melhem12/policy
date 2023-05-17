@@ -215,9 +215,9 @@ public class CarsSupplier  implements Serializable {
 	private String supplierLatitude;
 	
 	
-	@Column(name = "SUPPLIER_LONGITUDE")
-	private String supplierLongitude;
-	
+//	@Column(name = "SUPPLIER_LONGITUDE")
+//	private String supplierLongitude;
+//
 	public CarsSupplier() {
 		this.supplierId = UUID.randomUUID().toString();
 	}
@@ -623,11 +623,11 @@ public class CarsSupplier  implements Serializable {
 		this.supplierLatitude = supplierLatitude;
 	}
 
-	public String getSupplierLongitude() {
-		return supplierLongitude;
-	}
-
-	public void setSupplierLongitude(String supplierLongitude) {
-		this.supplierLongitude = supplierLongitude;
-	}
+//	public String getSupplierLongitude() {
+//		return supplierLongitude;
+//	}
+//
+//	public void setSupplierLongitude(String supplierLongitude) {
+//		this.supplierLongitude = supplierLongitude;
+//	}
 }

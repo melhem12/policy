@@ -17,7 +17,7 @@ public class CarsDtSupplier  implements Serializable {
     @Column(name = "DT_ID", nullable = false, length = 36)
     private String dtId;
     @Column(name = "INS_ID")
-    private BigDecimal insId;
+    private String insId;
     @Column(name = "INS_SUPPLIER_CODE", length = 1000)
     private String insSupplierCode;
     @Column(name = "INS_SUPPLIER_DESC", length = 1000)
@@ -69,11 +69,11 @@ public class CarsDtSupplier  implements Serializable {
         this.dtId = dtId;
     }
 
-    public BigDecimal getInsId() {
+    public String getInsId() {
         return insId;
     }
 
-    public void setInsId(BigDecimal insId) {
+    public void setInsId(String insId) {
         this.insId = insId;
     }
 

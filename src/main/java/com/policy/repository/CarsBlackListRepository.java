@@ -28,7 +28,7 @@ public interface CarsBlackListRepository extends JpaRepository<CarsBlackList,Str
 
 	Optional<CarsBlackList> findTopByBlBrokerIdOrderBySysUpdatedDateDesc(String s);
 
-	@Query(" select   b from CarsBlackList b join fetch  b.blSupplier  s   where s.supplierId =?1  and  b.blInsuranceId =?2 ORDER BY b.sysUpdatedDate  desc   ")
+	@Query(" select   b from CarsBlackList b join fetch  b.blSupplier  s   where s.supplierId = ?1  and  b.blInsuranceId =?2 order by b.sysUpdatedDate  desc   ")
 	List<CarsBlackList> findByBlSupplierIdAndBlInsuranceId(String profileCode, String insuranceId);
 
 	Optional<CarsBlackList> findTopByBlFirstNameAndBlFatherNameAndBlFamilyNameOrderBySysUpdatedDateDesc(String toUpperCase, String toUpperCase1, String toUpperCase2);
