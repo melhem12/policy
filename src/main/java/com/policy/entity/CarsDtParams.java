@@ -40,8 +40,7 @@ public class CarsDtParams {
         this.paramsId = paramsId;
     }
 
-    @Column(name = "INS_MODEL_CODE")
-    private java.lang.String insuranceModelCode;
+
     @Column(name = "SYS_VERSION_NUMBER")
     private java.lang.Integer sysVersionNumber;
 
@@ -89,13 +88,7 @@ public class CarsDtParams {
         this.paramsCeCode = paramsCeCode;
     }
 
-    public String getInsuranceModelCode() {
-        return insuranceModelCode;
-    }
 
-    public void setInsuranceModelCode(String insuranceModelCode) {
-        this.insuranceModelCode = insuranceModelCode;
-    }
 
     public Integer getSysVersionNumber() {
         return sysVersionNumber;

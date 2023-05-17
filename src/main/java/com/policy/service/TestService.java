@@ -4,13 +4,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +15,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.policy.bean.*;
 import com.policy.entity.*;
 import com.policy.response.VehicleResponse;
-import org.apache.el.lang.ELArithmetic;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
@@ -840,6 +836,7 @@ public class TestService {
             carsBlackList.setBlFirstName(firstInsuredName);
             carsBlackList.setBlFatherName(fatherInsuredName);
             carsBlackList.setBlFamilyName(lastInsuredName);
+            carsBlackList.setBlCar("INS");
             if (fatherInsuredName == null) {
                 carsBlackList.setBlFatherName("");
 
@@ -3047,7 +3044,7 @@ public class TestService {
 
         ResponseEntity res=new ResponseEntity(response, HttpStatus.OK);
         if (policyListhing.getProfileType().equals("BROKER")) {
-            Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findTopByBlBrokerIdOrderBySysUpdatedDateDesc(policyListhing.getInsuranceId() + "." + policyListhing.getProfileCode());
+            Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findTopByBlBrokerIdOrderBySysUpdatedDateDesc(policyListhing.getInsuranceId() + "." + policyListhing.getProfileId());
 
 
             if (carsBroker.isPresent()) {
@@ -3151,7 +3148,7 @@ public class TestService {
                     CarsBlackList carsBlackList = new CarsBlackList();
                     carsBlackList.setBlId(UUID.randomUUID().toString());
                     carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                    carsBlackList.setBlBrokerId(policyListhing.getInsuranceId() + "." + policyListhing.getProfileCode());
+                    carsBlackList.setBlBrokerId(policyListhing.getInsuranceId() + "." + policyListhing.getProfileId());
                     carsBlackList.setBlFamilyName(carsBroker2.get().getBrokerDesc());
 
 
@@ -3218,7 +3215,7 @@ public class TestService {
 
 
         else if (policyListhing.getProfileType().equals("INSURED")) {
-            Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(policyListhing.getProfileCode(),policyListhing.getInsuranceId());
+            Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(policyListhing.getProfileId(),policyListhing.getInsuranceId());
             if (carsBlackListOptional.isPresent()) {
                 if ((policyListhing.getBlacklisted()&&  carsBlackListOptional.get().getBlStatus().equals("IN"))||(!policyListhing.getBlacklisted()&&  carsBlackListOptional.get().getBlStatus().equals("OU"))) {
 
@@ -3252,7 +3249,7 @@ public class TestService {
                     CarsBlackList carsBlackList = new CarsBlackList();
                     carsBlackList.setBlId(UUID.randomUUID().toString());
                     carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                    carsBlackList.setClientNum(policyListhing.getProfileCode());
+                    carsBlackList.setClientNum(policyListhing.getProfileId());
                     carsBlackList.setBlFirstName(carsBlackListOptional.get().getBlFirstName());
                     carsBlackList.setBlFatherName(carsBlackListOptional.get().getBlFatherName());
                     carsBlackList.setBlFamilyName(carsBlackListOptional.get().getBlFamilyName());
@@ -3299,14 +3296,14 @@ public class TestService {
 
 
                 Optional<CarsClient> carsClient = db.carsClientRepository
-                        .findByClientInsuranceIdAndClientNum1(policyListhing.getInsuranceId(), policyListhing.getProfileCode());
+                        .findByClientInsuranceIdAndClientNum1(policyListhing.getInsuranceId(), policyListhing.getProfileId());
                 if (carsClient.isPresent()) {
 
 
                     CarsBlackList carsBlackList = new CarsBlackList();
                     carsBlackList.setBlId(UUID.randomUUID().toString());
                     carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                    carsBlackList.setClientNum(policyListhing.getProfileCode());
+                    carsBlackList.setClientNum(policyListhing.getProfileId());
                     carsBlackList.setBlFirstName(carsClient.get().getClientFirstName());
                     carsBlackList.setBlFatherName(carsClient.get().getClientFatherName());
                     carsBlackList.setBlFamilyName(carsClient.get().getClientFamilyName());
@@ -3401,7 +3398,7 @@ public class TestService {
                     CarsBlackList carsBlackList = new CarsBlackList();
                     carsBlackList.setBlId(UUID.randomUUID().toString());
                     carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                    carsBlackList.setClientNum(policyListhing.getProfileCode());
+                    carsBlackList.setClientNum(policyListhing.getProfileId());
                     carsBlackList.setBlFirstName(carsBlackListOptional.get().getBlFirstName());
                     carsBlackList.setBlFatherName(carsBlackListOptional.get().getBlFatherName());
                     carsBlackList.setBlFamilyName(carsBlackListOptional.get().getBlFamilyName());
@@ -3448,14 +3445,14 @@ public class TestService {
 
 
                 Optional<CarsClient> carsClient = db.carsClientRepository
-                        .findByClientInsuranceIdAndClientNum1(policyListhing.getInsuranceId(), policyListhing.getProfileCode());
+                        .findByClientInsuranceIdAndClientNum1(policyListhing.getInsuranceId(), policyListhing.getProfileId());
                 if (carsClient.isPresent()) {
 
 
                     CarsBlackList carsBlackList = new CarsBlackList();
                     carsBlackList.setBlId(UUID.randomUUID().toString());
                     carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                    carsBlackList.setClientNum(policyListhing.getProfileCode());
+                    carsBlackList.setClientNum(policyListhing.getProfileId());
                     carsBlackList.setBlFirstName(carsClient.get().getClientFirstName());
                     carsBlackList.setBlFatherName(carsClient.get().getClientFatherName());
                     carsBlackList.setBlFamilyName(carsClient.get().getClientFamilyName());
@@ -3530,7 +3527,7 @@ public class TestService {
 
         else if (policyListhing.getProfileType().equals("E")||policyListhing.getProfileType().equals("G")||policyListhing.getProfileType().equals("A")||policyListhing.getProfileType().equals("L")||policyListhing.getProfileType().equals("H")) {
 
-            Optional<CarsDtSupplier> carsDtSupplierOptional = db.carsDtSupplierRepository.findByInsIdAndInsSupplierCode(policyListhing.getInsuranceId(),policyListhing.getProfileCode());
+            Optional<CarsDtSupplier> carsDtSupplierOptional = db.carsDtSupplierRepository.findByInsIdAndInsSupplierCode(policyListhing.getInsuranceId(),policyListhing.getProfileId());
             if(carsDtSupplierOptional.isPresent()){
 
          List <CarsBlackList> carsBlackListOptional=       db.carsBlackListRepository.findByBlSupplierIdAndBlInsuranceId(carsDtSupplierOptional.get().getCeCode(),policyListhing.getInsuranceId());

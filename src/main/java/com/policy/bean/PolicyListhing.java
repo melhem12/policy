@@ -2,7 +2,7 @@ package com.policy.bean;
 public class PolicyListhing {
    private String insuranceId ;
    private String profileType ;
-   private String profileCode ;
+   private String profileId;
 
 
     private String profileFirstName ;
@@ -27,12 +27,12 @@ public class PolicyListhing {
         this.profileType = profileType;
     }
 
-    public String getProfileCode() {
-        return profileCode;
+    public String getProfileId() {
+        return profileId;
     }
 
-    public void setProfileCode(String profileCode) {
-        this.profileCode = profileCode;
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
     }
 
     public Boolean getBlacklisted() {
