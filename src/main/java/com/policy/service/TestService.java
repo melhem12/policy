@@ -3507,31 +3507,13 @@ public class TestService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         else if (policyListhing.getProfileTypeId().equals("E")||policyListhing.getProfileTypeId().equals("G")||policyListhing.getProfileTypeId().equals("A")||policyListhing.getProfileTypeId().equals("L")||policyListhing.getProfileTypeId().equals("H")) {
 
             Optional<CarsDtSupplier> carsDtSupplierOptional = db.carsDtSupplierRepository.findByInsIdAndInsSupplierCode(policyListhing.getInsuranceId(),policyListhing.getProfileId());
             if(carsDtSupplierOptional.isPresent()){
 
          List <CarsBlackList> carsBlackListOptional=       db.carsBlackListRepository.findByBlSupplierIdAndBlInsuranceId(carsDtSupplierOptional.get().getCeCode(),policyListhing.getInsuranceId());
-
+                System.out.println("supplier size is "+carsBlackListOptional.size());
                 if(carsBlackListOptional.size()>0){
                     if ((policyListhing.getBlacklisted()&&  carsBlackListOptional.get(0).getBlStatus().equals("IN"))||(!policyListhing.getBlacklisted()&&  carsBlackListOptional.get(0).getBlStatus().equals("OU"))) {
                         carsBlackListOptional.get(0).setBlSetBy(policyListhing.getSetBy());
@@ -3557,6 +3539,9 @@ public class TestService {
                         response = "supplier black white listed  updated";
                         res = new ResponseEntity(response, HttpStatus.OK);
                     }
+
+
+
                     else{
 
 
@@ -3612,7 +3597,11 @@ public class TestService {
                     }
 
 
-                }else
+                }
+
+
+
+                else
                 {
 
                    Optional<CarsSupplier> carsSupplierOptional=db.carsSupplierRepository.findById(carsDtSupplierOptional.get().getCeCode());
@@ -3672,6 +3661,8 @@ if(carsSupplierOptional.isPresent()) {
 
 
             }
+
+
             else{
                 response = "INS CODE NOT FOUND";
                 res=new  ResponseEntity(response, HttpStatus.NOT_FOUND);
@@ -3679,6 +3670,12 @@ if(carsSupplierOptional.isPresent()) {
             }
 
         }
+
+
+
+
+
+
 return res;
 
 
