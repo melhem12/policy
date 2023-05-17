@@ -3553,6 +3553,7 @@ public class TestService {
                         }
                         carsBlackListOptional.get(0).setSysUpdatedBy(CREATED_BY_QUARTZ);
                         carsBlackListOptional.get(0).setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                        db.carsBlackListRepository.save(carsBlackListOptional.get(0));
                         response = "supplier black white listed  updated";
                         res = new ResponseEntity(response, HttpStatus.OK);
                     }
