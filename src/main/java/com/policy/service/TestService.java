@@ -608,7 +608,7 @@ public class TestService {
                                          String printName, String firstInsuredName, String fatherInsuredName, String lastInsuredName,
                                          String insuredPhoneNumber, boolean blackListed, String reason, String note, String policyNo,
                                          String certificateNo, String certifId, String insBlackSetOn,
-                                         String insBlackSetBy) throws Exception {
+                                         String insBlackSetBy ) throws Exception {
 
 
 //		Optional<CarsPolicy> carsPolicy = db.carsPolicyRepository.findByPolicyCertIfID(certifId);
@@ -629,6 +629,10 @@ public class TestService {
             // clientInsuranceId, certificateNo);
             return null;
         }
+
+
+
+
 
 //		String clientCodeNew = clientCode;
 //		if (clientCodeNew != null) {
@@ -677,6 +681,7 @@ public class TestService {
                     carsClientNew.setClientMobilePhone(insuredPhoneNumber);
                 }
 
+                carsClientNew.setClientReference(String.valueOf(clientId));
 
                 carsClientNew.setClientId(clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0");
                 carsClientNew.setClientNum1(clientCode);
@@ -722,6 +727,7 @@ public class TestService {
                 carsClient.get().setClientFamilyName(lastInsuredName);
                 carsClient.get().setClientFatherName(fatherInsuredName);
                 carsClient.get().setClientFirstName(firstInsuredName);
+                carsClient.get().setClientReference(String.valueOf(clientId));
 
 
                 if (fatherInsuredName == null) {

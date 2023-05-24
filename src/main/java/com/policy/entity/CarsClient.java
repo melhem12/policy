@@ -40,6 +40,12 @@ public class CarsClient {
 	@Column(name = "CLIENT_BUS_PHONE")
 	private java.lang.String clientBusinessPhone;
 
+
+
+
+	@Column(name = "CLIENT_REFERENCE")
+	private java.lang.String clientReference;
+
 	@Column(name = "CLIENT_MOBILE_PHONE")
 	private java.lang.String clientMobilePhone;
 
@@ -259,4 +265,19 @@ public class CarsClient {
 		this.sysUpdatedBy = sysUpdatedBy;
 	}
 
+	public static Log getLogger() {
+		return logger;
+	}
+
+	public static void setLogger(Log logger) {
+		CarsClient.logger = logger;
+	}
+
+	public String getClientReference() {
+		return clientReference;
+	}
+
+	public void setClientReference(String clientReference) {
+		this.clientReference = clientReference;
+	}
 }
