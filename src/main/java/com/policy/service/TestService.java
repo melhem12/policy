@@ -123,7 +123,7 @@ public class TestService {
             StringBuffer stringBufferTrademark = new StringBuffer("");
             PolicyVehicle policyVehicle = new PolicyVehicle();
             for (Policy policy : policies.getPolicies()) {
-
+                if (policy.getEndorsementTypeCode()!=null) {
                 if (policy.getEndorsementTypeCode().equals("C")) {
                     List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policyNo);
                     List<Vehicles> newVehicles = new ArrayList<>();
@@ -163,7 +163,7 @@ public class TestService {
                     policy.setVehicles(newVehicles);
 
                 }
-
+            }
 
                 ValidatePolicy(policy);
                 policyVehicle.setPolicy(policy);
@@ -325,14 +325,14 @@ public class TestService {
                             // String a = policy.getPolicyID().toString()+"asdasdsd";
                             for (Covers covers : vehicle.getCovers()) {
                                 String CarsCover = validateCover(covers, policyNo, vehicle.getCertificateNo());
-                                insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null, vehicle.getCovers().indexOf(covers) + 1, 0);
+                                insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null);
                                 if (covers.getSubCovers() != null && !covers.getSubCovers().isEmpty()) {
                                     for (SubCovers subCovers : covers.getSubCovers()) {
                                         String CarsSubCover = validateSubCover(subCovers, covers.getCoverCode(),
                                                 policyNo, vehicle.getCertificateNo(), covers.getCoverID().toString());
                                         // carsDtCoverContractService.insertSubCover(subCovers, vehicle.getPolicyID());
                                         insertCarsCover(null, subCovers, subCovers.getSubCoverID().toString(), carId,
-                                                covers.getCoverCode(), CarsSubCover, vehicle.getCovers().indexOf(covers), covers.getSubCovers().indexOf(subCovers) + 1);
+                                                covers.getCoverCode(), CarsSubCover);
                                     }
                                 }
                             }
@@ -874,6 +874,8 @@ public class TestService {
             }
 
             carsBlackList.setBlSetBy(insBlackSetBy);
+            System.out.println("client balckList saved");
+
             db.carsBlackListRepository.save(carsBlackList);
 
         }
@@ -883,6 +885,7 @@ public class TestService {
             carsBlackList.get().setBlFirstName(firstInsuredName);
             carsBlackList.get().setBlFatherName(fatherInsuredName);
             carsBlackList.get().setBlFamilyName(lastInsuredName);
+            carsBlackList.get().setBlCar("INS");
 
             if (fatherInsuredName == null) {
                 carsBlackList.get().setBlFatherName("");
@@ -912,6 +915,8 @@ public class TestService {
             carsBlackList.get().setBlReason(reason);
             carsBlackList.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
             carsBlackList.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+            System.out.println("client balckList updated");
+
             db.carsBlackListRepository.save(carsBlackList.get());
         }
 
@@ -2369,7 +2374,7 @@ public class TestService {
     }
 
     public void insertCarsCover(Covers cover, SubCovers subCover, String carCoverCode, String carId, String CoverCode,
-                                String subCoverCode, int coverIndex, int subCoverIndex) {
+                                String subCoverCode) {
         if (cover != null) {
             CarsPolicyCover carsPolicyCoverToInsert = new CarsPolicyCover();
             carsPolicyCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
@@ -2380,7 +2385,7 @@ public class TestService {
             if (cover.getSumInsured() > 0) {
                 carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
             }
-            carsPolicyCoverToInsert.setPolicyCoversOrder(((double) coverIndex));
+            carsPolicyCoverToInsert.setPolicyCoversOrder(((double) cover.getCoverOrder()));
 
             carsPolicyCoverToInsert.setPolicyCoversDeductible((double) cover.getDeductibleFlatAmount());
             carsPolicyCoverToInsert.setPolicyCoversLimitClaim(cover.getCoverLimitClaim());
@@ -2403,7 +2408,7 @@ public class TestService {
         if (subCover != null) {
             CarsPolicyCover carsPolicySubCoverToInsert = new CarsPolicyCover();
             carsPolicySubCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
-            carsPolicySubCoverToInsert.setPolicyCoversOrder(Double.valueOf(coverIndex + "." + subCoverIndex));
+            carsPolicySubCoverToInsert.setPolicyCoversOrder(Double.valueOf(cover.getCoverOrder() + "." + subCover.getSubCoverOrder()));
 
             carsPolicySubCoverToInsert.setPolicyCoversCover(CoverCode + "." + subCover.getSubCoverCode());
             carsPolicySubCoverToInsert.setPolicyCoversCoverId(subCoverCode);

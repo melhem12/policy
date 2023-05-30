@@ -29,6 +29,16 @@ public class SubCovers implements Serializable {
 	private float subCoverDeductiblePercentage;
 
 	private float subCoverDeductibleFlatAmount;
+	private Long subCoverOrder;
+
+
+	public Long getSubCoverOrder() {
+		return subCoverOrder;
+	}
+
+	public void setSubCoverOrder(Long subCoverOrder) {
+		this.subCoverOrder = subCoverOrder;
+	}
 
 	public Integer getSubCoverID() {
 		return subCoverID;

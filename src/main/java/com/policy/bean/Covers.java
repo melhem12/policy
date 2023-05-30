@@ -34,7 +34,7 @@ public class Covers implements Serializable{
 	private float deductibleFlatAmount;
 
 	private float sumInsured;
-
+	private Long 	coverOrder;
 	private List<SubCovers> subCovers;
 
 //	public String getTpaCoverType() {
@@ -159,5 +159,11 @@ public class Covers implements Serializable{
 		this.subCovers = subCovers;
 	}
 
-	
+	public Long getCoverOrder() {
+		return coverOrder;
+	}
+
+	public void setCoverOrder(Long coverOrder) {
+		this.coverOrder = coverOrder;
+	}
 }
