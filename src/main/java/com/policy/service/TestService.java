@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.policy.bean.*;
 import com.policy.entity.*;
+import com.policy.response.CarShapeRespomse;
 import com.policy.response.VehicleResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -266,15 +267,30 @@ public class TestService {
                         if (carsPolicyToSearchList != null && !carsPolicyToSearchList.isEmpty()) {
 
                             policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-                                    brokerId, SublineId, carsPolicyToSearchList, insuranceCode, policy.getSubLineCode(), policy.getBlacklisted(), policy.getEndorsementTypeDescription(), policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(), policy.getPolicyID().toString(), vehicle.getCertifID().toString(), policy.getInsuredID().toString(), policy.getFirstInsuredName() + " " + policy.getFatherInsuredName() + " " + policy.getLastInsuredName(), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
+                                    brokerId, SublineId, carsPolicyToSearchList, insuranceCode, policy.getSubLineCode(),
+                                    policy.getBlacklisted(), policy.getEndorsementTypeDescription(), policy.getEndorsementTypeCode(),
+                                    policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(),
+                                    policy.getPolicyID().toString(), vehicle.getCertifID().toString(), policy.getInsuredID().toString(),
+                                    ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
 
                         } else {
                             if (carsPolicyToSearchList2.size() > 0) {
                                 policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-                                        brokerId, SublineId, carsPolicyToSearchList2, insuranceCode, policy.getSubLineCode(), policy.getBlacklisted(), policy.getEndorsementTypeDescription(), policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(), policy.getPolicyID().toString(), vehicle.getCertifID().toString(), policy.getInsuredID().toString(), policy.getFirstInsuredName() + " " + policy.getFatherInsuredName() + " " + policy.getLastInsuredName(), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
+                                        brokerId, SublineId, carsPolicyToSearchList2, insuranceCode,
+                                        policy.getSubLineCode(), policy.getBlacklisted(), policy.getEndorsementTypeDescription(),
+                                        policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(),
+                                        policy.getPolicyRootID().toString(), policy.getPolicyID().toString(),
+                                        vehicle.getCertifID().toString(), policy.getInsuredID().toString(),
+                                        ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
                             } else {
                                 policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
-                                        broker.getBrokerId(), SublineId, insuranceCode, policy.getSysID().toString(), policy.getSubLineCode(), policy.getBlacklisted(), policy.getEndorsementTypeDescription(), policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(), policy.getPolicyID().toString(), vehicle.getCertifID().toString(), policy.getInsuredID().toString(), policy.getFirstInsuredName() + " " + policy.getFatherInsuredName() + " " + policy.getLastInsuredName(), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
+                                        broker.getBrokerId(), SublineId, insuranceCode,
+                                        policy.getSysID().toString(), policy.getSubLineCode(),
+                                        policy.getBlacklisted(), policy.getEndorsementTypeDescription(),
+                                        policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(),
+                                        policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(),
+                                        policy.getPolicyID().toString(), vehicle.getCertifID().toString(), policy.getInsuredID().toString(),
+                                        ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
 
                             }
                         }
@@ -325,14 +341,14 @@ public class TestService {
                             // String a = policy.getPolicyID().toString()+"asdasdsd";
                             for (Covers covers : vehicle.getCovers()) {
                                 String CarsCover = validateCover(covers, policyNo, vehicle.getCertificateNo());
-                                insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null);
+                                insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null,covers.getCoverOrder());
                                 if (covers.getSubCovers() != null && !covers.getSubCovers().isEmpty()) {
                                     for (SubCovers subCovers : covers.getSubCovers()) {
                                         String CarsSubCover = validateSubCover(subCovers, covers.getCoverCode(),
                                                 policyNo, vehicle.getCertificateNo(), covers.getCoverID().toString());
                                         // carsDtCoverContractService.insertSubCover(subCovers, vehicle.getPolicyID());
                                         insertCarsCover(null, subCovers, subCovers.getSubCoverID().toString(), carId,
-                                                covers.getCoverCode(), CarsSubCover);
+                                                covers.getCoverCode(), CarsSubCover,covers.getCoverOrder());
                                     }
                                 }
                             }
@@ -663,7 +679,7 @@ public class TestService {
                     Date date = new Date();
                     Timestamp ts = new Timestamp(date.getTime());
                     carsPolicyList.forEach(carsPolicy -> {
-                        if (carsPolicy.getPolicyExpiryDate().after(ts)) {
+                        if (carsPolicy.getPolicyExpiryDate().before(ts)) {
                             Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
                             if (clientOptional.isPresent()) {
                                 carsClientNew.setClientBusinessPhone(insuredPhoneNumber);
@@ -722,6 +738,48 @@ public class TestService {
 
 
                 // carsClient.get().setClientId(clientInsuranceId+"."+Long.valueOf(clientCodeNew));
+
+
+
+
+
+
+     //           carsClient.get().setClientInsuranceId(clientInsuranceId);
+
+                List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(carsClient.get().getClientId());
+                if (carsPolicyList.size() > 0) {
+                    System.out.println("we have an existing policy on update this");
+                    Date date = new Date();
+                    Timestamp ts = new Timestamp(date.getTime());
+                    carsPolicyList.forEach(carsPolicy -> {
+                        if (carsPolicy.getPolicyExpiryDate().before(ts)) {
+                            System.out.println("not expiry ");
+                            Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
+                            if (clientOptional.isPresent()) {
+                                System.out.println("get the number");
+                                carsClient.get().setClientBusinessPhone(insuredPhoneNumber);
+                                if (clientOptional.get().getClientMobilePhone() != null) {
+                                    carsClient.get().setClientMobilePhone(clientOptional.get().getClientMobilePhone());
+                                }
+
+
+                            }
+                            //carsClientNew.setClientBusinessPhone(carsPolicy.getph);
+                        }
+                    });
+                } else {
+                    carsClient.get().setClientBusinessPhone(null);
+                    carsClient.get().setClientMobilePhone(insuredPhoneNumber);
+                }
+
+
+
+
+
+
+
+
+
                 carsClient.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
                 carsClient.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
                 carsClient.get().setClientFamilyName(lastInsuredName);
@@ -739,7 +797,7 @@ public class TestService {
                 }
 
 
-                carsClient.get().setClientMobilePhone(insuredPhoneNumber);
+            //    carsClient.get().setClientMobilePhone(insuredPhoneNumber);
                 carsClient.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
                 carsClient.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
                 if (blackListed == true) {
@@ -1093,7 +1151,7 @@ public class TestService {
 
     public String populateShape(StringBuffer stringBufferTrademark, String id,
                                 Collection<CarsDtModel> dataTransferModelList) {
-
+        System.out.println( "populate my shape"+dataTransferModelList.iterator().next().getTrademarkId());
         if (dataTransferModelList != null && !dataTransferModelList.isEmpty()) {
             String value = dataTransferModelList.iterator().next().getTrademarkId();
             if (!".".equals(value) && !"".equals(value) && value != null) {
@@ -1366,7 +1424,8 @@ public class TestService {
         carsPolicy.setPolicyFleetId(policyId);
         carsPolicy.setPolicyCertIfID(certifID);
 
-        carsPolicy.setPolicyHolderId(insuredID);
+        carsPolicy.setPolicyHolderId(clientId);
+
         carsPolicy.setPolicyHolderPhone(insuredPhoneNumber);
         carsPolicy.setPolicyHolderCode(insuredCode1);
         carsPolicy.setPolicyHolderName(insuredFirstName);
@@ -1673,7 +1732,7 @@ public class TestService {
         if (Utility.isEmpty(policyVehicle.getPolicy().getNote())) {
             policyRemark.append(policyVehicle.getPolicy().getNote() + " ");
         }
-        carsPolicy.setPolicyRemarks(policyRemark.toString());
+       carsPolicy.setPolicyRemarks("");
         carsPolicy.setSysVersionNumber(0);
         carsPolicy.setSysCreatedBy(CREATED_BY_QUARTZ);
         carsPolicy.setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -1749,7 +1808,7 @@ public class TestService {
         carsPolicyToSave.setPolicyCertIfID(certifID);
         carsPolicyToSave.setPolicyHolderName(insuredFirstName);
         carsPolicyToSave.setPolicyHolderCode(insuredCode1);
-        carsPolicyToSave.setPolicyHolderId(insuredID);
+        carsPolicyToSave.setPolicyHolderId(clientId);
         carsPolicyToSave.setPolicyHolderPhone(insuredPhoneNumber);
 //		String actionTypeOriginale = DataTransferHeaderFileFactory.getService().getHeaderStateOriginal(
 //				dataTransferPolicyLoaded.getPolicyProduct(), dataTransferPolicyLoaded.getPolicyNumber(),
@@ -1957,7 +2016,7 @@ public class TestService {
         if (!Utility.isEmpty(policyVehicle.getPolicy().getNote())) {
             policyRemark.append(policyVehicle.getPolicy().getNote() + " ");
         }
-        carsPolicyToSave.setPolicyRemarks(policyRemark.toString());
+    carsPolicyToSave.setPolicyRemarks("");
         carsPolicyToSave.setSysVersionNumber(0);
         carsPolicyToSave.setSysUpdatedBy(CREATED_BY_QUARTZ);
 
@@ -2040,52 +2099,151 @@ public class TestService {
     public Collection<CarsDtModel> getDataTransferByModel(String insuranceId, String modelName, String carMake) {
         Collection<CarsDtModel> lista = new ArrayList<CarsDtModel>();
         System.out.println(insuranceId);
+        System.out.println(modelName);
+        System.out.println(carMake);
 
 
-        Collection<String> modelList = db.carsDtModelRepository.getDataTransferByModel(insuranceId, modelName, carMake);
+        List<String> modelList = db.carsDtModelRepository.getDataTransferByModel(insuranceId, modelName, carMake);
 
         if (modelList.size() == 0) {
-            Optional<String> shapeId = db.carsCarShapeRepository.findShapeCode(carMake);
+            Optional<String> shapeId = db.carsCarShapeRepository.findShapeCode(carMake,modelName);
             System.out.println(shapeId);
             System.out.println("oooooooooooooooooooooooooooooooooooooooo");
             if (shapeId.isPresent()) {
-                Optional<CarsDtModel> qmpQuestLoaded = db.carsDtModelRepository.findById(shapeId.get());
-                if (qmpQuestLoaded.isPresent()) {
-                    lista.add(qmpQuestLoaded.get());
+                System.out.println("SHAPE IS PRESENT");
+                Optional<CarShapeRespomse>carShapeRespomse =db.carsCarShapeRepository.findByShapeCode(shapeId.get());
+                CarsDtModel carsDtModel =new CarsDtModel() ;
+                carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
+                carsDtModel.setBrandId(carShapeRespomse.get().getBrandCode());
+                carsDtModel.setInsuranceId(insuranceId);
+
+                lista.add(carsDtModel);
                     System.out.println("added tolista");
 
-                }
+
             } else {
-                insertDTModel(insuranceId, modelName);
+                Optional<String> shapeId2 = db.carsCarShapeRepository.findShapeCode(carMake,"NOT LISTED");
+                if (shapeId2.isPresent()) {
+                    System.out.println("SHAPE IS PRESENT but model not present ");
+                    System.out.println("shape Id "+ shapeId2.get());
+Optional<CarShapeRespomse>carShapeRespomse =db.carsCarShapeRepository.findByShapeCode(shapeId2.get());
+CarsDtModel carsDtModel =new CarsDtModel() ;
+carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
+                    carsDtModel.setBrandId(carShapeRespomse.get().getBrandCode());
+                    carsDtModel.setInsuranceId(insuranceId);
+                        lista.add(carsDtModel);
+                        System.out.println("added to lista");
+                    insertDTModel(insuranceId, modelName,carMake);
+
+
+                }
+
+
+
+              //  insertDTModel(insuranceId, modelName,carMake);
 
             }
         }
 
-        if (modelList.size() != 0) {
-            Iterator<String> iterator = modelList.iterator();
-            while (iterator.hasNext()) {
-                String idss = iterator.next();
-                Optional<CarsDtModel> qmpQuestLoaded = db.carsDtModelRepository.findById(idss);
-                if (qmpQuestLoaded.isPresent()) {
+
+        if (modelList.size()>0) {
+
+
+            String idss = modelList.get(0);
+
+            Optional<CarsDtModel> qmpQuestLoaded = db.carsDtModelRepository.findById(idss);
+            if (qmpQuestLoaded.isPresent()) {
+                if(qmpQuestLoaded.get().getTrademarkId()!=null) {
+                    System.out.println("modelisted finded and trademark not null" + qmpQuestLoaded.get().getTrademarkId());
                     lista.add(qmpQuestLoaded.get());
                 }
+                else{
+                    System.out.println("modelisted finded and trademark null" + qmpQuestLoaded.get().getTrademarkId());
+
+
+
+
+
+
+
+
+
+
+
+                    Optional<String> shapeId = db.carsCarShapeRepository.findShapeCode(carMake,modelName);
+                    System.out.println(shapeId);
+                    System.out.println("oooooooooooooooooooooooooooooooooooooooo");
+                    if (shapeId.isPresent()) {
+                        System.out.println("SHAPE IS PRESENT but trademark null");
+                        Optional<CarShapeRespomse>carShapeRespomse =db.carsCarShapeRepository.findByShapeCode(shapeId.get());
+                        CarsDtModel carsDtModel =new CarsDtModel() ;
+                        carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
+                        carsDtModel.setBrandId(carShapeRespomse.get().getBrandCode());
+                        carsDtModel.setInsuranceId(insuranceId);
+
+                        lista.add(carsDtModel);
+                        System.out.println("added tolista");
+
+
+                    } else {
+                        Optional<String> shapeId2 = db.carsCarShapeRepository.findShapeCode(carMake,"NOT LISTED");
+                        if (shapeId2.isPresent()) {
+                            System.out.println("SHAPE IS PRESENT but model not present but trademark null ");
+                            System.out.println("shape Id "+ shapeId2.get());
+                            Optional<CarShapeRespomse>carShapeRespomse =db.carsCarShapeRepository.findByShapeCode(shapeId2.get());
+                            CarsDtModel carsDtModel =new CarsDtModel() ;
+                            carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
+                            carsDtModel.setBrandId(carShapeRespomse.get().getBrandCode());
+                            carsDtModel.setInsuranceId(insuranceId);
+                            lista.add(carsDtModel);
+                            System.out.println("added to lista but trademark null");
+
+
+                        }
+
+
+
+                        //  insertDTModel(insuranceId, modelName,carMake);
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
             }
         }
+
+
 
         return lista;
     }
 
-    public void insertDTModel(String insuranceId, String modelName) {
+    public CarsDtModel insertDTModel(String insuranceId, String modelName,String makeCode ) {
         CarsDtModel carsDtModel = new CarsDtModel();
         carsDtModel.setId(UUID.randomUUID().toString());
         carsDtModel.setInsuranceId(insuranceId);
         carsDtModel.setModelName(modelName);
         carsDtModel.setSysCreatedBy("transfer");
         carsDtModel.setSysUpdatedBy("transfer");
+        carsDtModel.setInsuranceMakeCode(makeCode);
         carsDtModel.setSysCreatedDate(new Timestamp(new Date().getTime()));
         carsDtModel.setSysUpdatedDate(new Timestamp(new Date().getTime()));
         carsDtModel.setSysVersionNumber(0);
         db.carsDtModelRepository.save(carsDtModel);
+        return carsDtModel;
 
     }
 
@@ -2374,7 +2532,7 @@ public class TestService {
     }
 
     public void insertCarsCover(Covers cover, SubCovers subCover, String carCoverCode, String carId, String CoverCode,
-                                String subCoverCode) {
+                                String subCoverCode,Long coverOrder) {
         if (cover != null) {
             CarsPolicyCover carsPolicyCoverToInsert = new CarsPolicyCover();
             carsPolicyCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
@@ -2408,7 +2566,7 @@ public class TestService {
         if (subCover != null) {
             CarsPolicyCover carsPolicySubCoverToInsert = new CarsPolicyCover();
             carsPolicySubCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
-            carsPolicySubCoverToInsert.setPolicyCoversOrder(Double.valueOf(cover.getCoverOrder() + "." + subCover.getSubCoverOrder()));
+            carsPolicySubCoverToInsert.setPolicyCoversOrder(Double.valueOf(coverOrder + "." + subCover.getSubCoverOrder()));
 
             carsPolicySubCoverToInsert.setPolicyCoversCover(CoverCode + "." + subCover.getSubCoverCode());
             carsPolicySubCoverToInsert.setPolicyCoversCoverId(subCoverCode);

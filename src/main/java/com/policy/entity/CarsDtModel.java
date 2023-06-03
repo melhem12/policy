@@ -31,6 +31,8 @@ public class CarsDtModel {
 	@Column(name = "TRADEMARK_ID")
 	private java.lang.String trademarkId;
 
+
+
 	@Column(name = "SYS_VERSION_NUMBER")
 	private java.lang.Integer sysVersionNumber;
 
