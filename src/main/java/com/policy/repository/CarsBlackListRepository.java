@@ -24,7 +24,7 @@ public interface CarsBlackListRepository extends JpaRepository<CarsBlackList,Str
 
 	Optional<CarsBlackList> findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(String clientNum,String insId);
 
-    Optional<CarsBlackList> findByBlBrokerId(String s);
+    List<CarsBlackList> findByBlBrokerId(String s);
 
 	Optional<CarsBlackList> findTopByBlBrokerIdOrderBySysUpdatedDateDesc(String s);
 

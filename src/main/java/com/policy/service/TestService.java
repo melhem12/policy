@@ -52,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "10";
+    public static String insuranceCode = "18";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -150,7 +150,7 @@ public class TestService {
                             vehicles.setCarMake(savedVehicle.getCarMake());
                             vehicles.setCarMakeCode(savedVehicle.getCarMakeCode());
                             vehicles.setCarMakeID(savedVehicle.getCarMakeID());
-                            vehicles.setCarModelID(savedVehicle.getCarModelID());
+                          //  vehicles.setCarModelID(savedVehicle.getCarModelID());
                             vehicles.setCarModelCode(savedVehicle.getCarModelCode());
                             vehicles.setModelToPrint(savedVehicle.getModelToPrint());
                             vehicles.setCarYear(savedVehicle.getCarYear());
@@ -725,11 +725,10 @@ public class TestService {
                 carsClientNew.setSysUpdatedDate(new Timestamp(new Date().getTime()));
                 // carsClientNew.setClientP
                 db.carsClientRepository.save(carsClientNew);
-                if (blackListed == true) {
 
                     validateInsuranceBlackList(clientCode, clientInsuranceId, firstInsuredName, fatherInsuredName,
-                            lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy);
-                }
+                            lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy,blackListed);
+
                 return carsClientNew;
             }
 //		Optional<CarsClient> carsClient = db.carsClientRepository.findByClientInsuranceIdAndClientNum1(clientInsuranceId,
@@ -800,10 +799,10 @@ public class TestService {
             //    carsClient.get().setClientMobilePhone(insuredPhoneNumber);
                 carsClient.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
                 carsClient.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
-                if (blackListed == true) {
+
                     validateInsuranceBlackList(clientCode, clientInsuranceId, firstInsuredName, fatherInsuredName,
-                            lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy);
-                }
+                            lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy,blackListed);
+
                 db.carsClientRepository.save(carsClient.get());
 
                 return carsClient.get();
@@ -862,10 +861,10 @@ public class TestService {
 
             db.carsBrokerRepository.save(carsBrokerNew);
 
-            if (blackListed == true) {
+
                 validateBrokerBlackList(brokerCode, brokerId, brokerInsuranceId, brokerName, brokerPhoneNumber, reason,
-                        note, setOn, setBy);
-            }
+                        note, setOn, setBy,blackListed);
+
 
             return carsBrokerNew;
         }
@@ -879,117 +878,198 @@ public class TestService {
             carsBroker2.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
             db.carsBrokerRepository.save(carsBroker2.get());
         }
-        if (blackListed == true) {
+
             validateBrokerBlackList(brokerCode, brokerId, brokerInsuranceId, brokerName, brokerPhoneNumber, reason,
-                    note, setOn, setBy);
-        }
+                    note, setOn, setBy,blackListed);
+
         return carsBroker2.get();
     }
 
     public void validateInsuranceBlackList(String insuredCode, String clientInsuranceId, String firstInsuredName,
-                                           String fatherInsuredName, String lastInsuredName, String reason, String note, String insBlackSetOn, String insBlackSetBy) {
+                                           String fatherInsuredName, String lastInsuredName, String reason, String note, String insBlackSetOn, String insBlackSetBy,boolean blackListed) {
 
-        Collection<CarsBlackList> carsBlackListList = db.carsBlackListRepository
-                .findByBlInsuranceIdAndClientNum(clientInsuranceId, insuredCode);
+        Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository
+                .findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(clientInsuranceId, insuredCode);
 
-        if (carsBlackListList.size() == 0) {
-            CarsBlackList carsBlackList = new CarsBlackList();
-            carsBlackList.setBlId(UUID.randomUUID().toString());
-            carsBlackList.setBlInsuranceId(clientInsuranceId);
-            carsBlackList.setClientNum(insuredCode);
-            carsBlackList.setBlFirstName(firstInsuredName);
-            carsBlackList.setBlFatherName(fatherInsuredName);
-            carsBlackList.setBlFamilyName(lastInsuredName);
-            carsBlackList.setBlCar("INS");
-            if (fatherInsuredName == null) {
-                carsBlackList.setBlFatherName("");
+        if (!carsBlackListOptional.isPresent()) {
+            if (blackListed) {
+                CarsBlackList carsBlackList = new CarsBlackList();
+                carsBlackList.setBlId(UUID.randomUUID().toString());
+                carsBlackList.setBlInsuranceId(clientInsuranceId);
+                carsBlackList.setClientNum(insuredCode);
+                carsBlackList.setBlFirstName(firstInsuredName);
+                carsBlackList.setBlFatherName(fatherInsuredName);
+                carsBlackList.setBlFamilyName(lastInsuredName);
+                carsBlackList.setBlCar("INS");
+                if (fatherInsuredName == null) {
+                    carsBlackList.setBlFatherName("");
 
-            }
-            if (lastInsuredName == null) {
-                carsBlackList.setBlFamilyName("");
-            }
-
-
-            carsBlackList.setBlNote(note);
-            carsBlackList.setBlReason(reason);
-            carsBlackList.setBlStatus("IN");
-
-            carsBlackList.setSysVersionNumber(0);
-            carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
-            carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
-            carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
-            carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-
-
-            if (insBlackSetOn != null) {
-                try {
-                    Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(insBlackSetOn);
-                    carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
+                if (lastInsuredName == null) {
+                    carsBlackList.setBlFamilyName("");
+                }
+
+
+                carsBlackList.setBlNote(note);
+                carsBlackList.setBlReason(reason);
+                carsBlackList.setBlStatus("IN");
+
+                carsBlackList.setSysVersionNumber(0);
+                carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
+                carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+
+
+                if (insBlackSetOn != null) {
+                    try {
+                        Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(insBlackSetOn);
+                        carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                carsBlackList.setBlSetBy(insBlackSetBy);
+                System.out.println("client balckList saved");
+
+                db.carsBlackListRepository.save(carsBlackList);
             }
-
-            carsBlackList.setBlSetBy(insBlackSetBy);
-            System.out.println("client balckList saved");
-
-            db.carsBlackListRepository.save(carsBlackList);
-
         }
 
-        Optional<CarsBlackList> carsBlackList = db.carsBlackListRepository.findByClientNum(insuredCode);
-        if (carsBlackList.isPresent()) {
-            carsBlackList.get().setBlFirstName(firstInsuredName);
-            carsBlackList.get().setBlFatherName(fatherInsuredName);
-            carsBlackList.get().setBlFamilyName(lastInsuredName);
-            carsBlackList.get().setBlCar("INS");
+        if (carsBlackListOptional.isPresent()) {
+
+            if ((blackListed&&  carsBlackListOptional.get().getBlStatus().equals("IN"))||(!blackListed&&  carsBlackListOptional.get().getBlStatus().equals("OU"))) {
+
+                carsBlackListOptional.get().setBlFirstName(firstInsuredName);
+            carsBlackListOptional.get().setBlFatherName(fatherInsuredName);
+            carsBlackListOptional.get().setBlFamilyName(lastInsuredName);
+            carsBlackListOptional.get().setBlCar("INS");
 
             if (fatherInsuredName == null) {
-                carsBlackList.get().setBlFatherName("");
+                carsBlackListOptional.get().setBlFatherName("");
 
             }
             if (lastInsuredName == null) {
-                carsBlackList.get().setBlFamilyName("");
+                carsBlackListOptional.get().setBlFamilyName("");
             }
+if (blackListed){
+    carsBlackListOptional.get().setBlStatus("IN");
 
-            carsBlackList.get().setBlStatus("IN");
+}
+else{
+    carsBlackListOptional.get().setBlStatus("OU");
+
+}
 
 
             if (insBlackSetOn != null) {
                 try {
                     Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(insBlackSetOn);
-                    carsBlackList.get().setBlDate(new Timestamp(setOnn.getTime()));
+                    carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
 
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
 
-            carsBlackList.get().setBlSetBy(insBlackSetBy);
+            carsBlackListOptional.get().setBlSetBy(insBlackSetBy);
 
 
-            carsBlackList.get().setBlNote(note);
-            carsBlackList.get().setBlReason(reason);
-            carsBlackList.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
-            carsBlackList.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+            carsBlackListOptional.get().setBlNote(note);
+            carsBlackListOptional.get().setBlReason(reason);
+            carsBlackListOptional.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
+            carsBlackListOptional.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
             System.out.println("client balckList updated");
 
-            db.carsBlackListRepository.save(carsBlackList.get());
+            db.carsBlackListRepository.save(carsBlackListOptional.get());
+            }
+
+            else{
+
+
+                if (blackListed){
+                    carsBlackListOptional.get().setBlStatus("IN");
+
+                }
+                else{
+                    carsBlackListOptional.get().setBlStatus("OU");
+
+                }
+
+                CarsBlackList carsBlackList = new CarsBlackList();
+                carsBlackList.setBlId(UUID.randomUUID().toString());
+                carsBlackList.setBlInsuranceId(carsBlackListOptional.get().getBlInsuranceId());
+                carsBlackList.setClientNum(carsBlackListOptional.get().getClientNum());
+                carsBlackList.setBlFirstName(firstInsuredName);
+                carsBlackList.setBlFatherName(fatherInsuredName);
+                carsBlackList.setBlFamilyName(lastInsuredName);
+                carsBlackList.setBlCar("INS");
+                if (fatherInsuredName == null) {
+                    carsBlackList.setBlFatherName("");
+
+                }
+                if (lastInsuredName == null) {
+                    carsBlackList.setBlFamilyName("");
+                }
+
+
+                carsBlackList.setBlNote(note);
+                carsBlackList.setBlReason(reason);
+
+                carsBlackList.setSysVersionNumber(0);
+                carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
+                carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+
+
+                if (insBlackSetOn != null) {
+                    try {
+                        Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(insBlackSetOn);
+                        carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                carsBlackList.setBlSetBy(insBlackSetBy);
+                System.out.println("client balckList saved");
+
+                db.carsBlackListRepository.save(carsBlackList);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
         }
 
     }
 
 
     public void validateBrokerBlackList(String brokerCode, String brokerId, String brokerInsuranceId, String brokerName,
-                                        String brokerPhoneNumber, String reason, String note, String setOn, String setBy) {
+                                        String brokerPhoneNumber, String reason, String note, String setOn, String setBy,boolean blackListed) {
 
 //        List<CarsBlackList> carsBlackListList = db.carsBlackListRepository
 //                .findByBlInsuranceIdAndClientNum(brokerInsuranceId, brokerCode);
         System.out.println("brokerCode is  " + brokerCode);
-        Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findByBlBrokerId(brokerInsuranceId + "." + brokerCode);
+        Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findTopByBlBrokerIdOrderBySysUpdatedDateDesc(brokerInsuranceId + "." + brokerCode);
         if (!carsBroker.isPresent()) {
-            System.out.println("new Cars black list");
+            if (blackListed){
+                System.out.println("new broker black list");
             CarsBlackList carsBlackList = new CarsBlackList();
             carsBlackList.setBlId(UUID.randomUUID().toString());
             carsBlackList.setBlInsuranceId(brokerInsuranceId);
@@ -1014,29 +1094,81 @@ public class TestService {
             carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
             carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
             db.carsBlackListRepository.save(carsBlackList);
-
+        }
         }
 
         //Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findByClientNum(insuranceCode);
         if (carsBroker.isPresent()) {
-            carsBroker.get().setBlStatus("IN");
+            if ((blackListed&&  carsBroker.get().getBlStatus().equals("IN"))||(!blackListed&&  carsBroker.get().getBlStatus().equals("OU"))) {
 
-            carsBroker.get().setBlFamilyName(brokerName);
-            carsBroker.get().setBlReason(reason);
-            try {
-                Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
-                carsBroker.get().setBlDate(new Timestamp(setOnn.getTime()));
+                carsBroker.get().setBlFamilyName(brokerName);
+                carsBroker.get().setBlReason(reason);
+                try {
+                    Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
+                    carsBroker.get().setBlDate(new Timestamp(setOnn.getTime()));
 
-            } catch (ParseException e) {
-                e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                carsBroker.get().setBlNote(note);
+
+                carsBroker.get().setBlSetBy(setBy);
+
+                carsBroker.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
+                carsBroker.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                db.carsBlackListRepository.save(carsBroker.get());
+
+
             }
-            carsBroker.get().setBlNote(note);
 
-            carsBroker.get().setBlSetBy(setBy);
 
-            carsBroker.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
-            carsBroker.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
-            db.carsBlackListRepository.save(carsBroker.get());
+
+
+
+else{
+
+
+                CarsBlackList carsBlackList = new CarsBlackList();
+                carsBlackList.setBlId(UUID.randomUUID().toString());
+                carsBlackList.setBlInsuranceId( carsBroker.get().getBlInsuranceId());
+                carsBlackList.setBlBrokerId( carsBroker.get().getBlBrokerId());
+                carsBlackList.setBlFamilyName(brokerName);
+                if(blackListed){
+                    carsBlackList.setBlStatus("IN");
+
+                }
+                else{
+                    carsBlackList.setBlStatus("OU");
+
+                }
+                carsBlackList.setBlReason(reason);
+                try {
+                    Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
+                    carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                carsBlackList.setBlNote(note);
+
+                carsBlackList.setBlSetBy(setBy);
+                carsBlackList.setSysVersionNumber(0);
+                carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
+                carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                db.carsBlackListRepository.save(carsBlackList);
+
+            }
+
+
+
+
+
+
+
+
         }
 
     }
