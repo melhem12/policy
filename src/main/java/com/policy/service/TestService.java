@@ -134,7 +134,7 @@ public class TestService {
                             vehicles.setPolicyID(policy.getPolicyID());
                             vehicles.setCarChassis(savedVehicle.getCarChassis());
                             vehicles.setCarEngine(savedVehicle.getCarEngine());
-                            vehicles.setCarStatus(savedVehicle.getCarStatus());
+                            vehicles.setCarStatus("C");
                             vehicles.setCertificateNo(savedVehicle.getCertificateNo());
                             if (policy.getPolDateEffective() != null) {
                                 vehicles.setDateEffective(policy.getPolDateEffective());
