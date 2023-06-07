@@ -126,15 +126,18 @@ public class TestService {
             for (Policy policy : policies.getPolicies()) {
                 if (policy.getEndorsementTypeCode()!=null) {
                 if (policy.getEndorsementTypeCode().equals("C")) {
-                    List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policyNo);
+                    System.out.println("my policy No  "+ policy.getPolicyNo());
+                    List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policy.getPolicyNo());
                     List<Vehicles> newVehicles = new ArrayList<>();
                     if (savedVehicles.size() > 0) {
                         savedVehicles.forEach(savedVehicle -> {
                             Vehicles vehicles = new Vehicles();
                             vehicles.setPolicyID(policy.getPolicyID());
+                            vehicles.setCertificateBlacklisted(false);
                             vehicles.setCarChassis(savedVehicle.getCarChassis());
                             vehicles.setCarEngine(savedVehicle.getCarEngine());
-                            vehicles.setCarStatus("C");
+                            vehicles.setCarStatus(savedVehicle.getCarStatus());
+//                            System.out.println("cars Status is C");
                             vehicles.setCertificateNo(savedVehicle.getCertificateNo());
                             if (policy.getPolDateEffective() != null) {
                                 vehicles.setDateEffective(policy.getPolDateEffective());
@@ -160,7 +163,7 @@ public class TestService {
                             newVehicles.add(vehicles);
                         });
                     }
-
+                    System.out.println("set succcess");
                     policy.setVehicles(newVehicles);
 
                 }
@@ -200,7 +203,7 @@ public class TestService {
                 CarsClient client = validateCarsClient(policy.getInsuredID(), policy.getInsuredCode(), insuranceCode,
                         policy.getPrintName(), policy.getFirstInsuredName(), policy.getFatherInsuredName(),
                         policy.getLastInsuredName(), policy.getInsuredPhoneNumber(), policy.getInsBlacklisted(),
-                        policy.getInsBlackReason(), policy.getInsBlackNote(), policy.getPolicyNo(), null, null, policy.getInsBlackSetOn(), policy.getInsBlackSetBy());
+                        policy.getInsBlackReason(), policy.getInsBlackNote(), policy.getPolicyNo(), null, policy.getInsBlackSetOn(), policy.getInsBlackSetBy());
 
 
 //				Collection<CarsPolicy> carsPolicyToSearchList = carsPolicySearchable(policyVehicle);
@@ -240,7 +243,7 @@ public class TestService {
                                 vehicle.getCarinsuredfatherName(), vehicle.getCarinsuredlastName(),
                                 vehicle.getCarInsuredPhoneNumber(), vehicle.getCertificateBlacklisted(),
                                 vehicle.getCertificateReason(), vehicle.getCertificateNote(), policy.getPolicyNo(),
-                                vehicle.getCertificateNo(), vehicle.getCertifID().toString(), vehicle.getCertificateSetOn(), vehicle.getCertificateSetBy());
+                                vehicle.getCertificateNo(), vehicle.getCertificateSetOn(), vehicle.getCertificateSetBy());
 
 
                         CarsPolicyCar carsPolicyCarToSearch = new CarsPolicyCar();
@@ -280,7 +283,7 @@ public class TestService {
                                         policy.getSubLineCode(), policy.getBlacklisted(), policy.getEndorsementTypeDescription(),
                                         policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(),
                                         policy.getPolicyRootID().toString(), policy.getPolicyID().toString(),
-                                        vehicle.getCertifID().toString(), policy.getInsuredID().toString(),
+                                      vehicle.getCertifID()!=null? vehicle.getCertifID().toString():"", policy.getInsuredID().toString(),
                                         ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
                             } else {
                                 policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
@@ -623,7 +626,7 @@ public class TestService {
     public CarsClient validateCarsClient(Integer clientId, String clientCode, String clientInsuranceId,
                                          String printName, String firstInsuredName, String fatherInsuredName, String lastInsuredName,
                                          String insuredPhoneNumber, boolean blackListed, String reason, String note, String policyNo,
-                                         String certificateNo, String certifId, String insBlackSetOn,
+                                         String certificateNo, String insBlackSetOn,
                                          String insBlackSetBy ) throws Exception {
 
 
@@ -1283,7 +1286,7 @@ else{
 
     public String populateShape(StringBuffer stringBufferTrademark, String id,
                                 Collection<CarsDtModel> dataTransferModelList) {
-        System.out.println( "populate my shape"+dataTransferModelList.iterator().next().getTrademarkId());
+        //System.out.println( "populate my shape"+dataTransferModelList.iterator().next().getTrademarkId());
         if (dataTransferModelList != null && !dataTransferModelList.isEmpty()) {
             String value = dataTransferModelList.iterator().next().getTrademarkId();
             if (!".".equals(value) && !"".equals(value) && value != null) {
@@ -1529,7 +1532,7 @@ else{
         carsPolicyCarToSave.setCarProductDeductible(null);
         carsPolicyCarToSave.setCarVip(null);
         carsPolicyCarToSave.setPolicyId(policyId);
-        carsPolicyCarToSave.setCarCertIfID(vehicles.getCertifID().toString());
+        carsPolicyCarToSave.setCarCertIfID(vehicles.getCertifID()!=null?vehicles.getCertifID().toString():"");
 
         carsPolicyCarToSave.setShapeId(
                 populateShape(stringBufferTrademark, vehicles.getPolicyID().toString(), dataTransferModelList));
@@ -1614,7 +1617,9 @@ else{
         if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
             String actionTypeDecoded = Utility
                     .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
+            System.out.println("actionTypeDecoded "+actionTypeDecoded);
             carsPolicy.setPolicyAction(actionTypeDecoded);
+
         } else {
             saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Car Status", "Missing Field", "CARS_POLICY",
                     insuranceCode, policyVehicle.getVehicle().getCertificateNo());
@@ -2057,11 +2062,20 @@ else{
         // carsPolicy.setPolicyPlan(dataTransferPolicyLoaded.getPolicyPlan());
         // carsPolicy.setPolicyEndors1(dataTransferPolicyLoaded.getPolicyEndorsement1());
         // carsPolicy.setPolicyEndors2(dataTransferPolicyLoaded.getPolicyEndorsement2());
-        if (policyVehicle.getVehicle().getDealerRepair() == true) {
-            carsPolicyToSave.setPolicyAgencyRepair("Y");// dealer repair Y N
-        } else {
-            carsPolicyToSave.setPolicyAgencyRepair("N");
-        } // check
+       if(policyVehicle.getVehicle().getDealerRepair()==null){
+           carsPolicyToSave.setPolicyAgencyRepair("");// dealer repair Y N
+
+       }else{
+           if (policyVehicle.getVehicle().getDealerRepair()) {
+               carsPolicyToSave.setPolicyAgencyRepair("Y");// dealer repair Y N
+           } else {
+               carsPolicyToSave.setPolicyAgencyRepair("N");
+           }
+       }
+
+
+
+        // check
         // with moahamd
         // carsPolicy.setPolicyCarReplacement(dataTransferPolicyLoaded.getPolicyCarReplacement());
 
@@ -2824,6 +2838,7 @@ carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
     }
 
     public void ValidatePolicy(Policy policy) throws Exception {
+
         int blocking = 0;
         String Identifier = null;
 
@@ -3142,6 +3157,9 @@ carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
                     succChar = true;
                 }
                 if (vehicle.getCarStatus().equals("D")) {
+                    succChar = true;
+                }
+                if (vehicle.getCarStatus().equals("C")) {
                     succChar = true;
                 }
 
