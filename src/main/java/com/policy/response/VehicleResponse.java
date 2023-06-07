@@ -2,6 +2,8 @@ package com.policy.response;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import java.math.BigInteger;
+
 public interface VehicleResponse {
 
     @Value("#{target.CertificateNo}")
@@ -66,7 +68,8 @@ public interface VehicleResponse {
     @Value("#{target.CarStatus}")
     String getCarStatus();
 
-
+    @Value("#{target.certifId}")
+    BigInteger getCertifId();
 
 
 
