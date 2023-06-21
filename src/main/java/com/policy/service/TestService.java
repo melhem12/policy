@@ -686,7 +686,7 @@ public class TestService {
                 String cId = clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0";
                 List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(cId);
                 carsClientNew.setClientMobilePhone(insuredPhoneNumber);
-
+StringBuffer stringBuffer=new StringBuffer();
                 if (carsPolicyList.size() > 0) {
                     carsClientNew.setClientInsuranceId(clientInsuranceId);
                     Date date = new Date();
@@ -696,7 +696,9 @@ public class TestService {
                             Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
                             if (clientOptional.isPresent()) {
                                 if (clientOptional.get().getClientMobilePhone() != null &&!clientOptional.get().getClientMobilePhone().isEmpty()) {
+
                                     carsClientNew.setClientBusinessPhone(clientOptional.get().getClientMobilePhone());
+                                    stringBuffer.append(clientOptional.get().getClientMobilePhone());
                                 }
 
 
@@ -704,10 +706,11 @@ public class TestService {
                             //carsClientNew.setClientBusinessPhone(carsPolicy.getph);
                         }
                     });
-                } else {
-                    carsClientNew.setClientBusinessPhone(null);
-                    carsClientNew.setClientMobilePhone(insuredPhoneNumber);
                 }
+//                } else {
+//                    carsClientNew.setClientBusinessPhone(null);
+//                    carsClientNew.setClientMobilePhone(insuredPhoneNumber);
+//                }
 
                 carsClientNew.setClientReference(String.valueOf(clientId));
 
