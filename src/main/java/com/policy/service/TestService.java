@@ -52,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "10";
+    public static String insuranceCode = "18";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -685,6 +685,8 @@ public class TestService {
 
                 String cId = clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0";
                 List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(cId);
+                carsClientNew.setClientMobilePhone(insuredPhoneNumber);
+
                 if (carsPolicyList.size() > 0) {
                     carsClientNew.setClientInsuranceId(clientInsuranceId);
                     Date date = new Date();
@@ -693,9 +695,8 @@ public class TestService {
                         if (carsPolicy.getPolicyExpiryDate().before(ts)) {
                             Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
                             if (clientOptional.isPresent()) {
-                                carsClientNew.setClientBusinessPhone(insuredPhoneNumber);
-                                if (clientOptional.get().getClientMobilePhone() != null) {
-                                    carsClientNew.setClientMobilePhone(clientOptional.get().getClientMobilePhone());
+                                if (clientOptional.get().getClientMobilePhone() != null &&!clientOptional.get().getClientMobilePhone().isEmpty()) {
+                                    carsClientNew.setClientBusinessPhone(clientOptional.get().getClientMobilePhone());
                                 }
 
 
@@ -1752,6 +1753,13 @@ public class TestService {
         } else {
             carsPolicy.setPolicyEndAtNoon("N");
         }
+
+
+
+
+
+
+
         if(policyVehicle.getVehicle().getDealerRepair()==null){
             carsPolicy.setPolicyAgencyRepair("");// dealer repair Y N
 
@@ -1760,7 +1768,10 @@ public class TestService {
                 carsPolicy.setPolicyAgencyRepair("Y");// dealer repair Y N
             } else {
                 carsPolicy.setPolicyAgencyRepair("N");
-            }}
+            }
+
+        }
+
         // carsPolicy.setPolicyPlan(dataTransferPolicyLoaded.getPolicyPlan());
         // carsPolicy.setPolicyEndors1(dataTransferPolicyLoaded.getPolicyEndorsement1());
         // carsPolicy.setPolicyEndors2(dataTransferPolicyLoaded.getPolicyEndorsement2());
@@ -2084,6 +2095,7 @@ public class TestService {
                 carsPolicyToSave.setPolicyAgencyRepair("N");
             }
         }
+
 
 
 
@@ -2563,7 +2575,7 @@ public class TestService {
             }
             carsCover.setCoverDescription(desc);
             // carsCover.setCoverID(cover.getCoverID().toString());
-            carsCover.setCoverID((insuranceCode + "." + cover.getCoverCode().toString()).trim());
+            carsCover.setCoverID((insuranceCode + "." + cover.getCoverCode()).trim());
             carsCover.setCoverReference(cover.getCoverID().toString());
             // carsCover.setCoverInsuranceId(insuranceCode);
             carsCover.setCoverInsurance(Integer.valueOf(insuranceCode));
