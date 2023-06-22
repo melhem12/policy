@@ -52,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "18";
+    public static String insuranceCode = "10";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -686,9 +686,9 @@ public class TestService {
                 String cId = clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0";
                 List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(cId);
                 carsClientNew.setClientMobilePhone(insuredPhoneNumber);
-StringBuffer stringBuffer=new StringBuffer();
+                Set<String > businessPhoneNumbers = new HashSet<>();
+                StringBuffer stringBuffer=new StringBuffer();
                 if (carsPolicyList.size() > 0) {
-                    carsClientNew.setClientInsuranceId(clientInsuranceId);
                     Date date = new Date();
                     Timestamp ts = new Timestamp(date.getTime());
                     carsPolicyList.forEach(carsPolicy -> {
@@ -696,9 +696,13 @@ StringBuffer stringBuffer=new StringBuffer();
                             Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
                             if (clientOptional.isPresent()) {
                                 if (clientOptional.get().getClientMobilePhone() != null &&!clientOptional.get().getClientMobilePhone().isEmpty()) {
+                                    if(!insuredPhoneNumber.equals(clientOptional.get().getClientMobilePhone())) {
+                                        businessPhoneNumbers.add(clientOptional.get().getClientMobilePhone());
 
-                                    carsClientNew.setClientBusinessPhone(clientOptional.get().getClientMobilePhone());
-                                    stringBuffer.append(clientOptional.get().getClientMobilePhone());
+
+                                    }
+
+
                                 }
 
 
@@ -706,6 +710,14 @@ StringBuffer stringBuffer=new StringBuffer();
                             //carsClientNew.setClientBusinessPhone(carsPolicy.getph);
                         }
                     });
+                }
+                if(businessPhoneNumbers.size()>0){
+                    businessPhoneNumbers.forEach(businessPhoneNumber->{
+                        stringBuffer.append(businessPhoneNumber);
+                        stringBuffer.append("-");
+                    });
+                    carsClientNew.setClientBusinessPhone(stringBuffer.toString());
+
                 }
 //                } else {
 //                    carsClientNew.setClientBusinessPhone(null);
