@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Constraint;
 import javax.validation.Valid;
@@ -217,11 +218,21 @@ public class Policy implements Serializable {
 	private String note;
 	
 	private String mopNote;
+
+	private Optional<String> businessType ;
+
+
+
 	@Valid
 	private List<Vehicles> vehicles;
 
+	public Optional<String> getBusinessType() {
+		return businessType;
+	}
 
-
+	public void setBusinessType(Optional<String> businessType) {
+		this.businessType = businessType;
+	}
 
 	public BigDecimal getPremExchangeRate() {
 		return premExchangeRate;

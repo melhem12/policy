@@ -68,6 +68,7 @@ public class Vehicles implements Serializable {
 	private String carInsVal; // follow SI currency
 
 	private String carStatus;
+	private String carTowAllowed;
 	@Valid
 	private List<Clauses> clauses;
 
@@ -118,6 +119,14 @@ public class Vehicles implements Serializable {
 
 	public void setCertificateNo(String certificateNo) {
 		this.certificateNo = certificateNo;
+	}
+
+	public String getCarTowAllowed() {
+		return carTowAllowed;
+	}
+
+	public void setCarTowAllowed(String carTowAllowed) {
+		this.carTowAllowed = carTowAllowed;
 	}
 
 	public String getDateEffective() {

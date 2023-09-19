@@ -30,6 +30,33 @@ private static final String FILE_CONFIG_LOCATION = "C://appsfiles//dataTransferV
 
 	}
 
+
+	public static String getPropStringValuesWithNotFound(String propertuValue) {
+		Properties properties = new Properties();
+		try {
+			InputStream inputStream = new FileInputStream(FILE_CONFIG_LOCATION);
+			properties.load(inputStream);
+			String value = properties.getProperty(propertuValue);
+			if (!isEmpty(value)) {
+				return value;
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
 	public static String getMainDir(String propertuValue) {
 		Properties properties = new Properties();
 		try {

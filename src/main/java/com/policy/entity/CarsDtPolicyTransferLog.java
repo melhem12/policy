@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CARS_DT_POLICY_TRANSFER_LOG")
-public class CarsDtPolicyTransferLog {
+public class 	CarsDtPolicyTransferLog {
 
 	@Id
 	@Column(name = "DT_ID")

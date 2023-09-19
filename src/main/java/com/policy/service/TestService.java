@@ -132,6 +132,7 @@ public class TestService {
                         int certId=0;
 
                         if (savedVehicles.size() > 0) {
+                            System.out.println("size of v is not 0");
                             savedVehicles.forEach(savedVehicle -> {
                                 Vehicles vehicles = new Vehicles();
                                 vehicles.setPolicyID(policy.getPolicyID());
@@ -168,6 +169,7 @@ public class TestService {
                             });
                         }
                         System.out.println("set succcess");
+
                         policy.setVehicles(newVehicles);
 
                     }
@@ -272,24 +274,37 @@ public class TestService {
                         }
 
                         if (carsPolicyToSearchList != null && !carsPolicyToSearchList.isEmpty()) {
+                            String businessType =null;
+                           if(policy.getBusinessType().isPresent()){
+                               businessType=policy.getBusinessType().get();
+                           }
 
                             policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
                                     brokerId, SublineId, carsPolicyToSearchList, insuranceCode, policy.getSubLineCode(),
                                     policy.getBlacklisted(), policy.getEndorsementTypeDescription(), policy.getEndorsementTypeCode(),
                                     policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(),
                                     policy.getPolicyID().toString(),  vehicle.getCertifID()!=null? vehicle.getCertifID().toString():"", policy.getInsuredID().toString(),
-                                    ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
+                                    ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(),businessType);
 
                         } else {
                             if (carsPolicyToSearchList2.size() > 0) {
+                                String businessType =null;
+                                if(policy.getBusinessType().isPresent()){
+                                    businessType=policy.getBusinessType().get();
+                                }
+
                                 policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
                                         brokerId, SublineId, carsPolicyToSearchList2, insuranceCode,
                                         policy.getSubLineCode(), policy.getBlacklisted(), policy.getEndorsementTypeDescription(),
                                         policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(),
                                         policy.getPolicyRootID().toString(), policy.getPolicyID().toString(),
                                         vehicle.getCertifID()!=null? vehicle.getCertifID().toString():"", policy.getInsuredID().toString(),
-                                        ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
+                                        ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(),businessType);
                             } else {
+                                String businessType =null;
+                                if(policy.getBusinessType().isPresent()){
+                                    businessType=policy.getBusinessType().get();
+                                }
                                 policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
                                         broker.getBrokerId(), SublineId, insuranceCode,
                                         policy.getSysID().toString(), policy.getSubLineCode(),
@@ -297,7 +312,7 @@ public class TestService {
                                         policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(),
                                         policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(),
                                         policy.getPolicyID().toString(), vehicle.getCertifID()!=null? vehicle.getCertifID().toString():"", policy.getInsuredID().toString(),
-                                        ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber());
+                                        ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(),businessType);
 
                             }
                         }
@@ -1575,14 +1590,13 @@ public class TestService {
     }
 
     public String insertPolicyCar(PolicyVehicle policyVehicle, String productId, String branchId, String clientId,
-                                  String brokerId, String subLine, String insuranceId, String sysId, String subLineCode, boolean blackListed, String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes, String endorsementSubTypeCode, String policyRootId, String policyId, String certifID, String insuredID, String insuredFirstName, String insuredCode1, String insuredPhoneNumber) throws Exception {
+                                  String brokerId, String subLine, String insuranceId, String sysId, String subLineCode, boolean blackListed, String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes, String endorsementSubTypeCode, String policyRootId, String policyId, String certifID, String insuredID, String insuredFirstName, String insuredCode1, String insuredPhoneNumber,String businessType) throws Exception {
 
         CarsPolicy carsPolicy = new CarsPolicy();
         carsPolicy.setPolicyId(UUID.randomUUID().toString());
         carsPolicy.setPolicyRootId(policyRootId);
         carsPolicy.setPolicyFleetId(policyId);
         carsPolicy.setPolicyCertIfID(certifID);
-
         carsPolicy.setPolicyHolderId(clientId);
 
         carsPolicy.setPolicyHolderPhone(insuredPhoneNumber);
@@ -1638,16 +1652,75 @@ public class TestService {
         carsPolicy.setPolicyCurrency(curr);
         carsPolicy.setPolicySumInsCurrencyRate(policyVehicle.getPolicy().getsIExchangeRate());
 
-        if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
-            String actionTypeDecoded = Utility
-                    .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
-            System.out.println("actionTypeDecoded "+actionTypeDecoded);
-            carsPolicy.setPolicyAction(actionTypeDecoded);
+
+
+
+
+
+
+
+
+
+
+
+        if (!Utility.isEmpty(endorsementTypeCode)) {
+            String endorsementTypeCodeeDecoded = Utility
+                    .getPropStringValuesWithNotFound("decode." +endorsementTypeCode);
+if(endorsementTypeCodeeDecoded!=null){
+    System.out.println("endorsementTypeCodeeDecoded "+endorsementTypeCodeeDecoded);
+    carsPolicy.setPolicyAction(endorsementTypeCodeeDecoded);
+}
+else{
+    System.out.println("endorsementTypeCodeeDecoded not found ");
+    carsPolicy.setPolicyAction("M");
+}
+
 
         } else {
-            saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Car Status", "Missing Field", "CARS_POLICY",
-                    insuranceCode, policyVehicle.getVehicle().getCertificateNo());
+            if (!Utility.isEmpty(businessType)){
+
+
+                String businessTypeDecoded = Utility
+                        .getPropStringValuesWithNotFound("decode." +businessType);
+                if(businessTypeDecoded!=null){
+                    System.out.println("businessTypeDecoded "+businessTypeDecoded);
+                    carsPolicy.setPolicyAction(businessTypeDecoded);
+                }
+                else{
+                    System.out.println("businessTypeDecoded not found ");
+                    carsPolicy.setPolicyAction("M");
+                }
+
+
+            }else{
+                            saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
+                    insuranceCode, null);
+            }
+
         }
+
+
+
+
+
+//        if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
+//            String actionTypeDecoded = Utility
+//                    .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
+//            System.out.println("actionTypeDecoded "+actionTypeDecoded);
+//            carsPolicy.setPolicyAction(actionTypeDecoded);
+//
+//        } else {
+//            saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Car Status", "Missing Field", "CARS_POLICY",
+//                    insuranceCode, policyVehicle.getVehicle().getCertificateNo());
+//        }
+//
+
+
+
+
+
+
+
 
         curr = validatePremiumCurrency(policyVehicle.getPolicy().getPremCurrency(),
                 policyVehicle.getPolicy().getPremCurrencyDescription(),
@@ -1687,7 +1760,14 @@ public class TestService {
             carsPolicy.setPolicyCar(0);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
-            carsPolicy.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+            if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+                carsPolicy.setPolicyAmendment(-1);
+
+            }else{
+                carsPolicy.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+
+            }
+
         } else {
             carsPolicy.setPolicyAmendment(0);
         }
@@ -1725,9 +1805,16 @@ public class TestService {
 //		carsPolicy.setPolicyAction(actionTypeDecoded);
 
         if (Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
+
             carsPolicy.setPolicyAmendment(0);
         } else {
-            carsPolicy.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+            if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+                carsPolicy.setPolicyAmendment(-1);
+
+            }else{
+                carsPolicy.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+
+            }
         }
         // carsPolicy.setPolicyAmendment(0);
 
@@ -1919,7 +2006,7 @@ public class TestService {
     }
 
     public String updatePolicyCar(PolicyVehicle policyVehicle, String productId, String branchId, String clientId,
-                                  String brokerId, String subLine, Collection<CarsPolicy> carsPolicyToSearchList, String insuranceId, String subLineCode, boolean blackListed, String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes, String endorsementSubTypeCode, String policyRootId, String policyId, String certifID, String insuredID, String insuredFirstName, String insuredCode1, String insuredPhoneNumber)
+                                  String brokerId, String subLine, Collection<CarsPolicy> carsPolicyToSearchList, String insuranceId, String subLineCode, boolean blackListed, String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes, String endorsementSubTypeCode, String policyRootId, String policyId, String certifID, String insuredID, String insuredFirstName, String insuredCode1, String insuredPhoneNumber,String businessType)
             throws Exception {
         CarsPolicy carsPolicyLoad = carsPolicyToSearchList.iterator().next();
 
@@ -1959,6 +2046,7 @@ public class TestService {
             carsPolicyToSave.setPolicyBlackListed("N");
         }
 
+        carsPolicyToSave.setPolicyTowFlag(policyVehicle.getVehicle().getCarTowAllowed());
 
         carsPolicyToSave.setPolicySumInsCurrencyRate(policyVehicle.getPolicy().getsIExchangeRate());
         curr = validatePremiumCurrency(policyVehicle.getPolicy().getPremCurrency(),
@@ -1970,6 +2058,7 @@ public class TestService {
         carsPolicyToSave.setPolicyPremiumCurrency(curr);
         carsPolicyToSave.setPolicyPremiumCurrencyRate(policyVehicle.getPolicy().getPremExchangeRate());
         carsPolicyToSave.setPolicyEndorsementTypeDesc(endorsementTypeDes);
+        System.out.println("update endorsementTypeCode "+ endorsementTypeCode);
         carsPolicyToSave.setPolicyEndorsementTypeCode(endorsementTypeCode);
         carsPolicyToSave.setPolicyEndorsSubTypeCode(endorsementSubTypeCode);
         carsPolicyToSave.setPolicyBlacklistSetBy(policyVehicle.getPolicy().getSetBy());
@@ -2017,10 +2106,19 @@ public class TestService {
             carsPolicyToSave.setPolicyCar(0);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
-            carsPolicyToSave.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+          if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+              carsPolicyToSave.setPolicyAmendment(-1);
+
+          }else{
+              carsPolicyToSave.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+
+          }
         } else {
             carsPolicyToSave.setPolicyAmendment(0);
         }
+
+
+
 
         StringBuilder policyClauses = new StringBuilder();
         if (!Utility.isEmpty(policyVehicle.getPolicy().getReason())) {
@@ -2063,11 +2161,58 @@ public class TestService {
         }
         carsPolicyToSave.setPolicyProduct(subLineCode);
 
-        if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
-            String actionTypeDecoded = Utility
-                    .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
-            carsPolicyToSave.setPolicyAction(actionTypeDecoded);
+//        if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
+//            String actionTypeDecoded = Utility
+//                    .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
+//            carsPolicyToSave.setPolicyAction(actionTypeDecoded);
+//        }
+
+
+
+        if (!Utility.isEmpty(endorsementTypeCode)) {
+            String endorsementTypeCodeeDecoded = Utility
+                    .getPropStringValuesWithNotFound("decode." +endorsementTypeCode);
+            if(endorsementTypeCodeeDecoded!=null){
+                System.out.println("endorsementTypeCodeeDecoded "+endorsementTypeCodeeDecoded);
+                carsPolicyToSave.setPolicyAction(endorsementTypeCodeeDecoded);
+            }
+            else{
+                System.out.println("endorsementTypeCodeeDecoded not found ");
+                carsPolicyToSave.setPolicyAction("M");
+            }
+
+
+        } else {
+            if (!Utility.isEmpty(businessType)){
+
+
+                String businessTypeDecoded = Utility
+                        .getPropStringValuesWithNotFound("decode." +businessType);
+                if(businessTypeDecoded!=null){
+                    System.out.println("businessTypeDecoded "+businessTypeDecoded);
+                    carsPolicyToSave.setPolicyAction(businessTypeDecoded);
+                }
+                else{
+                    System.out.println("businessTypeDecoded not found ");
+                    carsPolicyToSave.setPolicyAction("M");
+                }
+
+
+            }else{
+                saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
+                        insuranceCode, null);
+            }
+
         }
+
+
+
+
+
+
+
+
+
 //		else {
 //			saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Car Status", "Missing Field", "CARS_POLICY",
 //					insuranceCode, policyVehicle.getVehicle().getCertificateNo());
@@ -2257,7 +2402,15 @@ public class TestService {
             carsPolicyToSearch.setPolicyCar(0);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
-            carsPolicyToSearch.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+
+            if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+                carsPolicyToSearch.setPolicyAmendment(-1);
+
+            }else{
+                carsPolicyToSearch.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+
+            }
+
         } else {
             carsPolicyToSearch.setPolicyAmendment(0);
         }
@@ -2273,7 +2426,6 @@ public class TestService {
 
 
     public Collection<CarsPolicy> carsPolicySearchable2(PolicyVehicle policyVehicle, String productId) {
-
 
         Collection<CarsPolicy> cl = db.carsPolicyRepository.findByPolicyInsuranceIdAndPolicyIdIns(insuranceCode, String.valueOf(policyVehicle.getPolicy().getPolicyID()));
         System.out.println("size of cars "+cl.size());
@@ -2440,9 +2592,9 @@ public class TestService {
         carsPolicyCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
         carsPolicyCoverToInsert.setPolicyCoversCover(cover.getCoverCode());
         //	carsPolicyCoverToInsert.setPolicyCoversOrder(coversOrder);
-        if (cover.getSumInsured() > 0) {
+
             carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
-        }
+
         carsPolicyCoverToInsert.setPolicyCoversDeductible((double) cover.getDeductibleFlatAmount());
         carsPolicyCoverToInsert.setPolicyCoversDeductible100((double) cover.getDeductiblePercentage());
 //				carsPolicyCoverToInsert
@@ -2726,9 +2878,8 @@ public class TestService {
             carsPolicyCoverToInsert.setPolicyCoversCover(carCoverCode);
             carsPolicyCoverToInsert.setPolicyCoversCoverId(CoverCode);
 
-            if (cover.getSumInsured() > 0) {
                 carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
-            }
+
             carsPolicyCoverToInsert.setPolicyCoversOrder(((double) cover.getCoverOrder()));
 
             carsPolicyCoverToInsert.setPolicyCoversDeductible((double) cover.getDeductibleFlatAmount());
@@ -2756,9 +2907,9 @@ public class TestService {
 
             carsPolicySubCoverToInsert.setPolicyCoversCover(CoverCode + "." + subCover.getSubCoverCode());
             carsPolicySubCoverToInsert.setPolicyCoversCoverId(subCoverCode);
-            if (subCover.getSubCoverSumInsured() > 0) {
+
                 carsPolicySubCoverToInsert.setPolicyCoversSumInsured((long) subCover.getSubCoverSumInsured());
-            }
+
             carsPolicySubCoverToInsert.setPolicyCoversDeductible((double) subCover.getSubCoverDeductibleFlatAmount());
             carsPolicySubCoverToInsert
                     .setPolicyCoversDeductible100((double) subCover.getSubCoverDeductiblePercentage());
