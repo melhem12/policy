@@ -1564,6 +1564,8 @@ public class TestService {
         carsPolicyCarToSave.setCarTrademarkDesc(vehicles.getCarModel());
         // carsPolicyCarToSave.setCarUsage(vehicles.getCarUsage()); jeannnnnnnnn
         carsPolicyCarToSave.setCarEngine(vehicles.getCarEngine());
+        carsPolicyCarToSave.setPolicyDealerWorkshopName(vehicles.getDealerWorkshopName());
+        carsPolicyCarToSave.setCarModelToPrint(vehicles.getModelToPrint());
         // carsPolicyCar.setCarDeductible(vehicles.getDeductible());
         carsPolicyCarToSave.setCarTheetDeductible(null);
 
@@ -1757,7 +1759,7 @@ else{
         if (!Utility.isEmpty(policyVehicle.getVehicle().getCertificateNo())) {
             carsPolicy.setPolicyCar(Integer.valueOf(policyVehicle.getVehicle().getCertificateNo()));
         } else {
-            carsPolicy.setPolicyCar(0);
+            carsPolicy.setPolicyCar(1);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
             if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
@@ -2103,7 +2105,7 @@ else{
         if (!Utility.isEmpty(policyVehicle.getVehicle().getCertificateNo())) {
             carsPolicyToSave.setPolicyCar(Integer.valueOf(policyVehicle.getVehicle().getCertificateNo()));
         } else {
-            carsPolicyToSave.setPolicyCar(0);
+            carsPolicyToSave.setPolicyCar(1);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
           if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
@@ -2399,7 +2401,7 @@ else{
         if (!Utility.isEmpty(policyVehicle.getVehicle().getCertificateNo())) {
             carsPolicyToSearch.setPolicyCar(Integer.valueOf(policyVehicle.getVehicle().getCertificateNo()));
         } else {
-            carsPolicyToSearch.setPolicyCar(0);
+            carsPolicyToSearch.setPolicyCar(1);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
 
