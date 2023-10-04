@@ -3657,7 +3657,7 @@ else{
 
             else {
 
-                Optional<CarsBroker> carsBroker2 = db.carsBrokerRepository.findByBrokerInsuranceIdAndBrokerNum(
+                Optional<CarsBroker> carsBroker2 = db.carsBrokerRepository.findByBrokerReferenceOrBrokerNumAndInsuranceId(
                         policyListhing.getInsuranceId(), policyListhing.getInsuranceId());
 
                 if (carsBroker2.isPresent()){
@@ -3814,7 +3814,7 @@ else{
 
 
                 Optional<CarsClient> carsClient = db.carsClientRepository
-                        .findByClientInsuranceIdAndClientNum1(policyListhing.getInsuranceId(), policyListhing.getProfileId());
+                        .findByClientReferenceOrClientNum1AndInsuranceId(policyListhing.getInsuranceId(), policyListhing.getProfileId());
                 if (carsClient.isPresent()) {
 
 
@@ -3963,7 +3963,7 @@ else{
 
 
                 Optional<CarsClient> carsClient = db.carsClientRepository
-                        .findByClientInsuranceIdAndClientNum1(policyListhing.getInsuranceId(), policyListhing.getProfileId());
+                        .findByClientReferenceOrClientNum1AndInsuranceId(policyListhing.getInsuranceId(), policyListhing.getProfileId());
                 if (carsClient.isPresent()) {
 
 
