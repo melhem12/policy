@@ -1613,6 +1613,8 @@ public class testController {
 
 		try {
 			logger.info("Inside Validation");
+
+
 			return  testService.deletePolicyFunction(policyToDelete.getInsuranceId(),policyToDelete.getPolicyId(),policyToDelete.getBranchId()
 					,policyToDelete.getPolicyNumber(),policyToDelete.getVehicleId(),policyToDelete.getAmendment(),policyToDelete.getCertificate());
 

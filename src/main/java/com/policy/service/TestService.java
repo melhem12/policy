@@ -85,7 +85,13 @@ public class TestService {
                         .addValue("I_CAR", vehicleId)
                         .addValue("I_AMENDMENT", amendment)
                         .addValue("I_CERTIFICATE", certificate));
-        return new ResponseEntity(out, HttpStatus.OK);
+        if(out.equals("POLICY NOT FOUND")){
+            return new ResponseEntity(out, HttpStatus.NOT_FOUND);
+
+        }else{
+            return new ResponseEntity(out, HttpStatus.OK);
+
+        }
 
 
     }
