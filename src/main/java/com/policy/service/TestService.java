@@ -52,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "10";
+    public static String insuranceCode = "18";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -833,7 +833,7 @@ public class TestService {
                 carsClient.get().setClientFatherName(fatherInsuredName);
                 carsClient.get().setClientFirstName(firstInsuredName);
                 carsClient.get().setClientReference(String.valueOf(clientId));
-
+//carsClient.get().setClientNum1();
 
                 if (fatherInsuredName == null) {
                     carsClient.get().setClientFatherName("");
@@ -922,6 +922,7 @@ public class TestService {
             carsBroker2.get().setBrokerDesc(brokerName);
             carsBroker2.get().setBrokerTelephone(brokerPhoneNumber);
             carsBroker2.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
+            carsBroker2.get().setBrokerReference(brokerId);
             carsBroker2.get().setBrokerEmail(brokerMail);
             carsBroker2.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
             db.carsBrokerRepository.save(carsBroker2.get());
@@ -3658,7 +3659,7 @@ else{
             else {
 
                 Optional<CarsBroker> carsBroker2 = db.carsBrokerRepository.findByBrokerReferenceOrBrokerNumAndInsuranceId(
-                        policyListhing.getInsuranceId(), policyListhing.getInsuranceId());
+                        policyListhing.getInsuranceId(), policyListhing.getProfileId());
 
                 if (carsBroker2.isPresent()){
 
@@ -3666,7 +3667,7 @@ else{
                     CarsBlackList carsBlackList = new CarsBlackList();
                     carsBlackList.setBlId(UUID.randomUUID().toString());
                     carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                    carsBlackList.setBlBrokerId(policyListhing.getInsuranceId() + "." + policyListhing.getProfileId());
+                    carsBlackList.setBlBrokerId(carsBroker2.get().getBrokerId());
                     carsBlackList.setBlFamilyName(carsBroker2.get().getBrokerDesc());
 
 
@@ -3715,6 +3716,13 @@ else{
             }
 
         }
+
+
+
+
+
+
+
 
 
 
@@ -3871,6 +3879,31 @@ else{
 
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
