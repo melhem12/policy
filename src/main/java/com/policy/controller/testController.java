@@ -1609,27 +1609,17 @@ public class testController {
 	}
 
 	@PostMapping("/deletePolicy")
-	public ResponseEntity<String> deletePolicy( @RequestBody PolicyToDelete policyToDelete) throws CustomResponseException {
+	public ResponseEntity<String> deletePolicy( @RequestBody PolicyToDelete policyToDelete)  {
 
 
-		try {
+
 			logger.info("Inside Validation");
 
 
 			return  testService.deletePolicyFunction(policyToDelete.getInsuranceId(),policyToDelete.getPolicyId(),policyToDelete.getBranchId()
 					,policyToDelete.getPolicyNumber(),policyToDelete.getVehicleId(),policyToDelete.getAmendment(),policyToDelete.getCertificate());
 
-		} catch (
 
-				CustomResponseException e) {
-			e.printStackTrace();
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			String sStackTrace = sw.toString();
-			logger.error("failed",sStackTrace);
-			return new ResponseEntity(sStackTrace, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 	}
 
 
