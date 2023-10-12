@@ -73,6 +73,11 @@ public class TestService {
     private JdbcTemplate jdbcTemplate;
 
     public ResponseEntity<String> deletePolicyFunction(String insuranceId, String policyId, String branchId, String policyNumber, String vehicleId, String amendment, String certificate) {
+        try {
+            // Your custom logic to delete the policy
+            // If the policy is not found or deletion is not allowed, throw an exception
+
+            // Return a success response if the deletion is successful
 
         simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("FC_POLICY_DELETE")
@@ -88,7 +93,7 @@ public class TestService {
                         .addValue("I_CERTIFICATE", certificate));
         if(out.equals("POLICY NOT FOUND")||out.equals("Deletion is not allowed.Claim already exist")) {
            // return new ResponseEntity(out, HttpStatus.valueOf(customResponseCode));
-            throw new CustomResponseException(477, out);
+            throw new CustomResponseException(477, "Policy Not Found or Deletion Not Allowed");
 
         }
 
@@ -96,6 +101,10 @@ public class TestService {
             return new ResponseEntity(out, HttpStatus.OK);
 
         }
+        }
+        catch (CustomResponseException ex) {
+                throw ex; // Re-throw the CustomResponseException to be handled by ControllerAdvice
+            }
 
 
     }

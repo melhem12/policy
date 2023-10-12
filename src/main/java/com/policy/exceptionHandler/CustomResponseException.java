@@ -1,5 +1,4 @@
 package com.policy.exceptionHandler;
-
 public class CustomResponseException extends RuntimeException {
 
     private int customResponseCode;
