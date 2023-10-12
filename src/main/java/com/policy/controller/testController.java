@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import com.policy.bean.*;
+import com.policy.exceptionHandler.CustomResponseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
@@ -1608,7 +1609,7 @@ public class testController {
 	}
 
 	@PostMapping("/deletePolicy")
-	public ResponseEntity<String> deletePolicy( @RequestBody PolicyToDelete policyToDelete) throws Exception {
+	public ResponseEntity<String> deletePolicy( @RequestBody PolicyToDelete policyToDelete) throws CustomResponseException {
 
 
 		try {
@@ -1620,7 +1621,7 @@ public class testController {
 
 		} catch (
 
-				Exception e) {
+				CustomResponseException e) {
 			e.printStackTrace();
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
