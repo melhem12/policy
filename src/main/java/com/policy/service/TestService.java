@@ -52,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "18";
+    public static String insuranceCode = "10";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -85,10 +85,11 @@ public class TestService {
                         .addValue("I_CAR", vehicleId)
                         .addValue("I_AMENDMENT", amendment)
                         .addValue("I_CERTIFICATE", certificate));
-        if(out.equals("POLICY NOT FOUND")){
-            return new ResponseEntity(out, HttpStatus.NOT_FOUND);
+        if(out.equals("POLICY NOT FOUND")||out.equals("Deletion is not allowed.Claim already exist")) {
+            return new ResponseEntity(out, HttpStatus.LENGTH_REQUIRED);
+        }
 
-        }else{
+        else{
             return new ResponseEntity(out, HttpStatus.OK);
 
         }
@@ -3793,12 +3794,6 @@ else{
                     if (!policyListhing.getBlacklisted()) {
                         carsBlackList.setBlStatus("OU");
                     }
-
-                    carsBlackList.setSysVersionNumber(0);
-                    carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
-                    carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
-                    carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
-                    carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
                     if (policyListhing.getSetOn() != null) {
