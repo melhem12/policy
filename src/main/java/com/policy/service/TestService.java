@@ -16,6 +16,7 @@ import com.policy.bean.*;
 import com.policy.entity.*;
 import com.policy.response.CarShapeRespomse;
 import com.policy.response.VehicleResponse;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
@@ -75,7 +76,8 @@ public class TestService {
         simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("FC_POLICY_DELETE")
                 .declareParameters(new SqlParameter("u_id", Types.BIGINT));
-
+        int customResponseCode = 477;
+        String customMessage = " NOT FOUNDor OR NOT ALLOWED: "+ customResponseCode;
         String out = simpleJdbcCall.executeFunction(String.class,
 
                 new MapSqlParameterSource("I_COMPANY", insuranceId)
@@ -86,7 +88,7 @@ public class TestService {
                         .addValue("I_AMENDMENT", amendment)
                         .addValue("I_CERTIFICATE", certificate));
         if(out.equals("POLICY NOT FOUND")||out.equals("Deletion is not allowed.Claim already exist")) {
-            return new ResponseEntity(out, HttpStatus.LENGTH_REQUIRED);
+            return new ResponseEntity(out, HttpStatus.valueOf(customResponseCode));
         }
 
         else{
@@ -805,10 +807,13 @@ public class TestService {
                             Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
                             if (clientOptional.isPresent()) {
                                 System.out.println("get the number");
+
                                 carsClient.get().setClientBusinessPhone(insuredPhoneNumber);
                                 if (clientOptional.get().getClientMobilePhone() != null) {
                                     carsClient.get().setClientMobilePhone(clientOptional.get().getClientMobilePhone());
                                 }
+                         //       carsClient.get().setClientMobilePhone(insuredPhoneNumber);
+
 
 
                             }
