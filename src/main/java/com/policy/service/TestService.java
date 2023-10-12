@@ -134,7 +134,7 @@ public class TestService {
                 if (policy.getEndorsementTypeCode()!=null) {
                     if (policy.getEndorsementTypeCode().equals("C")) {
                         System.out.println("my policy No  "+ policy.getPolicyNo());
-                        List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policy.getPolicyNo());
+                        List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policy.getPolicyNo(),policy.getBranchCode());
                         List<Vehicles> newVehicles = new ArrayList<>();
                         int certId=0;
 
@@ -160,8 +160,16 @@ public class TestService {
 
                                 }
 
-                                vehicles.setCarInsuredCode(savedVehicle.getCarInsuredCode());
                                 vehicles.setCarInsuredID(Integer.parseInt(savedVehicle.getCarInsuredCode()));
+                                db.carsClientRepository.findById(savedVehicle.getCarInsuredID()).ifPresent(
+                                        carsClient -> {
+                                            vehicles.setCarInsuredCode(carsClient.getClientNum1());
+                                        }
+                                );
+
+
+
+
                                 vehicles.setCarMake(savedVehicle.getCarMake());
                                 vehicles.setCarMakeCode(savedVehicle.getCarMakeCode());
                                 vehicles.setCarMakeID(savedVehicle.getCarMakeID());
@@ -943,7 +951,7 @@ public class TestService {
                                            String fatherInsuredName, String lastInsuredName, String reason, String note, String insBlackSetOn, String insBlackSetBy,boolean blackListed) {
 
         Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository
-                .findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(clientInsuranceId, insuredCode);
+                .findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(insuredCode, clientInsuranceId);
 
         if (!carsBlackListOptional.isPresent()) {
             if (blackListed) {

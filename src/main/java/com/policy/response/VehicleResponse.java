@@ -14,7 +14,7 @@ public interface VehicleResponse {
 
 
     @Value("#{target.CarInsuredID}")
-    int getCarInsuredID();
+    String getCarInsuredID();
 
     @Value("#{target.CarMake}")
     String getCarMake();
