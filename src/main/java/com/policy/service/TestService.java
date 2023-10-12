@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.policy.bean.*;
 import com.policy.entity.*;
+import com.policy.exceptionHandler.CustomResponseException;
 import com.policy.response.CarShapeRespomse;
 import com.policy.response.VehicleResponse;
 import org.jsoup.HttpStatusException;
@@ -76,8 +77,6 @@ public class TestService {
         simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("FC_POLICY_DELETE")
                 .declareParameters(new SqlParameter("u_id", Types.BIGINT));
-        int customResponseCode = 477;
-        String customMessage = " NOT FOUNDor OR NOT ALLOWED: "+ customResponseCode;
         String out = simpleJdbcCall.executeFunction(String.class,
 
                 new MapSqlParameterSource("I_COMPANY", insuranceId)
@@ -88,7 +87,9 @@ public class TestService {
                         .addValue("I_AMENDMENT", amendment)
                         .addValue("I_CERTIFICATE", certificate));
         if(out.equals("POLICY NOT FOUND")||out.equals("Deletion is not allowed.Claim already exist")) {
-            return new ResponseEntity(out, HttpStatus.valueOf(customResponseCode));
+           // return new ResponseEntity(out, HttpStatus.valueOf(customResponseCode));
+            throw new CustomResponseException(477, out);
+
         }
 
         else{
