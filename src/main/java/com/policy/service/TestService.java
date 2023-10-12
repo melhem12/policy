@@ -134,7 +134,11 @@ public class TestService {
                 if (policy.getEndorsementTypeCode()!=null) {
                     if (policy.getEndorsementTypeCode().equals("C")) {
                         System.out.println("my policy No  "+ policy.getPolicyNo());
-                        List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policy.getPolicyNo(),policy.getBranchCode());
+                        String branchCodeNew = policy.getBranchCode();
+
+                        branchCodeNew = branchCodeNew.replaceFirst("^0+(?=.)", "");
+
+                        List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policy.getPolicyNo(),branchCodeNew);
                         List<Vehicles> newVehicles = new ArrayList<>();
                         int certId=0;
 
@@ -145,6 +149,7 @@ public class TestService {
                                 vehicles.setPolicyID(policy.getPolicyID());
                                 vehicles.setCertificateBlacklisted(false);
                                 vehicles.setCarChassis(savedVehicle.getCarChassis());
+
                                 vehicles.setCarEngine(savedVehicle.getCarEngine());
                                 vehicles.setCarStatus(savedVehicle.getCarStatus());
                                 vehicles.setCertifID(savedVehicle.getCertifId());
@@ -160,10 +165,10 @@ public class TestService {
 
                                 }
 
-                                vehicles.setCarInsuredID(Integer.parseInt(savedVehicle.getCarInsuredCode()));
                                 db.carsClientRepository.findById(savedVehicle.getCarInsuredID()).ifPresent(
                                         carsClient -> {
                                             vehicles.setCarInsuredCode(carsClient.getClientNum1());
+                                            vehicles.setCarInsuredID(Integer.parseInt(carsClient.getClientReference()));
                                         }
                                 );
 
