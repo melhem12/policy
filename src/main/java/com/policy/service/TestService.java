@@ -766,7 +766,7 @@ public class TestService {
 
                 carsClientNew.setClientFirstName(firstInsuredName);
                 // insuredPhoneNumber = insuredPhoneNumber.replace("-", "");
-                //	carsClientNew.setClientMobilePhone(insuredPhoneNumber);
+                	carsClientNew.setClientMobilePhone(insuredPhoneNumber);
                 carsClientNew.setSysVersionNumber(0);
                 carsClientNew.setSysCreatedBy(CREATED_BY_QUARTZ);
                 carsClientNew.setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -810,7 +810,8 @@ public class TestService {
                                 if (clientOptional.get().getClientMobilePhone() != null) {
                                     carsClient.get().setClientMobilePhone(clientOptional.get().getClientMobilePhone());
                                 }
-                         //       carsClient.get().setClientMobilePhone(insuredPhoneNumber);
+                                if(insuredPhoneNumber!=null||!insuredPhoneNumber.isEmpty())
+                              carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 
 
 
