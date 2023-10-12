@@ -1609,7 +1609,7 @@ public class testController {
 	}
 
 	@PostMapping("/deletePolicy")
-	public ResponseEntity<String> deletePolicy( @RequestBody PolicyToDelete policyToDelete)  {
+	public ResponseEntity<String> deletePolicy( @RequestBody PolicyToDelete policyToDelete)  throws CustomResponseException {
 
 
 
