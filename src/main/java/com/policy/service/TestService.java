@@ -152,7 +152,7 @@ public class TestService {
 
                                 vehicles.setCarEngine(savedVehicle.getCarEngine());
                                 vehicles.setCarStatus(savedVehicle.getCarStatus());
-                                vehicles.setCertifID(savedVehicle.getCertifId());
+                                vehicles.setCertifID(savedVehicle.getCertifId().negate());
 //                            System.out.println("cars Status is C");
                                 vehicles.setCertificateNo(savedVehicle.getCertificateNo());
                                 if (policy.getPolDateEffective() != null) {
@@ -167,10 +167,17 @@ public class TestService {
 
                                 db.carsClientRepository.findById(savedVehicle.getCarInsuredID()).ifPresent(
                                         carsClient -> {
-                                            vehicles.setCarInsuredCode(carsClient.getClientNum1());
                                             vehicles.setCarInsuredID(Integer.parseInt(carsClient.getClientReference()));
                                         }
                                 );
+
+                                String insuredCode = savedVehicle.getCarInsuredCode();
+                                if (!Utility.isEmpty(insuredCode)) {
+                                    insuredCode = insuredCode.replace("", "-");
+                                    vehicles.setCarInsuredCode(insuredCode);
+
+                                }
+
 
 
 

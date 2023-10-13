@@ -18,7 +18,7 @@ public interface CarsPolicyCarRepository extends JpaRepository<CarsPolicyCar,Str
     @Query(value=" SELECT DISTINCT    POLICY_CAR   \"CertificateNo\",   POLICY_CLIENT  \"CarInsuredCode\",   POLICY_CLIENT_ID  \"CarInsuredID\",     CAR_BRAND_DESC     \"CarMake\",    BRAND_ID   \"CarMakeID\",      CAR_BRAND_CODE   \"CarMakeCode\",     CAR_TRADEMARK_CODE   \"CarModelCode\" , " +
 
             "       TRADEMARK_ID   \"CarModelID\"," +
-            " concat('-',  POLICY_ID_INS ) \"certifId\" ," +
+            "   POLICY_ID_INS  \"certifId\" ," +
             "  SHAPE_ID,  CAR_MODEL_TO_PRINT   \"ModelToPrint\",      CAR_YEAR  \"CarYear\", " +
             "    CAR_PLATE_CHAR  \"CarPlatePrefix\",    CAR_PLATE_NUM  \"CarPlateNumber\",  " +
             "   CAR_USAGE  \"CarUsage\",       CAR_CHASSIS       \"CarChassis\",     CAR_ENGINE  \"CarEngine\", " +
