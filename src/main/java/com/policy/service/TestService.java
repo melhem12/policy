@@ -167,16 +167,12 @@ public class TestService {
 
                                 db.carsClientRepository.findById(savedVehicle.getCarInsuredID()).ifPresent(
                                         carsClient -> {
+                                            vehicles.setCarInsuredCode(carsClient.getClientNum1());
                                             vehicles.setCarInsuredID(Integer.parseInt(carsClient.getClientReference()));
                                         }
                                 );
 
-                                String insuredCode = savedVehicle.getCarInsuredCode();
-                                if (!Utility.isEmpty(insuredCode)) {
-                                    insuredCode = insuredCode.replace("", "-");
-                                    vehicles.setCarInsuredCode(insuredCode);
 
-                                }
 
 
 
