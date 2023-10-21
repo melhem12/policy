@@ -833,7 +833,7 @@ public class TestService {
 //                        Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
 //                        if (clientOptional.isPresent()) {
                                 if(!Utility.isEmpty(insuredPhoneNumber)){
-                                if((carsClient.get().getClientBusinessPhone().isEmpty()||carsClient.get().getClientBusinessPhone()==null)&& (carsClient.get().getClientMobilePhone()==null||carsClient.get().getClientMobilePhone().isEmpty())){
+                                if(Utility.isEmpty(carsClient.get().getClientBusinessPhone()) && Utility.isEmpty(carsClient.get().getClientMobilePhone())){
                                     carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 
                                 }else {
@@ -841,7 +841,7 @@ public class TestService {
                                     if(!insuredPhoneNumber.equals(carsClient.get().getClientMobilePhone())) {
                                         if(!Utility.isEmpty(carsClient.get().getClientBusinessPhone())) {
                                             if (!carsClient.get().getClientBusinessPhone().contains(insuredPhoneNumber)) {
-                                                if (carsClient.get().getClientMobilePhone() != null && !carsClient.get().getClientMobilePhone().isEmpty()) {
+                                                if ( !Utility.isEmpty(carsClient.get().getClientMobilePhone())) {
                                                     carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone() + " " + carsClient.get().getClientBusinessPhone());
 
                                                 }
