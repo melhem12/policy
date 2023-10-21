@@ -761,7 +761,7 @@ public class TestService {
 //                    }
 //
 //                }else{
-                    if(insuredPhoneNumber!=null&&!insuredPhoneNumber.isEmpty()){
+                    if(!Utility.isEmpty(insuredPhoneNumber)){
                         carsClientNew.setClientMobilePhone(insuredPhoneNumber);
 
                     }
@@ -832,14 +832,14 @@ public class TestService {
                         //   if (carsPolicy.getPolicyExpiryDate().before(ts)) {
 //                        Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
 //                        if (clientOptional.isPresent()) {
-                            if(insuredPhoneNumber!=null  && !insuredPhoneNumber.isEmpty() ){
+                                if(!Utility.isEmpty(insuredPhoneNumber)){
                                 if((carsClient.get().getClientBusinessPhone().isEmpty()||carsClient.get().getClientBusinessPhone()==null)&& (carsClient.get().getClientMobilePhone()==null||carsClient.get().getClientMobilePhone().isEmpty())){
                                     carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 
                                 }else {
 //                                    if(!carsClient.get().getClientBusinessPhone().isEmpty()||carsClient.get().getClientBusinessPhone()!=null){}
                                     if(!insuredPhoneNumber.equals(carsClient.get().getClientMobilePhone())) {
-                                        if(carsClient.get().getClientBusinessPhone()!=null&&!carsClient.get().getClientBusinessPhone().isEmpty()) {
+                                        if(!Utility.isEmpty(carsClient.get().getClientBusinessPhone())) {
                                             if (!carsClient.get().getClientBusinessPhone().contains(insuredPhoneNumber)) {
                                                 if (carsClient.get().getClientMobilePhone() != null && !carsClient.get().getClientMobilePhone().isEmpty()) {
                                                     carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone() + " " + carsClient.get().getClientBusinessPhone());
@@ -851,7 +851,7 @@ public class TestService {
 
 
                                         }else{
-                                            if (carsClient.get().getClientMobilePhone() != null && !carsClient.get().getClientMobilePhone().isEmpty()) {
+                                            if (!Utility.isEmpty(carsClient.get().getClientMobilePhone())) {
                                                 carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone());
 
                                             }
