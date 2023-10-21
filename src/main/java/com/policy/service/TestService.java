@@ -298,9 +298,9 @@ public class TestService {
 
                         if (carsPolicyToSearchList != null && !carsPolicyToSearchList.isEmpty()) {
                             String businessType =null;
-                           if(policy.getBusinessType().isPresent()){
-                               businessType=policy.getBusinessType().get();
-                           }
+                            if(policy.getBusinessType().isPresent()){
+                                businessType=policy.getBusinessType().get();
+                            }
 
                             policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
                                     brokerId, SublineId, carsPolicyToSearchList, insuranceCode, policy.getSubLineCode(),
@@ -722,41 +722,54 @@ public class TestService {
                 String ClientCodeInt = clientCode.replaceAll("-", "");
 
                 String cId = clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0";
-                List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(cId);
-                carsClientNew.setClientMobilePhone(insuredPhoneNumber);
-                Set<String > businessPhoneNumbers = new HashSet<>();
-                StringBuffer stringBuffer=new StringBuffer();
-                if (carsPolicyList.size() > 0) {
-                    Date date = new Date();
-                    Timestamp ts = new Timestamp(date.getTime());
-                    carsPolicyList.forEach(carsPolicy -> {
-                        if (carsPolicy.getPolicyExpiryDate().before(ts)) {
-                            Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
-                            if (clientOptional.isPresent()) {
-                                if (clientOptional.get().getClientMobilePhone() != null &&!clientOptional.get().getClientMobilePhone().isEmpty()) {
-                                    if(!insuredPhoneNumber.equals(clientOptional.get().getClientMobilePhone())) {
-                                        businessPhoneNumbers.add(clientOptional.get().getClientMobilePhone());
+//                List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(cId);
+//                Set<String > businessPhoneNumbers = new HashSet<>();
+//                StringBuffer stringBuffer=new StringBuffer();
+//                if (carsPolicyList.size() > 0) {
+////                    Date date = new Date();
+////                    Timestamp ts = new Timestamp(date.getTime());
+//                    carsPolicyList.forEach(carsPolicy -> {
+////                        if (carsPolicy.getPolicyExpiryDate().before(ts)) {
+//                            Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
+//                            if (clientOptional.isPresent()) {
+//                                if (clientOptional.get().getClientMobilePhone() != null &&!clientOptional.get().getClientMobilePhone().isEmpty()) {
+//                                    if(insuredPhoneNumber!=null  && !insuredPhoneNumber.isEmpty() ){
+//
+//                                        if(clientOptional.get().getClientMobilePhone().equals(insuredPhoneNumber)||clientOptional.get().getClientBusinessPhone().contains(insuredPhoneNumber)){
+//                                        businessPhoneNumbers.add(clientOptional.get().getClientMobilePhone());
+//
+//
+//                                    }
+//
+//
+//                                }
+//                                }
+//
+//
+//                            }
+//                            //carsClientNew.setClientBusinessPhone(carsPolicy.getph);
+////                        }
+//                    });
+//
+//                    if(businessPhoneNumbers.size()>0){
+//                        businessPhoneNumbers.forEach(businessPhoneNumber->{
+//                            stringBuffer.append(businessPhoneNumber);
+//                            stringBuffer.append(" ");
+//                        });
+//                        carsClientNew.setClientBusinessPhone(stringBuffer.toString());
+//
+//                    }
+//
+//                }else{
+                    if(insuredPhoneNumber!=null&&!insuredPhoneNumber.isEmpty()){
+                        carsClientNew.setClientMobilePhone(insuredPhoneNumber);
+
+                    }
 
 
-                                    }
+           //     }
 
 
-                                }
-
-
-                            }
-                            //carsClientNew.setClientBusinessPhone(carsPolicy.getph);
-                        }
-                    });
-                }
-                if(businessPhoneNumbers.size()>0){
-                    businessPhoneNumbers.forEach(businessPhoneNumber->{
-                        stringBuffer.append(businessPhoneNumber);
-                        stringBuffer.append("-");
-                    });
-                    carsClientNew.setClientBusinessPhone(stringBuffer.toString());
-
-                }
 //                } else {
 //                    carsClientNew.setClientBusinessPhone(null);
 //                    carsClientNew.setClientMobilePhone(insuredPhoneNumber);
@@ -782,7 +795,7 @@ public class TestService {
 
                 carsClientNew.setClientFirstName(firstInsuredName);
                 // insuredPhoneNumber = insuredPhoneNumber.replace("-", "");
-                	carsClientNew.setClientMobilePhone(insuredPhoneNumber);
+                carsClientNew.setClientMobilePhone(insuredPhoneNumber);
                 carsClientNew.setSysVersionNumber(0);
                 carsClientNew.setSysCreatedBy(CREATED_BY_QUARTZ);
                 carsClientNew.setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -810,35 +823,31 @@ public class TestService {
 
                 //           carsClient.get().setClientInsuranceId(clientInsuranceId);
 
-                List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(carsClient.get().getClientId());
-                if (carsPolicyList.size() > 0) {
+//                List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(carsClient.get().getClientId());
+//                if (carsPolicyList.size() > 0) {
                     System.out.println("we have an existing policy on update this");
-                    Date date = new Date();
-                    Timestamp ts = new Timestamp(date.getTime());
-                    carsPolicyList.forEach(carsPolicy -> {
-                        if (carsPolicy.getPolicyExpiryDate().before(ts)) {
-                            System.out.println("not expiry ");
-                            Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
-                            if (clientOptional.isPresent()) {
-                                System.out.println("get the number");
-
-                                carsClient.get().setClientBusinessPhone(insuredPhoneNumber);
-                                if (clientOptional.get().getClientMobilePhone() != null) {
-                                    carsClient.get().setClientMobilePhone(clientOptional.get().getClientMobilePhone());
-                                }
-                                if(insuredPhoneNumber!=null||!insuredPhoneNumber.isEmpty())
-                              carsClient.get().setClientMobilePhone(insuredPhoneNumber);
-
-
+                    //   Date date = new Date();
+//                    Timestamp ts = new Timestamp(date.getTime());
+//                    carsPolicyList.forEach(carsPolicy -> {
+                        //   if (carsPolicy.getPolicyExpiryDate().before(ts)) {
+//                        Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
+//                        if (clientOptional.isPresent()) {
+                            if(insuredPhoneNumber!=null  && !insuredPhoneNumber.isEmpty() ){
+                            if(!carsClient.get().getClientMobilePhone().equals(insuredPhoneNumber)||!carsClient.get().getClientBusinessPhone().contains(insuredPhoneNumber)){
+                                carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone()+" "+carsClient.get().getClientBusinessPhone());
+                                carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 
                             }
-                            //carsClientNew.setClientBusinessPhone(carsPolicy.getph);
+
                         }
-                    });
-                } else {
-                    carsClient.get().setClientBusinessPhone(null);
-                    carsClient.get().setClientMobilePhone(insuredPhoneNumber);
-                }
+                        //carsClientNew.setClientBusinessPhone(carsPolicy.getph);
+                        //     }
+//                    });
+//                }
+//                else {
+//                    carsClient.get().setClientBusinessPhone(null);
+//                    carsClient.get().setClientMobilePhone(insuredPhoneNumber);
+//                }
 
 
 
@@ -1696,14 +1705,14 @@ public class TestService {
         if (!Utility.isEmpty(endorsementTypeCode)) {
             String endorsementTypeCodeeDecoded = Utility
                     .getPropStringValuesWithNotFound("decode." +endorsementTypeCode);
-if(endorsementTypeCodeeDecoded!=null){
-    System.out.println("endorsementTypeCodeeDecoded "+endorsementTypeCodeeDecoded);
-    carsPolicy.setPolicyAction(endorsementTypeCodeeDecoded);
-}
-else{
-    System.out.println("endorsementTypeCodeeDecoded not found ");
-    carsPolicy.setPolicyAction("M");
-}
+            if(endorsementTypeCodeeDecoded!=null){
+                System.out.println("endorsementTypeCodeeDecoded "+endorsementTypeCodeeDecoded);
+                carsPolicy.setPolicyAction(endorsementTypeCodeeDecoded);
+            }
+            else{
+                System.out.println("endorsementTypeCodeeDecoded not found ");
+                carsPolicy.setPolicyAction("M");
+            }
 
 
         } else {
@@ -1723,8 +1732,8 @@ else{
 
 
             }else{
-                            saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
-                    insuranceCode, null);
+                saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
+                        insuranceCode, null);
             }
 
         }
@@ -2136,13 +2145,13 @@ else{
             carsPolicyToSave.setPolicyCar(1);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
-          if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
-              carsPolicyToSave.setPolicyAmendment(-1);
+            if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+                carsPolicyToSave.setPolicyAmendment(-1);
 
-          }else{
-              carsPolicyToSave.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
+            }else{
+                carsPolicyToSave.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
 
-          }
+            }
         } else {
             carsPolicyToSave.setPolicyAmendment(0);
         }
@@ -2623,7 +2632,7 @@ else{
         carsPolicyCoverToInsert.setPolicyCoversCover(cover.getCoverCode());
         //	carsPolicyCoverToInsert.setPolicyCoversOrder(coversOrder);
 
-            carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
+        carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
 
         carsPolicyCoverToInsert.setPolicyCoversDeductible((double) cover.getDeductibleFlatAmount());
         carsPolicyCoverToInsert.setPolicyCoversDeductible100((double) cover.getDeductiblePercentage());
@@ -2908,7 +2917,7 @@ else{
             carsPolicyCoverToInsert.setPolicyCoversCover(carCoverCode);
             carsPolicyCoverToInsert.setPolicyCoversCoverId(CoverCode);
 
-                carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
+            carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
 
             carsPolicyCoverToInsert.setPolicyCoversOrder(((double) cover.getCoverOrder()));
 
@@ -2938,7 +2947,7 @@ else{
             carsPolicySubCoverToInsert.setPolicyCoversCover(CoverCode + "." + subCover.getSubCoverCode());
             carsPolicySubCoverToInsert.setPolicyCoversCoverId(subCoverCode);
 
-                carsPolicySubCoverToInsert.setPolicyCoversSumInsured((long) subCover.getSubCoverSumInsured());
+            carsPolicySubCoverToInsert.setPolicyCoversSumInsured((long) subCover.getSubCoverSumInsured());
 
             carsPolicySubCoverToInsert.setPolicyCoversDeductible((double) subCover.getSubCoverDeductibleFlatAmount());
             carsPolicySubCoverToInsert
