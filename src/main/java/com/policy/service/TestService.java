@@ -833,13 +833,49 @@ public class TestService {
 //                        Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
 //                        if (clientOptional.isPresent()) {
                             if(insuredPhoneNumber!=null  && !insuredPhoneNumber.isEmpty() ){
-                            if(!carsClient.get().getClientMobilePhone().equals(insuredPhoneNumber)||!carsClient.get().getClientBusinessPhone().contains(insuredPhoneNumber)){
-                                carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone()+" "+carsClient.get().getClientBusinessPhone());
-                                carsClient.get().setClientMobilePhone(insuredPhoneNumber);
+                                if((carsClient.get().getClientBusinessPhone().isEmpty()||carsClient.get().getClientBusinessPhone()==null)&& (carsClient.get().getClientMobilePhone()==null||carsClient.get().getClientMobilePhone().isEmpty())){
+                                    carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 
-                            }
+                                }else {
+//                                    if(!carsClient.get().getClientBusinessPhone().isEmpty()||carsClient.get().getClientBusinessPhone()!=null){}
+                                    if(!insuredPhoneNumber.equals(carsClient.get().getClientMobilePhone())) {
+                                        if(carsClient.get().getClientBusinessPhone()!=null&&!carsClient.get().getClientBusinessPhone().isEmpty()) {
+                                            if (!carsClient.get().getClientBusinessPhone().contains(insuredPhoneNumber)) {
+                                                if (carsClient.get().getClientMobilePhone() != null && !carsClient.get().getClientMobilePhone().isEmpty()) {
+                                                    carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone() + " " + carsClient.get().getClientBusinessPhone());
+
+                                                }
+
+                                                carsClient.get().setClientMobilePhone(insuredPhoneNumber);
+                                            }
+
+
+                                        }else{
+                                            if (carsClient.get().getClientMobilePhone() != null && !carsClient.get().getClientMobilePhone().isEmpty()) {
+                                                carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone());
+
+                                            }
+
+                                            carsClient.get().setClientMobilePhone(insuredPhoneNumber);
+                                        }
+
+
+
+
+
+
+
+
+                                    }
+
+
+
+
+                                }
+
 
                         }
+
                         //carsClientNew.setClientBusinessPhone(carsPolicy.getph);
                         //     }
 //                    });
