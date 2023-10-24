@@ -833,14 +833,19 @@ public class TestService {
 //                        Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
 //                        if (clientOptional.isPresent()) {
                                 if(!Utility.isEmpty(insuredPhoneNumber)){
+
                                 if(Utility.isEmpty(carsClient.get().getClientBusinessPhone()) && Utility.isEmpty(carsClient.get().getClientMobilePhone())){
                                     carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 
                                 }else {
+
 //                                    if(!carsClient.get().getClientBusinessPhone().isEmpty()||carsClient.get().getClientBusinessPhone()!=null){}
                                     if(!insuredPhoneNumber.equals(carsClient.get().getClientMobilePhone())) {
+
                                         if(!Utility.isEmpty(carsClient.get().getClientBusinessPhone())) {
+
                                             if (!carsClient.get().getClientBusinessPhone().contains(insuredPhoneNumber)) {
+
                                                 if ( !Utility.isEmpty(carsClient.get().getClientMobilePhone())) {
                                                     carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone() + " " + carsClient.get().getClientBusinessPhone());
 
@@ -858,11 +863,6 @@ public class TestService {
 
                                             carsClient.get().setClientMobilePhone(insuredPhoneNumber);
                                         }
-
-
-
-
-
 
 
 
@@ -1104,16 +1104,20 @@ public class TestService {
             else{
 
 
+
+
+                CarsBlackList carsBlackList = new CarsBlackList();
+
+
                 if (blackListed){
-                    carsBlackListOptional.get().setBlStatus("IN");
+                    carsBlackList.setBlStatus("IN");
 
                 }
                 else{
-                    carsBlackListOptional.get().setBlStatus("OU");
+                    carsBlackList.setBlStatus("OU");
 
                 }
 
-                CarsBlackList carsBlackList = new CarsBlackList();
                 carsBlackList.setBlId(UUID.randomUUID().toString());
                 carsBlackList.setBlInsuranceId(carsBlackListOptional.get().getBlInsuranceId());
                 carsBlackList.setClientNum(carsBlackListOptional.get().getClientNum());
