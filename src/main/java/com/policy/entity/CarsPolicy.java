@@ -182,7 +182,7 @@ private String  policyBlackListedReason ;
 	private java.lang.String policyProduct;
 
 	@Column(name = "POLICY_CLIENT")
-	private java.lang.Long policyClient;
+	private java.lang.String policyClient;
 
 	@Column(name = "POLICY_SECOND_CLIENT")
 	private java.lang.Integer policySecondClient;
@@ -529,11 +529,11 @@ private String  policyBlackListedReason ;
 		this.policyProduct = policyProduct;
 	}
 
-	public java.lang.Long getPolicyClient() {
+	public String getPolicyClient() {
 		return policyClient;
 	}
 
-	public void setPolicyClient(java.lang.Long policyClient) {
+	public void setPolicyClient(String policyClient) {
 		this.policyClient = policyClient;
 	}
 

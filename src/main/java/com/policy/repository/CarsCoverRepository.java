@@ -16,4 +16,6 @@ public interface CarsCoverRepository extends JpaRepository<CarsCover,String>{
 	Optional<CarsCover> findByCoverCodeAndCoverInsuranceId(String coverCode,String coverInsuranceId);
 	
 	Optional<CarsCover> findByCoverIDAndCoverInsurance(String coverId,Integer coverInsurance);
+	Optional<CarsCover> findByCoverCodeAndCoverInsurance(String coverCode,Integer coverInsuranceId);
+
 }

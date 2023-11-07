@@ -52,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "10";
+    public static String insuranceCode = "18";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -298,7 +298,7 @@ public class TestService {
 
                         if (carsPolicyToSearchList != null && !carsPolicyToSearchList.isEmpty()) {
                             String businessType =null;
-                            if(policy.getBusinessType().isPresent()){
+                            if(policy.getBusinessType()!=null){
                                 businessType=policy.getBusinessType().get();
                             }
 
@@ -325,7 +325,7 @@ public class TestService {
                                         ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(),businessType);
                             } else {
                                 String businessType =null;
-                                if(policy.getBusinessType().isPresent()){
+                                if(policy.getBusinessType()!=null){
                                     businessType=policy.getBusinessType().get();
                                 }
                                 policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
@@ -721,7 +721,7 @@ public class TestService {
 //			carsClientNew.setClientNum1(clientCodeNew);
                 String ClientCodeInt = clientCode.replaceAll("-", "");
 
-                String cId = clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0";
+//                String cId = clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0";
 //                List<CarsPolicy> carsPolicyList = db.carsPolicyRepository.findByPolicyClientId(cId);
 //                Set<String > businessPhoneNumbers = new HashSet<>();
 //                StringBuffer stringBuffer=new StringBuffer();
@@ -777,7 +777,7 @@ public class TestService {
 
                 carsClientNew.setClientReference(String.valueOf(clientId));
 
-                carsClientNew.setClientId(clientInsuranceId + "." + Integer.valueOf(ClientCodeInt) + "." + "0");
+                carsClientNew.setClientId(clientInsuranceId + "." + ClientCodeInt + "." + "0");
                 carsClientNew.setClientNum1(clientCode);
 
                 carsClientNew.setClientNum2(Long.valueOf(0));
@@ -1717,7 +1717,7 @@ public class TestService {
         String insuredCode = policyVehicle.getVehicle().getCarInsuredCode();
         if (!Utility.isEmpty(insuredCode)) {
             insuredCode = insuredCode.replace("-", "");
-            carsPolicy.setPolicyClient(Long.valueOf(insuredCode));
+            carsPolicy.setPolicyClient(insuredCode);
         }
 
         // carsPolicy.setPre
@@ -1772,8 +1772,18 @@ public class TestService {
 
 
             }else{
-                saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
-                        insuranceCode, null);
+
+
+
+                if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
+                    String actionTypeDecoded = Utility
+                            .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
+                    carsPolicy.setPolicyAction(actionTypeDecoded);
+                }else{
+                    saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
+                            insuranceCode, null);
+                }
+
             }
 
         }
@@ -2106,7 +2116,7 @@ public class TestService {
         String insuredCode = policyVehicle.getVehicle().getCarInsuredCode();
         if (!Utility.isEmpty(insuredCode)) {
             insuredCode = insuredCode.replace("-", "");
-            carsPolicyToSave.setPolicyClient(Long.valueOf(insuredCode));
+            carsPolicyToSave.setPolicyClient(insuredCode);
         }
         carsPolicyToSave.setPolicyBrokerNum(policyVehicle.getPolicy().getBrokerCode());
 
@@ -2278,8 +2288,20 @@ public class TestService {
 
 
             }else{
-                saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
-                        insuranceCode, null);
+                        if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
+            String actionTypeDecoded = Utility
+                    .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
+            carsPolicyToSave.setPolicyAction(actionTypeDecoded);
+        }else{
+                            saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
+                                    insuranceCode, null);
+                        }
+
+
+
+
+
+
             }
 
         }
@@ -2809,8 +2831,8 @@ public class TestService {
         }
 //		Optional<CarsCover> carsCoverOpt = db.carsCoverRepository
 //				.findByCoverCodeAndCoverInsuranceId(insuranceCode + cover.getCoverCode(), insuranceCode);//byCoverId
-        Optional<CarsCover> carsCoverOpt = db.carsCoverRepository.findByCoverIDAndCoverInsurance(
-                (insuranceCode + "." + cover.getCoverCode()).trim(), Integer.valueOf(insuranceCode));
+        Optional<CarsCover> carsCoverOpt = db.carsCoverRepository.findByCoverCodeAndCoverInsurance(
+                 cover.getCoverCode(), Integer.valueOf(insuranceCode));
 
         if (!carsCoverOpt.isPresent()) {
             CarsCover carsCover = new CarsCover();
@@ -2830,14 +2852,22 @@ public class TestService {
 
             // carsCover.setCoverInsurance(coverInsurance);
             // carsCover.setCoverInsurance();
+
+
             if (!Utility.isEmpty(cover.getTpaCoverTypeCode())) {
                 carsCover.setCoverType(cover.getTpaCoverTypeCode());
             }
+
+
+
+
+
+
 //			else {
 //				saveMessage(policyNo, "Tpa Cover Type Code", "Missing Field", "CARS_COVER", insuranceCode,
 //						certificateNo);
 //			}
-            carsCover.setCoverType(cover.getTpaCoverTypeCode());
+            //carsCover.setCoverType(cover.getTpaCoverTypeCode());
             // carsCover.setCoverState(coverState);
             carsCover.setSysVersionNumber(0);
             carsCover.setSysCreatedBy(CREATED_BY_QUARTZ);
@@ -2857,9 +2887,22 @@ public class TestService {
             if (!Utility.isEmpty(cover.getCoverDesc())) {
                 desc = cover.getCoverDesc().replace("•", "*");
             }
-            if (!Utility.isEmpty(cover.getTpaCoverTypeCode())) {
-                carsCoverOpt.get().setCoverType(cover.getTpaCoverTypeCode());
+
+            String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
+            if(  validatePolicyCoverType.equals("false")){
+      if(Utility.isEmpty(carsCoverOpt.get().getCoverType())){
+    carsCoverOpt.get().setCoverType(cover.getTpaCoverTypeCode());
+     }
+
+            }else{
+
+                if (!Utility.isEmpty(cover.getTpaCoverTypeCode())) {
+                    carsCoverOpt.get().setCoverType(cover.getTpaCoverTypeCode());
+                }
             }
+
+
+
             carsCoverOpt.get().setCoverDescription(desc);
             carsCoverOpt.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
             carsCoverOpt.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
@@ -2870,7 +2913,7 @@ public class TestService {
 
     }
 
-    String validateSubCover(SubCovers subCovers, String Cover, String policyNo, String certificateNo, String coverId) throws Exception {
+    String validateSubCover(SubCovers subCovers, String cover, String policyNo, String certificateNo, String coverId) throws Exception {
 
         if (Utility.isEmpty(subCovers.getSubCoverCode())) {
             // saveMessage(policyNo, "Cover Code", "Blocking Field", "CARS_COVER",
@@ -2891,13 +2934,13 @@ public class TestService {
         }
 //		Optional<CarsCover> carsCoverOpt = db.carsCoverRepository
 //		.findByCoverCodeAndCoverInsuranceId(insuranceCode + cover.getCoverCode(), insuranceCode);//byCoverId
-        Optional<CarsCover> carsCoverOpt = db.carsCoverRepository.findByCoverIDAndCoverInsurance((
-                insuranceCode + "." + Cover.trim() + "." + subCovers.getSubCoverCode()).trim(), Integer.valueOf(insuranceCode));
+        Optional<CarsCover> carsCoverOpt = db.carsCoverRepository.findByCoverCodeAndCoverInsurance(
+                cover + "." + subCovers.getSubCoverCode(), Integer.valueOf(insuranceCode));
 
 
         if (!carsCoverOpt.isPresent()) {
             CarsCover carsCover = new CarsCover();
-            carsCover.setCoverCode(Cover + "." + subCovers.getSubCoverCode());// jean
+            carsCover.setCoverCode(cover + "." + subCovers.getSubCoverCode());// jean
             // carsCover.setCoverCode("test");
             carsCover.setCoverInsurance(Integer.valueOf(insuranceCode));
             carsCover.setCoverInsuranceId(insuranceCode);
@@ -2905,7 +2948,7 @@ public class TestService {
             carsCover.setCoverDescription(subCovers.getSubCoverDesc());
             // carsCover.setCoverID(cover.getCoverID().toString());
 
-            carsCover.setCoverID((insuranceCode + "." + Cover.trim() + "." + subCovers.getSubCoverCode().toString()).trim());
+            carsCover.setCoverID((insuranceCode + "." + cover.trim() + "." + subCovers.getSubCoverCode().toString()).trim());
             carsCover.setCoverReference(subCovers.getSubCoverID().toString());
             // carsCover.setCoverInsuranceId(insuranceCode);
             // carsCover.setCoverInsurance(coverInsurance);
@@ -3477,16 +3520,55 @@ public class TestService {
 
 
                         if (Utility.isEmpty(covers.getTpaCoverTypeCode())) {
-                            error.append(" Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
-                                    + " , cover code " + covers.getCoverCode() +
-                                    " and cover name " + covers.getCoverDesc() +
+                            //todo  today
+                            String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
+                            if(  validatePolicyCoverType.equals("false")){
+                              Optional<CarsCover> carsCoverOptional= db.carsCoverRepository.findById(covers.getCoverID().toString());
+                              if(carsCoverOptional.isPresent()){
+                                  if (Utility.isEmpty(carsCoverOptional.get().getCoverType())){
+                                      error.append(" Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
+                                              + " , cover code " + covers.getCoverCode() +
+                                              " and cover name " + covers.getCoverDesc() +
 
-                                    " is missing " + " *This message is Informative* \n \n");
+                                              " is missing " + " *This message is Informative* \n \n");
 
 
-                            carsErrorlogService.insertError(companyName + " Policy Upload policy " + Identifier
-                                    + " Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
-                                    + " is missing ", insuranceCode, "CARS_COVER", "Informative Missing");
+                                      carsErrorlogService.insertError(companyName + " Policy Upload policy " + Identifier
+                                              + " Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
+                                              + " is missing ", insuranceCode, "CARS_COVER", "Informative Missing");
+                                  }
+
+                              }else {
+                                  error.append(" Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
+                                          + " , cover code " + covers.getCoverCode() +
+                                          " and cover name " + covers.getCoverDesc() +
+
+                                          " is missing " + " *This message is Informative* \n \n");
+
+
+                                  carsErrorlogService.insertError(companyName + " Policy Upload policy " + Identifier
+                                          + " Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
+                                          + " is missing ", insuranceCode, "CARS_COVER", "Informative Missing");
+                              }
+
+                            }else{
+                                error.append(" Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
+                                        + " , cover code " + covers.getCoverCode() +
+                                        " and cover name " + covers.getCoverDesc() +
+
+                                        " is missing " + " *This message is Informative* \n \n");
+
+
+                                carsErrorlogService.insertError(companyName + " Policy Upload policy " + Identifier
+                                        + " Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
+                                        + " is missing ", insuranceCode, "CARS_COVER", "Informative Missing");
+
+                            }
+
+
+
+
+
                             // saveMessage(policyNo, "Tpa Cover Type Code", "Missing Field", "CARS_COVER",
                             // insuranceCode,
                             // certificateNo);
