@@ -52,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "18";
+    public static String insuranceCode = "11";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -186,7 +186,13 @@ public class TestService {
                                 vehicles.setModelToPrint(savedVehicle.getModelToPrint());
                                 vehicles.setCarYear(savedVehicle.getCarYear());
                                 vehicles.setCarPlateNumber(savedVehicle.getCarPlateNumber());
-                                vehicles.setCarPlatePrefix(savedVehicle.getCarPlatePrefix());
+                                if(savedVehicle.getCarPlatePrefix()==null){
+                                    vehicles.setCarPlatePrefix("");
+
+                                }else{
+                                    vehicles.setCarPlatePrefix(savedVehicle.getCarPlatePrefix());
+
+                                }
                                 vehicles.setCarUsage(savedVehicle.getCarUsage());
                                 newVehicles.add(vehicles);
                             });
@@ -1716,7 +1722,7 @@ public class TestService {
         carsPolicy.setPolicyProduct(subLineCode);// ask jean size should be 4
         String insuredCode = policyVehicle.getVehicle().getCarInsuredCode();
         if (!Utility.isEmpty(insuredCode)) {
-            insuredCode = insuredCode.replace("-", "");
+//            insuredCode = insuredCode.replace("-", "");
             carsPolicy.setPolicyClient(insuredCode);
         }
 
@@ -2115,7 +2121,7 @@ public class TestService {
         carsPolicyToSave.setPolicyNumberSpecialNotes(policyVehicle.getPolicy().getMopNote());
         String insuredCode = policyVehicle.getVehicle().getCarInsuredCode();
         if (!Utility.isEmpty(insuredCode)) {
-            insuredCode = insuredCode.replace("-", "");
+//            insuredCode = insuredCode.replace("-", "");
             carsPolicyToSave.setPolicyClient(insuredCode);
         }
         carsPolicyToSave.setPolicyBrokerNum(policyVehicle.getPolicy().getBrokerCode());
@@ -2734,7 +2740,7 @@ public class TestService {
         if (!Utility.isEmpty(clause.getContent())) {
 
 
-            if (clause.getContent().length() < 3999) {
+            if (clause.getContent().length() < 3500) {
                 CarsPolicyWordingD carsPolicyWordingDToInsert = new CarsPolicyWordingD();
                 carsPolicyWordingDToInsert.setPolicyWordingDId(UUID.randomUUID().toString());
                 carsPolicyWordingDToInsert.setPolicyWordingHId(carsPolicyWordingHToInsert.getPolicyWordingHId());
@@ -2762,8 +2768,8 @@ public class TestService {
                     CarsPolicyWordingD carsPolicyWordingDToInsert = new CarsPolicyWordingD();
                     carsPolicyWordingDToInsert.setPolicyWordingDId(UUID.randomUUID().toString());
                     carsPolicyWordingDToInsert.setPolicyWordingHId(carsPolicyWordingHToInsert.getPolicyWordingHId());
-                    carsPolicyWordingDToInsert.setPolicyWordingDFreeText(convertText(clause.getContent().substring(index, Math.min(index + 4000, clause.getContent().length()))));
-                    carsPolicyWordingDToInsert.setPolicyWordingDHtml(clause.getContent().substring(index, Math.min(index + 4000, clause.getContent().length())));
+                    carsPolicyWordingDToInsert.setPolicyWordingDFreeText(convertText(clause.getContent().substring(index, Math.min(index + 3501, clause.getContent().length()))));
+                    carsPolicyWordingDToInsert.setPolicyWordingDHtml(clause.getContent().substring(index, Math.min(index + 3501, clause.getContent().length())));
                     //carsPolicyWordingDToInsert.setPolicyWordingDLong(clause.getContent());
                     carsPolicyWordingDToInsert.setPolicyWordingDLine(Integer.valueOf(clause.getOrder()));
                     carsPolicyWordingDToInsert.setSysVersionNumber(0);
@@ -2773,7 +2779,7 @@ public class TestService {
                     carsPolicyWordingDToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
                     db.carsPolicyWordingDRepository.save(carsPolicyWordingDToInsert);
                     //    strings.add(clause.getContent().substring(index, Math.min(index + 3900,clause.getContent().length())));
-                    index += 4000;
+                    index += 3501;
                 }
 
 
@@ -2956,6 +2962,17 @@ public class TestService {
             if (!Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
                 carsCover.setCoverType(subCovers.getTpaSubCoverTypeCode());
             }
+
+
+
+
+
+
+
+
+
+
+
 //			else {
 //				saveMessage(policyNo, "Tpa SubCover Type Code", "Missing Field", "CARS_COVER", insuranceCode,
 //						certificateNo);
@@ -2979,11 +2996,39 @@ public class TestService {
 
         if (carsCoverOpt.isPresent()) {
             carsCoverOpt.get().setCoverDescription(subCovers.getSubCoverDesc());
-            if (!Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
-                carsCoverOpt.get().setCoverType(subCovers.getTpaSubCoverTypeCode());
+
+
+
+//            if (!Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
+//                carsCoverOpt.get().setCoverType(subCovers.getTpaSubCoverTypeCode());
+//            }
+            String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
+            if(  validatePolicyCoverType.equals("false")){
+                if(Utility.isEmpty(carsCoverOpt.get().getCoverType())){
+                    carsCoverOpt.get().setCoverType(subCovers.getTpaSubCoverTypeCode());
+                }
+
+            }else{
+
+                if (!Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
+                    carsCoverOpt.get().setCoverType(subCovers.getTpaSubCoverTypeCode());
+                }
             }
+
+
+
+
             carsCoverOpt.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
             carsCoverOpt.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+
+
+
+
+
+
+
+
+
             db.carsCoverRepository.save(carsCoverOpt.get());
 
         }
@@ -3523,7 +3568,7 @@ public class TestService {
                             //todo  today
                             String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
                             if(  validatePolicyCoverType.equals("false")){
-                              Optional<CarsCover> carsCoverOptional= db.carsCoverRepository.findById(covers.getCoverID().toString());
+                              Optional<CarsCover> carsCoverOptional= db.carsCoverRepository.findByCoverCodeAndCoverInsurance(covers.getCoverCode(),Integer.parseInt(insuranceCode));
                               if(carsCoverOptional.isPresent()){
                                   if (Utility.isEmpty(carsCoverOptional.get().getCoverType())){
                                       error.append(" Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
@@ -3622,22 +3667,99 @@ public class TestService {
                                     // insuranceCode, certificateNo);
                                     // throw new Exception("Error :");
                                 }
-                                if (Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
-                                    error.append(" Tpa SubCover Type Code in Vehicle Certificate Number "
-                                            + certificateNo +
-                                            " , cover code " + covers.getCoverCode() +
-                                            " and cover name " + covers.getCoverDesc() +
 
-                                            " is missing " + " *This message is Informative* \n \n");
-                                    carsErrorlogService.insertError(
-                                            companyName + " Policy Upload policy " + Identifier
-                                                    + " Tpa SubCover Type Code in Vehicle Certificate Number "
-                                                    + certificateNo + " is missing ",
-                                            insuranceCode, "CARS_COVER", "Informative Missing");
+
+
+
+
+
+
+                                if (Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
+
+
+
+                                    String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
+
+                                    if(  validatePolicyCoverType.equals("false")){
+                                        Optional<CarsCover> carsCoverOptional= db.carsCoverRepository.findByCoverCodeAndCoverInsurance(covers.getCoverCode()+"."+subCovers.getSubCoverCode(),Integer.parseInt(insuranceCode));
+                                        if(carsCoverOptional.isPresent()){
+                                            if (Utility.isEmpty(carsCoverOptional.get().getCoverType())){
+                                                error.append(" Tpa SubCover Type Code in Vehicle Certificate Number "
+                                                        + certificateNo +
+                                                        " , cover code " + covers.getCoverCode() +
+                                                        " and cover name " + covers.getCoverDesc() +
+
+                                                        " is missing " + " *This message is Informative* \n \n");
+                                                carsErrorlogService.insertError(
+                                                        companyName + " Policy Upload policy " + Identifier
+                                                                + " Tpa SubCover Type Code in Vehicle Certificate Number "
+                                                                + certificateNo + " is missing ",
+                                                        insuranceCode, "CARS_COVER", "Informative Missing");
+                                            }
+
+                                        }else {
+                                            error.append(" Tpa SubCover Type Code in Vehicle Certificate Number "
+                                                    + certificateNo +
+                                                    " , cover code " + covers.getCoverCode() +
+                                                    " and cover name " + covers.getCoverDesc() +
+
+                                                    " is missing " + " *This message is Informative* \n \n");
+                                            carsErrorlogService.insertError(
+                                                    companyName + " Policy Upload policy " + Identifier
+                                                            + " Tpa SubCover Type Code in Vehicle Certificate Number "
+                                                            + certificateNo + " is missing ",
+                                                    insuranceCode, "CARS_COVER", "Informative Missing");
+                                        }
+
+                                    }else{
+                                        error.append(" Tpa SubCover Type Code in Vehicle Certificate Number "
+                                                + certificateNo +
+                                                " , cover code " + covers.getCoverCode() +
+                                                " and cover name " + covers.getCoverDesc() +
+
+                                                " is missing " + " *This message is Informative* \n \n");
+                                        carsErrorlogService.insertError(
+                                                companyName + " Policy Upload policy " + Identifier
+                                                        + " Tpa SubCover Type Code in Vehicle Certificate Number "
+                                                        + certificateNo + " is missing ",
+                                                insuranceCode, "CARS_COVER", "Informative Missing");
+
+                                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                     // saveMessage(policyNo, "Tpa Cover Type Code", "Missing Field", "CARS_COVER",
                                     // insuranceCode,
                                     // certificateNo);
+
+
+
+
                                 }
+
+
                             }
                         }
 
