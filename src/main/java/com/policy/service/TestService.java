@@ -138,6 +138,7 @@ public class TestService {
 
                         branchCodeNew = branchCodeNew.replaceFirst("^0+(?=.)", "");
 
+
                         List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policy.getPolicyNo(),branchCodeNew);
                         List<Vehicles> newVehicles = new ArrayList<>();
                         int certId=0;
@@ -202,7 +203,15 @@ public class TestService {
                         }
                         System.out.println("set succcess");
 
+
                         policy.setVehicles(newVehicles);
+                   Date  policyExpDate=     db.carsPolicyRepository.policyExpDate(policy.getPolicyID().toString(),policy.getBranchCode(),policy.getInsuredCode());
+                        if(policyExpDate!=null) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                            String formattedDate = sdf.format(policyExpDate);
+                            System.out.println("new Formated expiration date for cancelation ");
+                            policy.setPolDateExpiry(formattedDate);
+                        }
 
                     }
                 }
@@ -1206,8 +1215,9 @@ public class TestService {
                 carsBlackList.setBlStatus("IN");
                 carsBlackList.setBlReason(reason);
                 try {
+                    if(!Utility.isEmpty(setOn)){
                     Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
-                    carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
+                    carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));}
 
                 } catch (ParseException e) {
                     e.printStackTrace();
