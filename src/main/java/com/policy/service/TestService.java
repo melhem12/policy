@@ -52,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "11";
+    public static String insuranceCode = "10";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -133,6 +133,13 @@ public class TestService {
             for (Policy policy : policies.getPolicies()) {
                 if (policy.getEndorsementTypeCode()!=null) {
                     if (policy.getEndorsementTypeCode().equals("C")) {
+                        Date  policyExpDate=     db.carsPolicyRepository.policyExpDate(policy.getPolicyNo().toString(),policy.getBranchCode(),insuranceCode);
+                        if(policyExpDate!=null) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                            String formattedDate = sdf.format(policyExpDate);
+                            System.out.println("new Formated expiration date for cancelation "+formattedDate);
+                            policy.setPolDateExpiry(formattedDate);
+                        }
                         System.out.println("my policy No  "+ policy.getPolicyNo());
                         String branchCodeNew = policy.getBranchCode();
 
@@ -205,13 +212,7 @@ public class TestService {
 
 
                         policy.setVehicles(newVehicles);
-                   Date  policyExpDate=     db.carsPolicyRepository.policyExpDate(policy.getPolicyID().toString(),policy.getBranchCode(),policy.getInsuredCode());
-                        if(policyExpDate!=null) {
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                            String formattedDate = sdf.format(policyExpDate);
-                            System.out.println("new Formated expiration date for cancelation ");
-                            policy.setPolDateExpiry(formattedDate);
-                        }
+
 
                     }
                 }
@@ -1241,13 +1242,14 @@ public class TestService {
 
                 carsBroker.get().setBlFamilyName(brokerName);
                 carsBroker.get().setBlReason(reason);
+                if(!Utility.isEmpty(setOn)){
                 try {
                     Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
                     carsBroker.get().setBlDate(new Timestamp(setOnn.getTime()));
 
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }}
                 carsBroker.get().setBlNote(note);
 
                 carsBroker.get().setBlSetBy(setBy);
@@ -1280,6 +1282,7 @@ public class TestService {
 
                 }
                 carsBlackList.setBlReason(reason);
+
                 try {
                     if(!Utility.isEmpty(setOn)){
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
@@ -2825,6 +2828,7 @@ public class TestService {
 
             Collection<CarsPolicyWordingD> carsPolicyWordingDList = db.carsPolicyWordingDRepository
                     .findByPolicyWordingHId(carsPolicyWordingHToDelete.getPolicyWordingHId());
+
             if (carsPolicyWordingDList != null) {
                 Iterator<CarsPolicyWordingD> carsPolicyWordingDIterator = carsPolicyWordingDList.iterator();
                 while (carsPolicyWordingDIterator.hasNext()) {
@@ -3870,7 +3874,9 @@ public class TestService {
 
                     carsBroker.get().setBlReason(policyListhing.getReason());
                     carsBroker.get().setBlNote(policyListhing.getNote());
+                    if(!Utility.isEmpty(policyListhing.getSetOn())){
                     try {
+
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                         carsBroker.get().setBlDate(new Timestamp(setOnn.getTime()));
 
@@ -3880,6 +3886,8 @@ public class TestService {
 
                         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
                     }
+                    }
+
                     carsBroker.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
                     carsBroker.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
                     response = "Broker Black Listing Status Updated";
