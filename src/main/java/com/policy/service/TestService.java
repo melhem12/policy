@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -1055,7 +1056,7 @@ public class TestService {
                 carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                if (insBlackSetOn != null) {
+                if(!Utility.isEmpty(insBlackSetOn)){
                     try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(insBlackSetOn);
                         carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -1098,7 +1099,7 @@ public class TestService {
                 }
 
 
-                if (insBlackSetOn != null) {
+                if (!Utility.isEmpty(insBlackSetOn)) {
                     try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(insBlackSetOn);
                         carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
@@ -1163,7 +1164,7 @@ public class TestService {
                 carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                if (insBlackSetOn != null) {
+                if (!Utility.isEmpty(insBlackSetOn)) {
                     try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(insBlackSetOn);
                         carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -1215,15 +1216,15 @@ public class TestService {
                 carsBlackList.setBlFamilyName(brokerName);
                 carsBlackList.setBlStatus("IN");
                 carsBlackList.setBlReason(reason);
-                try {
-                    if(!Utility.isEmpty(setOn)){
-                    Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
-                    carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));}
+                if(!Utility.isEmpty(setOn)) {
+                    try {
+                        Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
+                        carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
-
                 carsBlackList.setBlNote(note);
 
                 carsBlackList.setBlSetBy(setBy);
@@ -1249,7 +1250,8 @@ public class TestService {
 
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }}
+                }
+                }
                 carsBroker.get().setBlNote(note);
 
                 carsBroker.get().setBlSetBy(setBy);
@@ -1282,15 +1284,16 @@ public class TestService {
 
                 }
                 carsBlackList.setBlReason(reason);
-
+                if(!Utility.isEmpty(setOn)){
                 try {
-                    if(!Utility.isEmpty(setOn)){
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
                         carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
-                    }
 
-                } catch (ParseException e) {
+
+                }
+                catch (ParseException e) {
                     e.printStackTrace();
+                }
                 }
 
                 carsBlackList.setBlNote(note);
@@ -3914,6 +3917,7 @@ public class TestService {
                     }
 
                     carsBlackList.setBlReason(policyListhing.getReason());
+                    if(!Utility.isEmpty(policyListhing.getSetOn())){
                     try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                         carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -3924,6 +3928,7 @@ public class TestService {
                         response = "error in date format dd-MM-yyyy ";
 
                         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                    }
                     }
 
                     carsBlackList.setBlNote(policyListhing.getNote());
@@ -3985,6 +3990,7 @@ public class TestService {
                     }
 
                     carsBlackList.setBlReason(policyListhing.getReason());
+                    if(!Utility.isEmpty(policyListhing.getSetOn())){
                     try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                         carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -3995,6 +4001,7 @@ public class TestService {
                         response = "error in date format dd-MM-yyyy ";
 
                         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                    }
                     }
 
                     carsBlackList.setBlNote(policyListhing.getNote());
@@ -4065,6 +4072,7 @@ public class TestService {
                     carsBlackListOptional.get().setBlNote(policyListhing.getNote());
                     carsBlackListOptional.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
                     carsBlackListOptional.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                    if(!Utility.isEmpty(policyListhing.getSetOn())){
                     try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                         carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
@@ -4075,7 +4083,7 @@ public class TestService {
                         response = "error in date format dd-MM-yyyy ";
 
                         return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
-                    }
+                    }}
                     db.carsBlackListRepository.save(carsBlackListOptional.get());
 
                     response = "CLIENT Black Listing Status Updated";
@@ -4107,7 +4115,7 @@ public class TestService {
                     }
 
 
-                    if (policyListhing.getSetOn() != null) {
+                    if (!Utility.isEmpty(policyListhing.getSetOn())) {
                         try {
                             Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                             carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -4165,7 +4173,7 @@ public class TestService {
                     carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                    if (policyListhing.getSetOn() != null) {
+                    if(!Utility.isEmpty(policyListhing.getSetOn())){
                         try {
                             Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                             carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -4244,15 +4252,18 @@ public class TestService {
                     carsBlackListOptional.get().setBlNote(policyListhing.getNote());
                     carsBlackListOptional.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
                     carsBlackListOptional.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
-                    try {
-                        Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
-                        carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
+                    if(!Utility.isEmpty(policyListhing.getSetOn())) {
 
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                        response = "error in date format dd-MM-yyyy ";
+                        try {
+                            Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
+                            carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
 
-                        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            response = "error in date format dd-MM-yyyy ";
+
+                            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                        }
                     }
                     db.carsBlackListRepository.save(carsBlackListOptional.get());
 
@@ -4291,7 +4302,7 @@ public class TestService {
                     carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                    if (policyListhing.getSetOn() != null) {
+                    if(!Utility.isEmpty(policyListhing.getSetOn())){
                         try {
                             Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                             carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -4349,7 +4360,7 @@ public class TestService {
                     carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                    if (policyListhing.getSetOn() != null) {
+                    if(!Utility.isEmpty(policyListhing.getSetOn())){
                         try {
                             Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                             carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -4400,15 +4411,18 @@ public class TestService {
                         }
                         carsBlackListOptional.get(0).setBlReason(policyListhing.getReason());
                         carsBlackListOptional.get(0).setBlNote(policyListhing.getNote());
-                        try {
-                            Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
-                            carsBlackListOptional.get(0).setBlDate(new Timestamp(setOnn.getTime()));
+                        if(!Utility.isEmpty(policyListhing.getSetOn())) {
 
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                            response = "error in date format dd-MM-yyyy ";
+                            try {
+                                Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
+                                carsBlackListOptional.get(0).setBlDate(new Timestamp(setOnn.getTime()));
 
-                            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                                response = "error in date format dd-MM-yyyy ";
+
+                                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                            }
                         }
                         carsBlackListOptional.get(0).setSysUpdatedBy(CREATED_BY_QUARTZ);
                         carsBlackListOptional.get(0).setSysUpdatedDate(new Timestamp(new Date().getTime()));
@@ -4454,7 +4468,7 @@ public class TestService {
                         carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                        if (policyListhing.getSetOn() != null) {
+                        if(!Utility.isEmpty(policyListhing.getSetOn())){
                             try {
                                 Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                                 carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -4519,7 +4533,7 @@ public class TestService {
                         carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                        if (policyListhing.getSetOn() != null) {
+                        if(!Utility.isEmpty(policyListhing.getSetOn())){
                             try {
                                 Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                                 carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
