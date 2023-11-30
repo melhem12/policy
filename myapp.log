@@ -1,124 +1,127 @@
-2023-09-20 08:47:56.628  INFO 12756 --- [restartedMain] com.policy.PolicyApplication             : Starting PolicyApplication using Java 18.0.2 on LAPTOP-36GVHL99 with PID 12756 (C:\Users\Claims\Downloads\policy\target\classes started by Claims in C:\Users\Claims\Downloads\policy)
-2023-09-20 08:47:56.638  INFO 12756 --- [restartedMain] com.policy.PolicyApplication             : No active profile set, falling back to default profiles: default
-2023-09-20 08:47:56.731  INFO 12756 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Claims\.m2\repository\com\oracle\database\jdbc\ojdbc8\21.1.0.0\ojdbc8-21.1.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Claims/.m2/repository/com/oracle/database/jdbc/ojdbc8/21.1.0.0/oraclepki.jar
-2023-09-20 08:47:56.732  INFO 12756 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Claims\.m2\repository\com\oracle\ojdbc\orai18n\19.3.0.0\orai18n-19.3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-mapping.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-utility.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-collation.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-translation.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-net.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-servlet.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-lcsd.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-tools.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/gdk_custom.jar
-2023-09-20 08:47:56.732  INFO 12756 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2023-09-20 08:47:56.732  INFO 12756 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2023-09-20 08:47:58.809  INFO 12756 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-09-20 08:47:59.037  INFO 12756 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 213 ms. Found 28 JPA repository interfaces.
-2023-09-20 08:48:00.078  INFO 12756 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
-2023-09-20 08:48:00.090  INFO 12756 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-09-20 08:48:00.091  INFO 12756 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
-2023-09-20 08:48:00.196  INFO 12756 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-09-20 08:48:00.197  INFO 12756 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3464 ms
-2023-09-20 08:48:00.448  INFO 12756 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-09-20 08:48:00.453  WARN 12756 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
-2023-09-20 08:48:01.641 ERROR 12756 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+2023-11-29 12:07:50.454  INFO 24532 --- [restartedMain] com.policy.PolicyApplication             : Starting PolicyApplication using Java 18.0.2 on LAPTOP-36GVHL99 with PID 24532 (C:\Users\Claims\Downloads\policy\target\classes started by Claims in C:\Users\Claims\Downloads\policy)
+2023-11-29 12:07:50.471  INFO 24532 --- [restartedMain] com.policy.PolicyApplication             : No active profile set, falling back to default profiles: default
+2023-11-29 12:07:50.558  INFO 24532 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Claims\.m2\repository\com\oracle\database\jdbc\ojdbc8\21.1.0.0\ojdbc8-21.1.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Claims/.m2/repository/com/oracle/database/jdbc/ojdbc8/21.1.0.0/oraclepki.jar
+2023-11-29 12:07:50.559  INFO 24532 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Claims\.m2\repository\com\oracle\ojdbc\orai18n\19.3.0.0\orai18n-19.3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-mapping.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-utility.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-collation.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-translation.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-net.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-servlet.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-lcsd.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-tools.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/gdk_custom.jar
+2023-11-29 12:07:50.559  INFO 24532 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-11-29 12:07:50.559  INFO 24532 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-11-29 12:07:53.165  INFO 24532 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-29 12:07:53.513  INFO 24532 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 331 ms. Found 28 JPA repository interfaces.
+2023-11-29 12:07:54.800  INFO 24532 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
+2023-11-29 12:07:54.817  INFO 24532 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-29 12:07:54.818  INFO 24532 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2023-11-29 12:07:54.939  INFO 24532 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-29 12:07:54.940  INFO 24532 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4380 ms
+2023-11-29 12:07:55.284  INFO 24532 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-29 12:07:55.293  WARN 24532 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2023-11-29 12:07:55.705  INFO 24532 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-29 12:07:55.793  INFO 24532 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-29 12:07:55.866  INFO 24532 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2023-11-29 12:07:56.077  INFO 24532 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-11-29 12:07:56.240  INFO 24532 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
+2023-11-29 12:07:57.997  INFO 24532 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-29 12:07:58.009  INFO 24532 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:08:00.137  WARN 24532 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-29 12:08:00.344  INFO 24532 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-11-29 12:08:00.599  INFO 24532 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3f9b3794, org.springframework.security.web.context.SecurityContextPersistenceFilter@4c778808, org.springframework.security.web.header.HeaderWriterFilter@40b438e6, org.springframework.security.web.authentication.logout.LogoutFilter@54187ed3, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@19e52edd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2aa1924d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@722d2898, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4026ab84, org.springframework.security.web.session.SessionManagementFilter@314670f0, org.springframework.security.web.access.ExceptionTranslationFilter@77848f23, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@70ae1ca0]
+2023-11-29 12:08:00.724  INFO 24532 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-11-29 12:08:01.061  INFO 24532 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
+2023-11-29 12:08:01.063  INFO 24532 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2023-11-29 12:08:01.093  INFO 24532 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2023-11-29 12:08:01.125  INFO 24532 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-11-29 12:08:01.393  INFO 24532 --- [restartedMain] com.policy.PolicyApplication             : Started PolicyApplication in 11.585 seconds (JVM running for 12.504)
+2023-11-29 12:08:15.386  INFO 24532 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-29 12:08:15.386  INFO 24532 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-29 12:08:15.387  INFO 24532 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2023-11-29 12:08:38.517  INFO 24532 --- [http-nio-8083-exec-1] com.policy.controller.testController     : Inside Validation
+2023-11-29 12:08:38.641 ERROR 24532 --- [http-nio-8083-exec-1] com.policy.service.TestService           : java.lang.NumberFormatException: For input string: "HO"
+2023-11-29 12:11:12.118  INFO 24532 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:11:12.121  INFO 24532 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-29 12:11:12.215  INFO 24532 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-29 12:11:44.747  INFO 11164 --- [restartedMain] com.policy.PolicyApplication             : Starting PolicyApplication using Java 18.0.2 on LAPTOP-36GVHL99 with PID 11164 (C:\Users\Claims\Downloads\policy\target\classes started by Claims in C:\Users\Claims\Downloads\policy)
+2023-11-29 12:11:44.751  INFO 11164 --- [restartedMain] com.policy.PolicyApplication             : No active profile set, falling back to default profiles: default
+2023-11-29 12:11:44.848  INFO 11164 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Claims\.m2\repository\com\oracle\database\jdbc\ojdbc8\21.1.0.0\ojdbc8-21.1.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Claims/.m2/repository/com/oracle/database/jdbc/ojdbc8/21.1.0.0/oraclepki.jar
+2023-11-29 12:11:44.848  INFO 11164 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Claims\.m2\repository\com\oracle\ojdbc\orai18n\19.3.0.0\orai18n-19.3.0.0.jar referenced one or more files that do not exist: file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-mapping.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-utility.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-collation.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-translation.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-net.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-servlet.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-lcsd.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/orai18n-tools.jar,file:/C:/Users/Claims/.m2/repository/com/oracle/ojdbc/orai18n/19.3.0.0/gdk_custom.jar
+2023-11-29 12:11:44.848  INFO 11164 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-11-29 12:11:44.848  INFO 11164 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-11-29 12:11:46.634  INFO 14980 --- [main] com.policy.PolicyApplicationTests        : Starting PolicyApplicationTests using Java 18.0.2 on LAPTOP-36GVHL99 with PID 14980 (started by Claims in C:\Users\Claims\Downloads\policy)
+2023-11-29 12:11:46.639  INFO 14980 --- [main] com.policy.PolicyApplicationTests        : No active profile set, falling back to default profiles: default
+2023-11-29 12:11:47.507  INFO 11164 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-29 12:11:47.794  INFO 11164 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 272 ms. Found 28 JPA repository interfaces.
+2023-11-29 12:11:48.394  INFO 14980 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-29 12:11:48.692  INFO 14980 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 282 ms. Found 28 JPA repository interfaces.
+2023-11-29 12:11:49.171  INFO 11164 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
+2023-11-29 12:11:49.196  INFO 11164 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-29 12:11:49.196  INFO 11164 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2023-11-29 12:11:49.360  INFO 11164 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-29 12:11:49.360  INFO 11164 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4511 ms
+2023-11-29 12:11:49.822  INFO 11164 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-29 12:11:49.830  WARN 11164 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2023-11-29 12:11:49.974  INFO 14980 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-29 12:11:49.989  WARN 14980 --- [main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2023-11-29 12:11:50.289  INFO 11164 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-29 12:11:50.391  INFO 11164 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-29 12:11:50.467  INFO 11164 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2023-11-29 12:11:50.517  INFO 14980 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-29 12:11:50.677  INFO 14980 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-29 12:11:50.728  INFO 11164 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-11-29 12:11:50.797  INFO 14980 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2023-11-29 12:11:50.932  INFO 11164 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
+2023-11-29 12:11:51.040  INFO 14980 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-11-29 12:11:51.229  INFO 14980 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
+2023-11-29 12:11:53.131  INFO 11164 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-29 12:11:53.146  INFO 11164 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:11:53.540  INFO 14980 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-29 12:11:53.556  INFO 14980 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:11:56.459  WARN 11164 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-29 12:11:56.807  INFO 11164 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-11-29 12:11:56.817  WARN 14980 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-29 12:11:57.110  INFO 11164 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1deedca9, org.springframework.security.web.context.SecurityContextPersistenceFilter@3326c0ff, org.springframework.security.web.header.HeaderWriterFilter@5943f645, org.springframework.security.web.authentication.logout.LogoutFilter@5f7d494e, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@69b537f6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@196ef08, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@58ec384f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3b580e14, org.springframework.security.web.session.SessionManagementFilter@62d8ecfb, org.springframework.security.web.access.ExceptionTranslationFilter@360c0c6b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7672b570]
+2023-11-29 12:11:57.271  INFO 11164 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-11-29 12:11:57.274  INFO 14980 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-11-29 12:11:57.615  INFO 11164 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
+2023-11-29 12:11:57.616  INFO 11164 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2023-11-29 12:11:57.643  INFO 11164 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2023-11-29 12:11:57.647  INFO 14980 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@d15f98a, org.springframework.security.web.context.SecurityContextPersistenceFilter@75c8ba94, org.springframework.security.web.header.HeaderWriterFilter@5a1e28ee, org.springframework.security.web.authentication.logout.LogoutFilter@4bb747c1, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@34d776eb, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4c666872, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@e6d9c25, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@704c3ca2, org.springframework.security.web.session.SessionManagementFilter@4eef2522, org.springframework.security.web.access.ExceptionTranslationFilter@635900ef, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7934164c]
+2023-11-29 12:11:57.681  INFO 11164 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-11-29 12:11:58.008  INFO 11164 --- [restartedMain] com.policy.PolicyApplication             : Started PolicyApplication in 14.168 seconds (JVM running for 16.965)
+2023-11-29 12:11:58.445  INFO 14980 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2023-11-29 12:11:58.465  INFO 14980 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2023-11-29 12:11:58.491  INFO 14980 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-11-29 12:11:58.714  INFO 14980 --- [main] com.policy.PolicyApplicationTests        : Started PolicyApplicationTests in 12.585 seconds (JVM running for 14.08)
+2023-11-29 12:11:58.955  INFO 14980 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:11:58.956  INFO 14980 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-29 12:11:58.993  INFO 14980 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-29 12:12:01.573  INFO 11164 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-29 12:12:01.574  INFO 11164 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-29 12:12:01.575  INFO 11164 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-11-29 12:12:01.771  INFO 11164 --- [http-nio-8083-exec-1] com.policy.controller.testController     : Inside Validation
+2023-11-29 12:12:51.805  INFO 11164 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:12:51.813  INFO 11164 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-29 12:12:51.932  INFO 11164 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-29 12:12:57.668  INFO 11164 --- [restartedMain] com.policy.PolicyApplication             : Starting PolicyApplication using Java 18.0.2 on LAPTOP-36GVHL99 with PID 11164 (C:\Users\Claims\Downloads\policy\target\classes started by Claims in C:\Users\Claims\Downloads\policy)
+2023-11-29 12:12:57.669  INFO 11164 --- [restartedMain] com.policy.PolicyApplication             : No active profile set, falling back to default profiles: default
+2023-11-29 12:12:57.895  INFO 11164 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-29 12:12:57.896  INFO 11164 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 0 ms. Found 0 JPA repository interfaces.
+2023-11-29 12:12:58.015  INFO 11164 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
+2023-11-29 12:12:58.017  INFO 11164 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-29 12:12:58.017  INFO 11164 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2023-11-29 12:12:58.060  INFO 11164 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-29 12:12:58.060  INFO 11164 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 388 ms
+2023-11-29 12:12:58.106  INFO 11164 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2023-11-29 12:12:58.107  WARN 11164 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2023-11-29 12:12:58.139  INFO 11164 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2023-11-29 12:12:58.141  INFO 11164 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-29 12:12:58.155  WARN 11164 --- [restartedMain] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
 
-java.sql.SQLRecoverableException: IO Error: The Network Adapter could not establish the connection (CONNECTION_ID=ODRjOu04TqGkpPSblpAvWg==)
-	at oracle.jdbc.driver.T4CConnection.handleLogonNetException(T4CConnection.java:870) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:675) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:1032) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:90) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:681) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:602) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-4.0.3.jar:na]
-	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:158) ~[spring-jdbc-5.3.10.jar:5.3.10]
-	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:116) ~[spring-jdbc-5.3.10.jar:5.3.10]
-	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:79) ~[spring-jdbc-5.3.10.jar:5.3.10]
-	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:330) ~[spring-jdbc-5.3.10.jar:5.3.10]
-	at org.springframework.boot.jdbc.EmbeddedDatabaseConnection.isEmbedded(EmbeddedDatabaseConnection.java:184) ~[spring-boot-2.5.5.jar:2.5.5]
-	at org.springframework.boot.autoconfigure.orm.jpa.HibernateDefaultDdlAutoProvider.getDefaultDdlAuto(HibernateDefaultDdlAutoProvider.java:42) ~[spring-boot-autoconfigure-2.5.5.jar:2.5.5]
-	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration.lambda$getVendorProperties$1(HibernateJpaConfiguration.java:130) ~[spring-boot-autoconfigure-2.5.5.jar:2.5.5]
-	at org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings.getDdlAuto(HibernateSettings.java:41) ~[spring-boot-autoconfigure-2.5.5.jar:2.5.5]
-	at org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties.determineDdlAuto(HibernateProperties.java:143) ~[spring-boot-autoconfigure-2.5.5.jar:2.5.5]
-	at org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties.getAdditionalProperties(HibernateProperties.java:103) ~[spring-boot-autoconfigure-2.5.5.jar:2.5.5]
-	at org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties.determineHibernateProperties(HibernateProperties.java:95) ~[spring-boot-autoconfigure-2.5.5.jar:2.5.5]
-	at org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration.getVendorProperties(HibernateJpaConfiguration.java:132) ~[spring-boot-autoconfigure-2.5.5.jar:2.5.5]
-	at org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration.entityManagerFactory(JpaBaseConfiguration.java:132) ~[spring-boot-autoconfigure-2.5.5.jar:2.5.5]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:577) ~[na:na]
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) ~[spring-context-5.3.10.jar:5.3.10]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) ~[spring-context-5.3.10.jar:5.3.10]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.10.jar:5.3.10]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.5.5.jar:2.5.5]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-2.5.5.jar:2.5.5]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[spring-boot-2.5.5.jar:2.5.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[spring-boot-2.5.5.jar:2.5.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-2.5.5.jar:2.5.5]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[spring-boot-2.5.5.jar:2.5.5]
-	at com.policy.PolicyApplication.main(PolicyApplication.java:10) ~[classes/:na]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:577) ~[na:na]
-	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.5.5.jar:2.5.5]
-Caused by: oracle.net.ns.NetException: The Network Adapter could not establish the connection (CONNECTION_ID=ODRjOu04TqGkpPSblpAvWg==)
-	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:594) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:565) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:937) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:346) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1967) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:640) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 50 common frames omitted
-Caused by: java.io.IOException: Connection refused: connect, socket connect lapse 1 ms. 0:0:0:0:0:0:0:1 1521  30000 (1/1) true
-	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:421) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.doLocalDNSLookupConnect(TcpNTAdapter.java:303) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:265) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnOption.connect(ConnOption.java:229) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:814) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:555) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 55 common frames omitted
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.base/sun.nio.ch.Net.connect0(Native Method) ~[na:na]
-	at java.base/sun.nio.ch.Net.connect(Net.java:579) ~[na:na]
-	at java.base/sun.nio.ch.Net.connect(Net.java:586) ~[na:na]
-	at java.base/sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:853) ~[na:na]
-	at java.base/java.nio.channels.SocketChannel.open(SocketChannel.java:285) ~[na:na]
-	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:184) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:158) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:380) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 60 common frames omitted
-
-2023-09-20 08:48:01.686  INFO 12756 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-09-20 08:48:01.743  INFO 12756 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
-2023-09-20 08:48:01.886  INFO 12756 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-09-20 08:48:02.014  INFO 12756 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-09-20 08:48:02.014  WARN 12756 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
-2023-09-20 08:48:03.022 ERROR 12756 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
-
-java.sql.SQLRecoverableException: IO Error: The Network Adapter could not establish the connection (CONNECTION_ID=rpaVPu3kTD6CGEhc5bCNfQ==)
-	at oracle.jdbc.driver.T4CConnection.handleLogonNetException(T4CConnection.java:870) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:675) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:1032) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:90) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:681) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:602) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-4.0.3.jar:na]
-	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+org.hibernate.boot.registry.selector.spi.StrategySelectionException: Unable to resolve name [com.policy.dialect.CustomOracleDialect] as strategy [org.hibernate.dialect.Dialect]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.selectStrategyImplementor(StrategySelectorImpl.java:156) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.resolveStrategy(StrategySelectorImpl.java:239) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.resolveDefaultableStrategy(StrategySelectorImpl.java:183) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.resolveDefaultableStrategy(StrategySelectorImpl.java:170) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.resolveStrategy(StrategySelectorImpl.java:164) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.constructDialect(DialectFactoryImpl.java:74) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:51) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:97) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
 	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
 	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
 	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
@@ -158,72 +161,32 @@ java.sql.SQLRecoverableException: IO Error: The Network Adapter could not establ
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:577) ~[na:na]
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.5.5.jar:2.5.5]
-Caused by: oracle.net.ns.NetException: The Network Adapter could not establish the connection (CONNECTION_ID=rpaVPu3kTD6CGEhc5bCNfQ==)
-	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:594) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:565) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:937) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:346) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1967) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:640) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 53 common frames omitted
-Caused by: java.io.IOException: Connection refused: connect, socket connect lapse 0 ms. 0:0:0:0:0:0:0:1 1521  30000 (1/1) true
-	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:421) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.doLocalDNSLookupConnect(TcpNTAdapter.java:303) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:265) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnOption.connect(ConnOption.java:229) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:814) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:555) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 58 common frames omitted
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.base/sun.nio.ch.Net.connect0(Native Method) ~[na:na]
-	at java.base/sun.nio.ch.Net.connect(Net.java:579) ~[na:na]
-	at java.base/sun.nio.ch.Net.connect(Net.java:586) ~[na:na]
-	at java.base/sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:853) ~[na:na]
-	at java.base/java.nio.channels.SocketChannel.open(SocketChannel.java:285) ~[na:na]
-	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:184) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:158) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:380) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 63 common frames omitted
+Caused by: org.hibernate.boot.registry.classloading.spi.ClassLoadingException: Unable to load class [com.policy.dialect.CustomOracleDialect]
+	at org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl.classForName(ClassLoaderServiceImpl.java:133) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.selectStrategyImplementor(StrategySelectorImpl.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	... 46 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Could not load requested class : com.policy.dialect.CustomOracleDialect
+	at org.hibernate.boot.registry.classloading.internal.AggregatedClassLoader.findClass(AggregatedClassLoader.java:210) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:588) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:488) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl.classForName(ClassLoaderServiceImpl.java:130) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	... 47 common frames omitted
 
-2023-09-20 08:48:03.026  WARN 12756 --- [restartedMain] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+2023-11-29 12:12:58.157 ERROR 11164 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2023-11-29 12:12:58.157  WARN 11164 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+2023-11-29 12:12:58.158  INFO 11164 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2023-11-29 12:12:58.161  INFO 11164 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2023-11-29 12:12:58.162  INFO 11164 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-11-29 12:12:58.170  INFO 11164 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
 
-java.sql.SQLRecoverableException: IO Error: The Network Adapter could not establish the connection (CONNECTION_ID=rpaVPu3kTD6CGEhc5bCNfQ==)
-	at oracle.jdbc.driver.T4CConnection.handleLogonNetException(T4CConnection.java:870) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:675) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:1032) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:90) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:681) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:602) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115) ~[HikariCP-4.0.3.jar:na]
-	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-4.0.3.jar:na]
-	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-11-29 12:12:58.175 ERROR 11164 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804) ~[spring-beans-5.3.10.jar:5.3.10]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.10.jar:5.3.10]
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.10.jar:5.3.10]
 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.10.jar:5.3.10]
@@ -243,43 +206,109 @@ java.sql.SQLRecoverableException: IO Error: The Network Adapter could not establ
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:577) ~[na:na]
 	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.5.5.jar:2.5.5]
-Caused by: oracle.net.ns.NetException: The Network Adapter could not establish the connection (CONNECTION_ID=rpaVPu3kTD6CGEhc5bCNfQ==)
-	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:594) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:565) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:937) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:346) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1967) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:640) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 53 common frames omitted
-Caused by: java.io.IOException: Connection refused: connect, socket connect lapse 0 ms. 0:0:0:0:0:0:0:1 1521  30000 (1/1) true
-	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:421) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.doLocalDNSLookupConnect(TcpNTAdapter.java:303) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:265) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnOption.connect(ConnOption.java:229) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnStrategy.executeConnOption(ConnStrategy.java:814) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:555) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 58 common frames omitted
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.base/sun.nio.ch.Net.connect0(Native Method) ~[na:na]
-	at java.base/sun.nio.ch.Net.connect(Net.java:579) ~[na:na]
-	at java.base/sun.nio.ch.Net.connect(Net.java:586) ~[na:na]
-	at java.base/sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:853) ~[na:na]
-	at java.base/java.nio.channels.SocketChannel.open(SocketChannel.java:285) ~[na:na]
-	at oracle.net.nt.TimeoutSocketChannel.connect(TimeoutSocketChannel.java:184) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TimeoutSocketChannel.<init>(TimeoutSocketChannel.java:158) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	at oracle.net.nt.TcpNTAdapter.establishSocket(TcpNTAdapter.java:380) ~[ojdbc8-21.1.0.0.jar:21.1.0.0.0]
-	... 63 common frames omitted
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:275) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:127) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1255) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.10.jar:5.3.10]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.10.jar:5.3.10]
+	... 19 common frames omitted
+Caused by: org.hibernate.boot.registry.selector.spi.StrategySelectionException: Unable to resolve name [com.policy.dialect.CustomOracleDialect] as strategy [org.hibernate.dialect.Dialect]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.selectStrategyImplementor(StrategySelectorImpl.java:156) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.resolveStrategy(StrategySelectorImpl.java:239) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.resolveDefaultableStrategy(StrategySelectorImpl.java:183) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.resolveDefaultableStrategy(StrategySelectorImpl.java:170) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.resolveStrategy(StrategySelectorImpl.java:164) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.constructDialect(DialectFactoryImpl.java:74) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:51) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:137) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	... 36 common frames omitted
+Caused by: org.hibernate.boot.registry.classloading.spi.ClassLoadingException: Unable to load class [com.policy.dialect.CustomOracleDialect]
+	at org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl.classForName(ClassLoaderServiceImpl.java:133) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at org.hibernate.boot.registry.selector.internal.StrategySelectorImpl.selectStrategyImplementor(StrategySelectorImpl.java:152) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	... 46 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Could not load requested class : com.policy.dialect.CustomOracleDialect
+	at org.hibernate.boot.registry.classloading.internal.AggregatedClassLoader.findClass(AggregatedClassLoader.java:210) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:588) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:488) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl.classForName(ClassLoaderServiceImpl.java:130) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+	... 47 common frames omitted
 
-2023-09-20 08:48:03.041  INFO 12756 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
-2023-09-20 08:48:04.321  INFO 12756 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-09-20 08:48:04.332  INFO 12756 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-09-20 08:48:06.018  WARN 12756 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-09-20 08:48:06.194  INFO 12756 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2023-09-20 08:48:06.413  INFO 12756 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@547de7ab, org.springframework.security.web.context.SecurityContextPersistenceFilter@3ac5b163, org.springframework.security.web.header.HeaderWriterFilter@30c16556, org.springframework.security.web.authentication.logout.LogoutFilter@351f131f, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@59055a3e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2ea26d24, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4cf52ad5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@e1181c8, org.springframework.security.web.session.SessionManagementFilter@48b4e797, org.springframework.security.web.access.ExceptionTranslationFilter@22289d7a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6cb9c8d3]
-2023-09-20 08:48:06.547  INFO 12756 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2023-09-20 08:48:06.853  INFO 12756 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
-2023-09-20 08:48:06.854  INFO 12756 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
-2023-09-20 08:48:06.875  INFO 12756 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
-2023-09-20 08:48:06.900  INFO 12756 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
-2023-09-20 08:48:07.153  INFO 12756 --- [restartedMain] com.policy.PolicyApplication             : Started PolicyApplication in 11.157 seconds (JVM running for 13.351)
-2023-09-20 08:48:47.009  INFO 12756 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:13:00.960  INFO 11164 --- [restartedMain] com.policy.PolicyApplication             : Starting PolicyApplication using Java 18.0.2 on LAPTOP-36GVHL99 with PID 11164 (C:\Users\Claims\Downloads\policy\target\classes started by Claims in C:\Users\Claims\Downloads\policy)
+2023-11-29 12:13:00.961  INFO 11164 --- [restartedMain] com.policy.PolicyApplication             : No active profile set, falling back to default profiles: default
+2023-11-29 12:13:01.866  INFO 11164 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-29 12:13:01.992  INFO 11164 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 126 ms. Found 28 JPA repository interfaces.
+2023-11-29 12:13:02.142  INFO 11164 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8083 (http)
+2023-11-29 12:13:02.143  INFO 11164 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-29 12:13:02.143  INFO 11164 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+2023-11-29 12:13:02.176  INFO 11164 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2023-11-29 12:13:02.176  INFO 11164 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1212 ms
+2023-11-29 12:13:02.241  INFO 11164 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2023-11-29 12:13:02.244  WARN 11164 --- [restartedMain] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2023-11-29 12:13:02.284  INFO 11164 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2023-11-29 12:13:02.306  INFO 11164 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-29 12:13:02.313  INFO 11164 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
+2023-11-29 12:13:02.540  INFO 19012 --- [main] com.policy.PolicyApplicationTests        : Starting PolicyApplicationTests using Java 18.0.2 on LAPTOP-36GVHL99 with PID 19012 (started by Claims in C:\Users\Claims\Downloads\policy)
+2023-11-29 12:13:02.544  INFO 19012 --- [main] com.policy.PolicyApplicationTests        : No active profile set, falling back to default profiles: default
+2023-11-29 12:13:02.981  INFO 11164 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-29 12:13:02.982  INFO 11164 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:13:03.745  WARN 11164 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-29 12:13:03.787  INFO 11164 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-11-29 12:13:03.846  INFO 11164 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7b2a92a7, org.springframework.security.web.context.SecurityContextPersistenceFilter@3a7877bd, org.springframework.security.web.header.HeaderWriterFilter@704709f3, org.springframework.security.web.authentication.logout.LogoutFilter@55a40606, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3a68d699, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1e6d421b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@56add8b4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@42173585, org.springframework.security.web.session.SessionManagementFilter@ef5412, org.springframework.security.web.access.ExceptionTranslationFilter@56ae53ea, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4c9de36f]
+2023-11-29 12:13:03.893  INFO 11164 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-11-29 12:13:04.069  INFO 11164 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8083 (http) with context path ''
+2023-11-29 12:13:04.070  INFO 11164 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2023-11-29 12:13:04.073  INFO 11164 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2023-11-29 12:13:04.078  INFO 11164 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-11-29 12:13:04.119  INFO 19012 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-29 12:13:04.189  INFO 11164 --- [restartedMain] com.policy.PolicyApplication             : Started PolicyApplication in 3.259 seconds (JVM running for 83.147)
+2023-11-29 12:13:04.192  INFO 11164 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2023-11-29 12:13:04.357  INFO 19012 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 224 ms. Found 28 JPA repository interfaces.
+2023-11-29 12:13:05.106  INFO 19012 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-29 12:13:05.112  WARN 19012 --- [main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=oracle.jdbc.driver.OracleDriver was not found, trying direct instantiation.
+2023-11-29 12:13:05.456  INFO 19012 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-29 12:13:05.530  INFO 19012 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-29 12:13:05.604  INFO 19012 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2023-11-29 12:13:05.770  INFO 19012 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-11-29 12:13:05.907  INFO 19012 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: com.policy.dialect.CustomOracleDialect
+2023-11-29 12:13:07.292  INFO 19012 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-29 12:13:07.301  INFO 19012 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:13:08.762  WARN 19012 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-11-29 12:13:09.049  INFO 19012 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-11-29 12:13:09.312  INFO 19012 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1dc47df3, org.springframework.security.web.context.SecurityContextPersistenceFilter@5698a866, org.springframework.security.web.header.HeaderWriterFilter@4eef2522, org.springframework.security.web.authentication.logout.LogoutFilter@74de1e9d, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@34989ceb, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@14abde3e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2db55dec, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@256a25a8, org.springframework.security.web.session.SessionManagementFilter@21339b6f, org.springframework.security.web.access.ExceptionTranslationFilter@6245303e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@623dc959]
+2023-11-29 12:13:09.944  INFO 19012 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2023-11-29 12:13:09.966  INFO 19012 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2023-11-29 12:13:09.990  INFO 19012 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-11-29 12:13:10.194  INFO 19012 --- [main] com.policy.PolicyApplicationTests        : Started PolicyApplicationTests in 8.05 seconds (JVM running for 9.199)
+2023-11-29 12:13:10.388  INFO 19012 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:13:10.390  INFO 19012 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-29 12:13:10.423  INFO 19012 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-29 12:15:10.088  INFO 11164 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-29 12:15:10.089  INFO 11164 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-29 12:15:10.090  INFO 11164 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-11-29 12:15:10.127  INFO 11164 --- [http-nio-8083-exec-1] com.policy.controller.testController     : Inside Validation
+2023-11-29 12:15:53.120  INFO 11164 --- [http-nio-8083-exec-2] com.policy.controller.testController     : Inside Validation
+2023-11-29 12:16:30.345  INFO 11164 --- [http-nio-8083-exec-3] com.policy.controller.testController     : Inside Validation
+2023-11-29 12:17:15.305  INFO 11164 --- [http-nio-8083-exec-4] com.policy.controller.testController     : Inside Validation
+2023-11-29 12:49:19.569  INFO 11164 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-29 12:49:19.570  INFO 11164 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2023-11-29 12:49:19.607  INFO 11164 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.

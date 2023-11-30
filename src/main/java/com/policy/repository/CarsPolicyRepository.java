@@ -22,7 +22,7 @@ public interface CarsPolicyRepository  extends JpaRepository<CarsPolicy,String> 
     Optional<CarsPolicy> findByPolicyCertIfID(String certifId);
 
     List<CarsPolicy> findByPolicyClientId(String clientId);
-@Query(value = " selecT MAX(POLICY_EXPIRY_DATE) from cars_policy where  POLICY_NUMBER= ?1 AND POLICY_BRANCH=?2 AND POLICY_INSURANCE=?3 ",nativeQuery = true)
+@Query(value = " selecT MAX(POLICY_EXPIRY_DATE) from cars_policy where  POLICY_NUMBER= ?1 AND POLICY_BRANCH=?2 AND POLICY_INSURANCE_ID=?3 ",nativeQuery = true)
     Date policyExpDate (String policyNumber ,String branch, String insurance);
     @Query(value = " SELECT CONFIG_VALUE FROM CORE_CONFIGURATION WHERE ID = ?1 ", nativeQuery = true)
     String findConfigByKey(String key);
