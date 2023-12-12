@@ -433,6 +433,8 @@ public class TestService {
                             // String a = policy.getPolicyID().toString()+"asdasdsd";
                             for (Covers covers : vehicle.getCovers()) {
                                 String CarsCover = validateCover(covers, policyNo, vehicle.getCertificateNo());
+
+
                                 insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null,covers.getCoverOrder());
                                 if (covers.getSubCovers() != null && !covers.getSubCovers().isEmpty()) {
                                     for (SubCovers subCovers : covers.getSubCovers()) {
@@ -1511,6 +1513,10 @@ public class TestService {
 
         }
 
+
+
+
+
         carsPolicyCar.setCarBrandCode(null);
         carsPolicyCar.setCarTrademarkCode(null);
         carsPolicyCar.setCarShapeCode(null);
@@ -1785,7 +1791,15 @@ public class TestService {
 
 
 
-
+        if(policyVehicle.getVehicle()!=null){
+            if(policyVehicle.getVehicle().getCovers()!=null){
+                policyVehicle.getVehicle().getCovers().forEach(covers -> {
+                    if(covers.getTpaCoverTypeCode().equals("6")){
+                        carsPolicy.setPolicyTowFlag("Y");
+                    }
+                });
+            }
+        }
 
 
 
@@ -2185,6 +2199,8 @@ public class TestService {
             carsPolicyToSave.setPolicyBlackListed("N");
         }
 
+
+
         carsPolicyToSave.setPolicyTowFlag(policyVehicle.getVehicle().getCarTowAllowed());
 
         carsPolicyToSave.setPolicySumInsCurrencyRate(policyVehicle.getPolicy().getsIExchangeRate());
@@ -2204,6 +2220,21 @@ public class TestService {
         carsPolicyToSave.setPolicyBlacklistSetOn(policyVehicle.getPolicy().getSetOn());
         carsPolicyToSave.setPolicyBlackListedNote(policyVehicle.getPolicy().getNote());
         carsPolicyToSave.setPolicyBlackListedReason(policyVehicle.getPolicy().getReason());
+
+if(policyVehicle.getVehicle()!=null){
+if(policyVehicle.getVehicle().getCovers()!=null){
+        policyVehicle.getVehicle().getCovers().forEach(covers -> {
+            if(covers.getTpaCoverTypeCode().equals("6")){
+                carsPolicyToSave.setPolicyTowFlag("Y");
+            }
+        });
+}
+}
+
+
+
+
+
 
         carsPolicyToSave.setPolicyEndorsSubTypeDesc(endorsementSubTypeDes);
         carsPolicyToSave.setPolicyRootId(policyRootId);
@@ -3093,6 +3124,9 @@ public class TestService {
             carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
 
             carsPolicyCoverToInsert.setPolicyCoversOrder(((double) cover.getCoverOrder()));
+
+
+
 
             carsPolicyCoverToInsert.setPolicyCoversDeductible((double) cover.getDeductibleFlatAmount());
             carsPolicyCoverToInsert.setPolicyCoversLimitClaim(cover.getCoverLimitClaim());

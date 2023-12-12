@@ -46,7 +46,8 @@ public class CarsPolicy {
 
 
 
-
+	@Column(name = "POLICY_TOW_FLAG")
+	private java.lang.String policyTowFlag;
 
 
 
@@ -259,8 +260,7 @@ private String  policyBlackListedReason ;
 	@Column(name = "POLICY_CLIENT_ID")
 	private java.lang.String policyClientId;
 
-	@Column(name = "POLICY_TOW_FLAG")
-	private java.lang.String policyTowFlag;
+
 
 	@Column(name = "POLICY_SPECIAL_FLAG")
 	private java.lang.String policySpecialFlag;
