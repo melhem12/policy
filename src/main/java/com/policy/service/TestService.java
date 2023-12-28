@@ -136,8 +136,11 @@ public class TestService {
 
                     if (policy.getEndorsementTypeCode().equals("C")) {
                         String branchCode="";
+
                         if(!Utility.isEmpty(policy.getBranchCode())){
                             branchCode = policy.getBranchCode();
+                            branchCode = branchCode.replaceFirst("^0+(?=.)", "");
+
                         }
                         Date  policyExpDate=     db.carsPolicyRepository.policyExpDate(policy.getPolicyNo().toString(),branchCode,insuranceCode);
 
@@ -1794,8 +1797,11 @@ public class TestService {
         if(policyVehicle.getVehicle()!=null){
             if(policyVehicle.getVehicle().getCovers()!=null){
                 policyVehicle.getVehicle().getCovers().forEach(covers -> {
-                    if(covers.getTpaCoverTypeCode().equals("6")){
-                        carsPolicy.setPolicyTowFlag("Y");
+                    if(!Utility.isEmpty(covers.getTpaCoverTypeCode())) {
+
+                        if (covers.getTpaCoverTypeCode().equals("6")) {
+                            carsPolicy.setPolicyTowFlag("Y");
+                        }
                     }
                 });
             }
