@@ -2230,9 +2230,10 @@ public class TestService {
 if(policyVehicle.getVehicle()!=null){
 if(policyVehicle.getVehicle().getCovers()!=null){
         policyVehicle.getVehicle().getCovers().forEach(covers -> {
+            if(!Utility.isEmpty(covers.getTpaCoverTypeCode())){
             if(covers.getTpaCoverTypeCode().equals("6")){
                 carsPolicyToSave.setPolicyTowFlag("Y");
-            }
+            }}
         });
 }
 }
