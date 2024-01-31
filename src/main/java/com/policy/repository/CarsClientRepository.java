@@ -17,7 +17,7 @@ public interface  CarsClientRepository extends JpaRepository<CarsClient,String> 
 
 
 	@Query(value = "select cc from  CarsClient cc where cc.clientInsuranceId =?1 and cc.clientNum1= ?2 ")
-	Optional<CarsClient> findByClientInsuranceIdAndClientNum1(String clientId, String clientNum1);
+	Optional<CarsClient> findByClientInsuranceIdAndClientNum1(String clientInsuranceId, String clientNum1);
 
 	@Query("FROM CarsClient WHERE (clientReference = :param OR clientNum1 = :param) AND clientInsuranceId = :insuranceId")
 	Optional<CarsClient> findByClientReferenceOrClientNum1AndInsuranceId( String insuranceId,String param);

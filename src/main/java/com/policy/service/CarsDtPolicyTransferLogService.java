@@ -18,7 +18,7 @@ public class CarsDtPolicyTransferLogService {
 
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "11";
+    public static String insuranceCode = "10";
     @Autowired
     public DB db;
 

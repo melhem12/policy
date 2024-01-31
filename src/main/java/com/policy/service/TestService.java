@@ -53,7 +53,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "11";
+    public static String insuranceCode = "10";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -1676,10 +1676,18 @@ public class TestService {
         carsPolicy.setPolicyRootId(policyRootId);
         carsPolicy.setPolicyFleetId(policyId);
         carsPolicy.setPolicyCertIfID(certifID);
-        carsPolicy.setPolicyHolderId(clientId);
 
         carsPolicy.setPolicyHolderPhone(insuredPhoneNumber);
         carsPolicy.setPolicyHolderCode(insuredCode1);
+
+        Optional<CarsClient> carsClient = db.carsClientRepository
+                .findByClientInsuranceIdAndClientNum1(insuranceCode, insuredCode1);
+        if (carsClient.isPresent()) {
+            carsPolicy.setPolicyHolderId(carsClient.get().getClientId());
+
+        }
+
+
         carsPolicy.setPolicyHolderName(insuredFirstName);
 
         if (blackListed) {
@@ -2162,7 +2170,19 @@ public class TestService {
         carsPolicyToSave.setPolicyCertIfID(certifID);
         carsPolicyToSave.setPolicyHolderName(insuredFirstName);
         carsPolicyToSave.setPolicyHolderCode(insuredCode1);
-        carsPolicyToSave.setPolicyHolderId(clientId);
+//        carsPolicyToSave.setPolicyHolderId(clientId);
+
+        Optional<CarsClient> carsClient = db.carsClientRepository
+                .findByClientInsuranceIdAndClientNum1(insuranceCode, insuredCode1);
+        if (carsClient.isPresent()) {
+            carsPolicyToSave.setPolicyHolderId(carsClient.get().getClientId());
+
+        }
+
+
+
+
+
         carsPolicyToSave.setPolicyHolderPhone(insuredPhoneNumber);
 //		String actionTypeOriginale = DataTransferHeaderFileFactory.getService().getHeaderStateOriginal(
 //				dataTransferPolicyLoaded.getPolicyProduct(), dataTransferPolicyLoaded.getPolicyNumber(),
@@ -2796,7 +2816,7 @@ public class TestService {
             carsCover.setCoverCode(cover.getCoverCode());// jean
             // carsCover.setCoverCode("test");
             if (!Utility.isEmpty(cover.getCoverDesc())) {
-                desc = cover.getCoverDesc().replace(" ", "*");
+                desc = cover.getCoverDesc().replace("•", "*");
             }
             carsCover.setCoverDescription(desc);
             // carsCover.setCoverID(cover.getCoverID().toString());
@@ -2838,7 +2858,7 @@ public class TestService {
         if (carsCoverOpt.isPresent()) {
             desc = cover.getCoverDesc();
             if (!Utility.isEmpty(cover.getCoverDesc())) {
-                desc = cover.getCoverDesc().replace(" ", "*");
+                desc = cover.getCoverDesc().replace("•", "*");
             }
 
             String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
@@ -2965,29 +2985,23 @@ public class TestService {
 
     public void insertCarsCover(Covers cover, SubCovers subCover, String carCoverCode, String carId, String coverCode,
                                 String subCoverCode, Long coverOrder) {
-SendingMail sendingMail = new SendingMail();
+        SendingMail sendingMail = new SendingMail();
 
         if (cover != null) {
             int coversExist = db.carsPolicyCoverRepository.findIfCoversExist(coverCode, carId);
-            if (coversExist>0) {
+            if (coversExist > 0) {
                 saveMessage(policyNo, "Cover:" + cover.getCoverCode() + " " + cover.getCoverDesc(), "Duplicate Cover",
                         "CARS_COVER", insuranceCode, null);
 
 
-
                 try {
                     sendingMail.run(companyName + " duplicate Covers in  " + policyNo,
-                            "Cover:" + cover.getCoverCode() + " " + cover.getCoverDesc()+" has been duplicated \n \n This Email Is Informative");
+                            "Cover:" + cover.getCoverCode() + " " + cover.getCoverDesc() + " has been duplicated \n \n This Email Is Informative");
 
                 } catch (Exception e) {
                     e.printStackTrace();
 
                 }
-
-
-
-
-
 
 
             }
@@ -2998,7 +3012,7 @@ SendingMail sendingMail = new SendingMail();
                 carsPolicyCoverToInsert.setPolicyCoversCover(carCoverCode);
                 carsPolicyCoverToInsert.setPolicyCoversCoverId(coverCode);
 
-                carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
+                carsPolicyCoverToInsert.setPolicyCoversSumInsured(cover.getSumInsured());
 
                 carsPolicyCoverToInsert.setPolicyCoversOrder(((double) cover.getCoverOrder()));
 
@@ -3025,12 +3039,12 @@ SendingMail sendingMail = new SendingMail();
         }
         if (subCover != null) {
             Integer subCoverExist = db.carsPolicyCoverRepository.findIfCoversExist(subCoverCode, carId);
-            if (subCoverExist>0) {
+            if (subCoverExist > 0) {
 
 
                 try {
                     sendingMail.run(companyName + " duplicate SubCovers in  " + policyNo,
-                            " SubCover :" + subCoverCode + " in Cover : " + coverCode+" has been duplicated \n \n This Email Is Informative");
+                            " SubCover :" + subCoverCode + " in Cover : " + coverCode + " has been duplicated \n \n This Email Is Informative");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -3046,7 +3060,7 @@ SendingMail sendingMail = new SendingMail();
                 carsPolicySubCoverToInsert.setPolicyCoversCover(coverCode + "." + subCover.getSubCoverCode());
                 carsPolicySubCoverToInsert.setPolicyCoversCoverId(subCoverCode);
 
-                carsPolicySubCoverToInsert.setPolicyCoversSumInsured( subCover.getSubCoverSumInsured());
+                carsPolicySubCoverToInsert.setPolicyCoversSumInsured(subCover.getSubCoverSumInsured());
 
                 carsPolicySubCoverToInsert.setPolicyCoversDeductible((double) subCover.getSubCoverDeductibleFlatAmount());
                 carsPolicySubCoverToInsert
