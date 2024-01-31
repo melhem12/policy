@@ -20,7 +20,7 @@ public class CarsPolicyCover {
 	private java.lang.Double policyCoversOrder;
 	
 	@Column(name = "POLICY_COVERS_SUM_INSURED")
-	private java.lang.Long policyCoversSumInsured;
+	private float policyCoversSumInsured;
 	
 	@Column(name = "POLICY_COVERS_DEDUCTIBLE_100")
 	private java.lang.Double policyCoversDeductible100;
@@ -93,11 +93,9 @@ public class CarsPolicyCover {
 		this.policyCoversOrder = policyCoversOrder;
 	}
 
-	public java.lang.Long getPolicyCoversSumInsured() {
-		return policyCoversSumInsured;
-	}
 
-	public void setPolicyCoversSumInsured(java.lang.Long policyCoversSumInsured) {
+
+	public void setPolicyCoversSumInsured(float policyCoversSumInsured) {
 		this.policyCoversSumInsured = policyCoversSumInsured;
 	}
 

@@ -81,4 +81,11 @@ public class DB {
 
 	@Autowired
 	public CarsDtParamsRepository carsDtParamsRepository;
+
+
+	@Autowired
+	public SupplierIntermRepository supplierIntermRepository;
+
+	@Autowired
+	public  AddressViewRepository addressViewRepository;
 }

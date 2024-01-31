@@ -86,11 +86,9 @@ public class TestService {
                         .addValue("I_CAR", vehicleId)
                         .addValue("I_AMENDMENT", amendment)
                         .addValue("I_CERTIFICATE", certificate));
-        if(out.equals("POLICY NOT FOUND")||out.equals("Deletion is not allowed.Claim already exist")) {
+        if (out.equals("POLICY NOT FOUND") || out.equals("Deletion is not allowed.Claim already exist")) {
             return new ResponseEntity(out, HttpStatus.NOT_FOUND);
-        }
-
-        else{
+        } else {
             return new ResponseEntity(out, HttpStatus.OK);
 
         }
@@ -132,24 +130,24 @@ public class TestService {
             StringBuffer stringBufferTrademark = new StringBuffer("");
             PolicyVehicle policyVehicle = new PolicyVehicle();
             for (Policy policy : policies.getPolicies()) {
-                if (policy.getEndorsementTypeCode()!=null) {
+                if (policy.getEndorsementTypeCode() != null) {
 
                     if (policy.getEndorsementTypeCode().equals("C")) {
-                        String branchCode="";
+                        String branchCode = "";
 
-                        if(!Utility.isEmpty(policy.getBranchCode())){
+                        if (!Utility.isEmpty(policy.getBranchCode())) {
                             branchCode = policy.getBranchCode();
                             branchCode = branchCode.replaceFirst("^0+(?=.)", "");
 
                         }
-                        Date  policyExpDate=     db.carsPolicyRepository.policyExpDate(policy.getPolicyNo().toString(),branchCode,insuranceCode);
+                        Date policyExpDate = db.carsPolicyRepository.policyExpDate(policy.getPolicyNo().toString(), branchCode, insuranceCode);
 
-                        if(policyExpDate!=null) {
+                        if (policyExpDate != null) {
                             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                             String formattedDate = sdf.format(policyExpDate);
-                            System.out.println("new Formated expiration date for cancelation "+formattedDate);
+                            System.out.println("new Formated expiration date for cancelation " + formattedDate);
                             policy.setPolDateExpiry(formattedDate);
-                            if(policy.getVehicles().size()>0){
+                            if (policy.getVehicles().size() > 0) {
                                 policy.getVehicles().forEach(vehicles -> {
                                     vehicles.setDateExpiry(formattedDate);
                                 });
@@ -159,23 +157,23 @@ public class TestService {
                     }
 
 
-                    if (policy.getEndorsementTypeCode().equals("C")&&policy.getVehicles().size()==0) {
-                        Date  policyExpDate=     db.carsPolicyRepository.policyExpDate(policy.getPolicyNo().toString(),policy.getBranchCode(),insuranceCode);
+                    if (policy.getEndorsementTypeCode().equals("C") && policy.getVehicles().size() == 0) {
+                        Date policyExpDate = db.carsPolicyRepository.policyExpDate(policy.getPolicyNo().toString(), policy.getBranchCode(), insuranceCode);
 //                        if(policyExpDate!=null) {
 //                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 //                            String formattedDate = sdf.format(policyExpDate);
 //                            System.out.println("new Formated expiration date for cancelation "+formattedDate);
 //                            policy.setPolDateExpiry(formattedDate);
 //                        }
-                        System.out.println("my policy No  "+ policy.getPolicyNo());
+                        System.out.println("my policy No  " + policy.getPolicyNo());
                         String branchCodeNew = policy.getBranchCode();
 
                         branchCodeNew = branchCodeNew.replaceFirst("^0+(?=.)", "");
 
 
-                        List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policy.getPolicyNo(),branchCodeNew);
+                        List<VehicleResponse> savedVehicles = db.carsPolicyCarRepository.getVehicles(Integer.parseInt(insuranceCode), policy.getPolicyNo(), branchCodeNew);
                         List<Vehicles> newVehicles = new ArrayList<>();
-                        int certId=0;
+                        int certId = 0;
 
                         if (savedVehicles.size() > 0) {
                             System.out.println("size of v is not 0");
@@ -187,14 +185,14 @@ public class TestService {
 
                                 vehicles.setCarEngine(savedVehicle.getCarEngine());
                                 vehicles.setCarStatus(savedVehicle.getCarStatus());
-                                if(savedVehicle.getCertifId()!=null){
+                                if (savedVehicle.getCertifId() != null) {
                                     vehicles.setCertifID(savedVehicle.getCertifId().negate());
 
                                 }
 //                            System.out.println("cars Status is C");
                                 vehicles.setCertificateNo(savedVehicle.getCertificateNo());
                                 if (policy.getPolDateEffective() != null) {
-                                    System.out.println("PolDateEffective() "  +policy.getPolDateEffective() );
+                                    System.out.println("PolDateEffective() " + policy.getPolDateEffective());
                                     vehicles.setDateEffective(policy.getPolDateEffective());
 
                                 }
@@ -211,11 +209,6 @@ public class TestService {
                                 );
 
 
-
-
-
-
-
                                 vehicles.setCarMake(savedVehicle.getCarMake());
                                 vehicles.setCarMakeCode(savedVehicle.getCarMakeCode());
                                 vehicles.setCarMakeID(savedVehicle.getCarMakeID());
@@ -224,10 +217,10 @@ public class TestService {
                                 vehicles.setModelToPrint(savedVehicle.getModelToPrint());
                                 vehicles.setCarYear(savedVehicle.getCarYear());
                                 vehicles.setCarPlateNumber(savedVehicle.getCarPlateNumber());
-                                if(savedVehicle.getCarPlatePrefix()==null){
+                                if (savedVehicle.getCarPlatePrefix() == null) {
                                     vehicles.setCarPlatePrefix("");
 
-                                }else{
+                                } else {
                                     vehicles.setCarPlatePrefix(savedVehicle.getCarPlatePrefix());
 
                                 }
@@ -343,23 +336,23 @@ public class TestService {
                         }
 
                         if (carsPolicyToSearchList != null && !carsPolicyToSearchList.isEmpty()) {
-                            String businessType =null;
-                            if(policy.getBusinessType()!=null){
-                                businessType=policy.getBusinessType().get();
+                            String businessType = null;
+                            if (policy.getBusinessType() != null) {
+                                businessType = policy.getBusinessType();
                             }
 
                             policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
                                     brokerId, SublineId, carsPolicyToSearchList, insuranceCode, policy.getSubLineCode(),
                                     policy.getBlacklisted(), policy.getEndorsementTypeDescription(), policy.getEndorsementTypeCode(),
                                     policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(),
-                                    policy.getPolicyID().toString(),  vehicle.getCertifID()!=null? vehicle.getCertifID().toString():"", policy.getInsuredID().toString(),
-                                    ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(),businessType);
+                                    policy.getPolicyID().toString(), vehicle.getCertifID() != null ? vehicle.getCertifID().toString() : "", policy.getInsuredID().toString(),
+                                    (policy.getFirstInsuredName() != null ? policy.getFirstInsuredName() : "") + " " + (policy.getFatherInsuredName() == null ? "" : policy.getFatherInsuredName()) + " " + (policy.getLastInsuredName() == null ? "" : policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(), businessType);
 
                         } else {
                             if (carsPolicyToSearchList2.size() > 0) {
-                                String businessType =null;
-                                if(policy.getBusinessType().isPresent()){
-                                    businessType=policy.getBusinessType().get();
+                                String businessType = null;
+                                if (policy.getBusinessType() != null) {
+                                    businessType = policy.getBusinessType();
                                 }
 
                                 policyId = updatePolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
@@ -367,12 +360,12 @@ public class TestService {
                                         policy.getSubLineCode(), policy.getBlacklisted(), policy.getEndorsementTypeDescription(),
                                         policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(), policy.getEndorsementSubTypeCode(),
                                         policy.getPolicyRootID().toString(), policy.getPolicyID().toString(),
-                                        vehicle.getCertifID()!=null? vehicle.getCertifID().toString():"", policy.getInsuredID().toString(),
-                                        ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(),businessType);
+                                        vehicle.getCertifID() != null ? vehicle.getCertifID().toString() : "", policy.getInsuredID().toString(),
+                                        (policy.getFirstInsuredName() != null ? policy.getFirstInsuredName() : "") + " " + (policy.getFatherInsuredName() == null ? "" : policy.getFatherInsuredName()) + " " + (policy.getLastInsuredName() == null ? "" : policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(), businessType);
                             } else {
-                                String businessType =null;
-                                if(policy.getBusinessType()!=null){
-                                    businessType=policy.getBusinessType().get();
+                                String businessType = null;
+                                if (policy.getBusinessType() != null) {
+                                    businessType = policy.getBusinessType();
                                 }
                                 policyId = insertPolicyCar(policyVehicle, productId, branch.getBranchId(), ClientId,
                                         broker.getBrokerId(), SublineId, insuranceCode,
@@ -380,8 +373,8 @@ public class TestService {
                                         policy.getBlacklisted(), policy.getEndorsementTypeDescription(),
                                         policy.getEndorsementTypeCode(), policy.getEndorsementSubTypeDescription(),
                                         policy.getEndorsementSubTypeCode(), policy.getPolicyRootID().toString(),
-                                        policy.getPolicyID().toString(), vehicle.getCertifID()!=null? vehicle.getCertifID().toString():"", policy.getInsuredID().toString(),
-                                        ( policy.getFirstInsuredName()!=null?policy.getFirstInsuredName():"")  + " " +( policy.getFatherInsuredName()==null?"":policy.getFatherInsuredName() )+ " " +(policy.getLastInsuredName()==null?"": policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(),businessType);
+                                        policy.getPolicyID().toString(), vehicle.getCertifID() != null ? vehicle.getCertifID().toString() : "", policy.getInsuredID().toString(),
+                                        (policy.getFirstInsuredName() != null ? policy.getFirstInsuredName() : "") + " " + (policy.getFatherInsuredName() == null ? "" : policy.getFatherInsuredName()) + " " + (policy.getLastInsuredName() == null ? "" : policy.getLastInsuredName()), policy.getInsuredCode(), policy.getInsuredPhoneNumber(), businessType);
 
                             }
                         }
@@ -403,20 +396,20 @@ public class TestService {
 //							policyId = insertPolicyCar(policyVehicle, products.getProductsId(), branch.getBranchId(),
 //									client.getClientId(), broker.getBrokerId(), insuranceCode);
 //						}
-                        System.out.println("plate test search "+carsPolicyCarToSearch.getCarPlate());
+                        System.out.println("plate test search " + carsPolicyCarToSearch.getCarPlate());
                         Example<CarsPolicyCar> example = Example.of(carsPolicyCarToSearch);
 
                         Collection<CarsPolicyCar> carsPolicyCarList = db.carsPolicyCarRepository.findAll(example);
-                        System.out.println(" cert size"+carsPolicyCarList.size());
+                        System.out.println(" cert size" + carsPolicyCarList.size());
 
                         if (carsPolicyCarList != null && !carsPolicyCarList.isEmpty()) {
-                            System.out.println("test cert update"+vehicle.getCertificateNo());
+                            System.out.println("test cert update" + vehicle.getCertificateNo());
 
                             carId = updateCarsPolicyCar(vehicle, policyId, carsPolicyCarList, dataTransferModelList,
                                     stringBufferTrademark, policyNo);
 
                         } else {
-                            System.out.println("test cert insert"+vehicle.getCertificateNo());
+                            System.out.println("test cert insert" + vehicle.getCertificateNo());
 
                             carId = insertCarsPolicyCar(vehicle, policyId, dataTransferModelList, stringBufferTrademark,
                                     policyNo);
@@ -438,14 +431,14 @@ public class TestService {
                                 String CarsCover = validateCover(covers, policyNo, vehicle.getCertificateNo());
 
 
-                                insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null,covers.getCoverOrder());
+                                insertCarsCover(covers, null, covers.getCoverCode().toString(), carId, CarsCover, null, covers.getCoverOrder());
                                 if (covers.getSubCovers() != null && !covers.getSubCovers().isEmpty()) {
                                     for (SubCovers subCovers : covers.getSubCovers()) {
                                         String CarsSubCover = validateSubCover(subCovers, covers.getCoverCode(),
                                                 policyNo, vehicle.getCertificateNo(), covers.getCoverID().toString());
                                         // carsDtCoverContractService.insertSubCover(subCovers, vehicle.getPolicyID());
                                         insertCarsCover(null, subCovers, subCovers.getSubCoverID().toString(), carId,
-                                                covers.getCoverCode(), CarsSubCover,covers.getCoverOrder());
+                                                covers.getCoverCode(), CarsSubCover, covers.getCoverOrder());
                                     }
                                 }
                             }
@@ -721,7 +714,7 @@ public class TestService {
                                          String printName, String firstInsuredName, String fatherInsuredName, String lastInsuredName,
                                          String insuredPhoneNumber, boolean blackListed, String reason, String note, String policyNo,
                                          String certificateNo, String insBlackSetOn,
-                                         String insBlackSetBy ) throws Exception {
+                                         String insBlackSetBy) throws Exception {
 
 
 //		Optional<CarsPolicy> carsPolicy = db.carsPolicyRepository.findByPolicyCertIfID(certifId);
@@ -742,9 +735,6 @@ public class TestService {
             // clientInsuranceId, certificateNo);
             return null;
         }
-
-
-
 
 
 //		String clientCodeNew = clientCode;
@@ -809,7 +799,7 @@ public class TestService {
 //                    }
 //
 //                }else{
-                if(!Utility.isEmpty(insuredPhoneNumber)){
+                if (!Utility.isEmpty(insuredPhoneNumber)) {
                     carsClientNew.setClientMobilePhone(insuredPhoneNumber);
 
                 }
@@ -853,7 +843,7 @@ public class TestService {
                 db.carsClientRepository.save(carsClientNew);
 
                 validateInsuranceBlackList(clientCode, clientInsuranceId, firstInsuredName, fatherInsuredName,
-                        lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy,blackListed);
+                        lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy, blackListed);
 
                 return carsClientNew;
             }
@@ -863,10 +853,6 @@ public class TestService {
 
 
                 // carsClient.get().setClientId(clientInsuranceId+"."+Long.valueOf(clientCodeNew));
-
-
-
-
 
 
                 //           carsClient.get().setClientInsuranceId(clientInsuranceId);
@@ -880,21 +866,21 @@ public class TestService {
                 //   if (carsPolicy.getPolicyExpiryDate().before(ts)) {
 //                        Optional<CarsClient> clientOptional = db.carsClientRepository.findById(carsPolicy.getPolicyClientId());
 //                        if (clientOptional.isPresent()) {
-                if(!Utility.isEmpty(insuredPhoneNumber)){
+                if (!Utility.isEmpty(insuredPhoneNumber)) {
 
-                    if(Utility.isEmpty(carsClient.get().getClientBusinessPhone()) && Utility.isEmpty(carsClient.get().getClientMobilePhone())){
+                    if (Utility.isEmpty(carsClient.get().getClientBusinessPhone()) && Utility.isEmpty(carsClient.get().getClientMobilePhone())) {
                         carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 
-                    }else {
+                    } else {
 
 //                                    if(!carsClient.get().getClientBusinessPhone().isEmpty()||carsClient.get().getClientBusinessPhone()!=null){}
-                        if(!insuredPhoneNumber.equals(carsClient.get().getClientMobilePhone())) {
+                        if (!insuredPhoneNumber.equals(carsClient.get().getClientMobilePhone())) {
 
-                            if(!Utility.isEmpty(carsClient.get().getClientBusinessPhone())) {
+                            if (!Utility.isEmpty(carsClient.get().getClientBusinessPhone())) {
 
                                 if (!carsClient.get().getClientBusinessPhone().contains(insuredPhoneNumber)) {
 
-                                    if ( !Utility.isEmpty(carsClient.get().getClientMobilePhone())) {
+                                    if (!Utility.isEmpty(carsClient.get().getClientMobilePhone())) {
                                         carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone() + " " + carsClient.get().getClientBusinessPhone());
 
                                     }
@@ -903,7 +889,7 @@ public class TestService {
                                 }
 
 
-                            }else{
+                            } else {
                                 if (!Utility.isEmpty(carsClient.get().getClientMobilePhone())) {
                                     carsClient.get().setClientBusinessPhone(carsClient.get().getClientMobilePhone());
 
@@ -913,10 +899,7 @@ public class TestService {
                             }
 
 
-
                         }
-
-
 
 
                     }
@@ -932,13 +915,6 @@ public class TestService {
 //                    carsClient.get().setClientBusinessPhone(null);
 //                    carsClient.get().setClientMobilePhone(insuredPhoneNumber);
 //                }
-
-
-
-
-
-
-
 
 
                 carsClient.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -963,7 +939,7 @@ public class TestService {
                 carsClient.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
                 validateInsuranceBlackList(clientCode, clientInsuranceId, firstInsuredName, fatherInsuredName,
-                        lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy,blackListed);
+                        lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy, blackListed);
 
                 db.carsClientRepository.save(carsClient.get());
 
@@ -1025,7 +1001,7 @@ public class TestService {
 
 
             validateBrokerBlackList(brokerCode, brokerId, brokerInsuranceId, brokerName, brokerPhoneNumber, reason,
-                    note, setOn, setBy,blackListed);
+                    note, setOn, setBy, blackListed);
 
 
             return carsBrokerNew;
@@ -1043,13 +1019,13 @@ public class TestService {
         }
 
         validateBrokerBlackList(brokerCode, brokerId, brokerInsuranceId, brokerName, brokerPhoneNumber, reason,
-                note, setOn, setBy,blackListed);
+                note, setOn, setBy, blackListed);
 
         return carsBroker2.get();
     }
 
     public void validateInsuranceBlackList(String insuredCode, String clientInsuranceId, String firstInsuredName,
-                                           String fatherInsuredName, String lastInsuredName, String reason, String note, String insBlackSetOn, String insBlackSetBy,boolean blackListed) {
+                                           String fatherInsuredName, String lastInsuredName, String reason, String note, String insBlackSetOn, String insBlackSetBy, boolean blackListed) {
 
         Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository
                 .findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(insuredCode, clientInsuranceId);
@@ -1084,7 +1060,7 @@ public class TestService {
                 carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                if(!Utility.isEmpty(insBlackSetOn)){
+                if (!Utility.isEmpty(insBlackSetOn)) {
                     try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(insBlackSetOn);
                         carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -1103,7 +1079,7 @@ public class TestService {
 
         if (carsBlackListOptional.isPresent()) {
 
-            if ((blackListed&&  carsBlackListOptional.get().getBlStatus().equals("IN"))||(!blackListed&&  carsBlackListOptional.get().getBlStatus().equals("OU"))) {
+            if ((blackListed && carsBlackListOptional.get().getBlStatus().equals("IN")) || (!blackListed && carsBlackListOptional.get().getBlStatus().equals("OU"))) {
 
                 carsBlackListOptional.get().setBlFirstName(firstInsuredName);
                 carsBlackListOptional.get().setBlFatherName(fatherInsuredName);
@@ -1117,11 +1093,10 @@ public class TestService {
                 if (lastInsuredName == null) {
                     carsBlackListOptional.get().setBlFamilyName("");
                 }
-                if (blackListed){
+                if (blackListed) {
                     carsBlackListOptional.get().setBlStatus("IN");
 
-                }
-                else{
+                } else {
                     carsBlackListOptional.get().setBlStatus("OU");
 
                 }
@@ -1147,21 +1122,16 @@ public class TestService {
                 System.out.println("client balckList updated");
 
                 db.carsBlackListRepository.save(carsBlackListOptional.get());
-            }
-
-            else{
-
-
+            } else {
 
 
                 CarsBlackList carsBlackList = new CarsBlackList();
 
 
-                if (blackListed){
+                if (blackListed) {
                     carsBlackList.setBlStatus("IN");
 
-                }
-                else{
+                } else {
                     carsBlackList.setBlStatus("OU");
 
                 }
@@ -1208,18 +1178,6 @@ public class TestService {
                 db.carsBlackListRepository.save(carsBlackList);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
             }
 
         }
@@ -1228,14 +1186,14 @@ public class TestService {
 
 
     public void validateBrokerBlackList(String brokerCode, String brokerId, String brokerInsuranceId, String brokerName,
-                                        String brokerPhoneNumber, String reason, String note, String setOn, String setBy,boolean blackListed) {
+                                        String brokerPhoneNumber, String reason, String note, String setOn, String setBy, boolean blackListed) {
 
 //        List<CarsBlackList> carsBlackListList = db.carsBlackListRepository
 //                .findByBlInsuranceIdAndClientNum(brokerInsuranceId, brokerCode);
         System.out.println("brokerCode is  " + brokerCode);
         Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findTopByBlBrokerIdOrderBySysUpdatedDateDesc(brokerInsuranceId + "." + brokerCode);
         if (!carsBroker.isPresent()) {
-            if (blackListed){
+            if (blackListed) {
                 System.out.println("new broker black list");
                 CarsBlackList carsBlackList = new CarsBlackList();
                 carsBlackList.setBlId(UUID.randomUUID().toString());
@@ -1244,7 +1202,7 @@ public class TestService {
                 carsBlackList.setBlFamilyName(brokerName);
                 carsBlackList.setBlStatus("IN");
                 carsBlackList.setBlReason(reason);
-                if(!Utility.isEmpty(setOn)) {
+                if (!Utility.isEmpty(setOn)) {
                     try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
                         carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -1267,18 +1225,18 @@ public class TestService {
 
         //Optional<CarsBlackList> carsBroker = db.carsBlackListRepository.findByClientNum(insuranceCode);
         if (carsBroker.isPresent()) {
-            if ((blackListed&&  carsBroker.get().getBlStatus().equals("IN"))||(!blackListed&&  carsBroker.get().getBlStatus().equals("OU"))) {
+            if ((blackListed && carsBroker.get().getBlStatus().equals("IN")) || (!blackListed && carsBroker.get().getBlStatus().equals("OU"))) {
 
                 carsBroker.get().setBlFamilyName(brokerName);
                 carsBroker.get().setBlReason(reason);
-                if(!Utility.isEmpty(setOn)){
-                try {
-                    Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
-                    carsBroker.get().setBlDate(new Timestamp(setOnn.getTime()));
+                if (!Utility.isEmpty(setOn)) {
+                    try {
+                        Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
+                        carsBroker.get().setBlDate(new Timestamp(setOnn.getTime()));
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
                 carsBroker.get().setBlNote(note);
 
@@ -1289,39 +1247,31 @@ public class TestService {
                 db.carsBlackListRepository.save(carsBroker.get());
 
 
-            }
-
-
-
-
-
-            else{
+            } else {
 
 
                 CarsBlackList carsBlackList = new CarsBlackList();
                 carsBlackList.setBlId(UUID.randomUUID().toString());
-                carsBlackList.setBlInsuranceId( carsBroker.get().getBlInsuranceId());
-                carsBlackList.setBlBrokerId( carsBroker.get().getBlBrokerId());
+                carsBlackList.setBlInsuranceId(carsBroker.get().getBlInsuranceId());
+                carsBlackList.setBlBrokerId(carsBroker.get().getBlBrokerId());
                 carsBlackList.setBlFamilyName(brokerName);
-                if(blackListed){
+                if (blackListed) {
                     carsBlackList.setBlStatus("IN");
 
-                }
-                else{
+                } else {
                     carsBlackList.setBlStatus("OU");
 
                 }
                 carsBlackList.setBlReason(reason);
-                if(!Utility.isEmpty(setOn)){
-                try {
+                if (!Utility.isEmpty(setOn)) {
+                    try {
                         Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(setOn);
                         carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
 
 
-                }
-                catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 carsBlackList.setBlNote(note);
@@ -1335,12 +1285,6 @@ public class TestService {
                 db.carsBlackListRepository.save(carsBlackList);
 
             }
-
-
-
-
-
-
 
 
         }
@@ -1515,9 +1459,6 @@ public class TestService {
             carsPolicyCar.setCarBlackListing("N");
 
         }
-
-
-
 
 
         carsPolicyCar.setCarBrandCode(null);
@@ -1709,7 +1650,7 @@ public class TestService {
         carsPolicyCarToSave.setCarProductDeductible(null);
         carsPolicyCarToSave.setCarVip(null);
         carsPolicyCarToSave.setPolicyId(policyId);
-        carsPolicyCarToSave.setCarCertIfID(vehicles.getCertifID()!=null?vehicles.getCertifID().toString():"");
+        carsPolicyCarToSave.setCarCertIfID(vehicles.getCertifID() != null ? vehicles.getCertifID().toString() : "");
 
         carsPolicyCarToSave.setShapeId(
                 populateShape(stringBufferTrademark, vehicles.getPolicyID().toString(), dataTransferModelList));
@@ -1728,7 +1669,7 @@ public class TestService {
     }
 
     public String insertPolicyCar(PolicyVehicle policyVehicle, String productId, String branchId, String clientId,
-                                  String brokerId, String subLine, String insuranceId, String sysId, String subLineCode, boolean blackListed, String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes, String endorsementSubTypeCode, String policyRootId, String policyId, String certifID, String insuredID, String insuredFirstName, String insuredCode1, String insuredPhoneNumber,String businessType) throws Exception {
+                                  String brokerId, String subLine, String insuranceId, String sysId, String subLineCode, boolean blackListed, String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes, String endorsementSubTypeCode, String policyRootId, String policyId, String certifID, String insuredID, String insuredFirstName, String insuredCode1, String insuredPhoneNumber, String businessType) throws Exception {
 
         CarsPolicy carsPolicy = new CarsPolicy();
         carsPolicy.setPolicyId(UUID.randomUUID().toString());
@@ -1791,13 +1732,10 @@ public class TestService {
         carsPolicy.setPolicySumInsCurrencyRate(policyVehicle.getPolicy().getsIExchangeRate());
 
 
-
-
-
-        if(policyVehicle.getVehicle()!=null){
-            if(policyVehicle.getVehicle().getCovers()!=null){
+        if (policyVehicle.getVehicle() != null) {
+            if (policyVehicle.getVehicle().getCovers() != null) {
                 policyVehicle.getVehicle().getCovers().forEach(covers -> {
-                    if(!Utility.isEmpty(covers.getTpaCoverTypeCode())) {
+                    if (!Utility.isEmpty(covers.getTpaCoverTypeCode())) {
 
                         if (covers.getTpaCoverTypeCode().equals("6")) {
                             carsPolicy.setPolicyTowFlag("Y");
@@ -1808,48 +1746,41 @@ public class TestService {
         }
 
 
-
-
-
-
         if (!Utility.isEmpty(endorsementTypeCode)) {
             String endorsementTypeCodeeDecoded = Utility
-                    .getPropStringValuesWithNotFound("decode." +endorsementTypeCode);
-            if(endorsementTypeCodeeDecoded!=null){
-                System.out.println("endorsementTypeCodeeDecoded "+endorsementTypeCodeeDecoded);
+                    .getPropStringValuesWithNotFound("decode." + endorsementTypeCode);
+            if (endorsementTypeCodeeDecoded != null) {
+                System.out.println("endorsementTypeCodeeDecoded " + endorsementTypeCodeeDecoded);
                 carsPolicy.setPolicyAction(endorsementTypeCodeeDecoded);
-            }
-            else{
+            } else {
                 System.out.println("endorsementTypeCodeeDecoded not found ");
                 carsPolicy.setPolicyAction("M");
             }
 
 
         } else {
-            if (!Utility.isEmpty(businessType)){
+            if (!Utility.isEmpty(businessType)) {
 
 
                 String businessTypeDecoded = Utility
-                        .getPropStringValuesWithNotFound("decode." +businessType);
-                if(businessTypeDecoded!=null){
-                    System.out.println("businessTypeDecoded "+businessTypeDecoded);
+                        .getPropStringValuesWithNotFound("decode." + businessType);
+                if (businessTypeDecoded != null) {
+                    System.out.println("businessTypeDecoded " + businessTypeDecoded);
                     carsPolicy.setPolicyAction(businessTypeDecoded);
-                }
-                else{
+                } else {
                     System.out.println("businessTypeDecoded not found ");
                     carsPolicy.setPolicyAction("M");
                 }
 
 
-            }else{
-
+            } else {
 
 
                 if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
                     String actionTypeDecoded = Utility
                             .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
                     carsPolicy.setPolicyAction(actionTypeDecoded);
-                }else{
+                } else {
                     saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
                             insuranceCode, null);
                 }
@@ -1857,9 +1788,6 @@ public class TestService {
             }
 
         }
-
-
-
 
 
 //        if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
@@ -1873,12 +1801,6 @@ public class TestService {
 //                    insuranceCode, policyVehicle.getVehicle().getCertificateNo());
 //        }
 //
-
-
-
-
-
-
 
 
         curr = validatePremiumCurrency(policyVehicle.getPolicy().getPremCurrency(),
@@ -1919,10 +1841,10 @@ public class TestService {
             carsPolicy.setPolicyCar(1);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
-            if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+            if (policyVehicle.getPolicy().getEndorsementNo().equals("0")) {
                 carsPolicy.setPolicyAmendment(-1);
 
-            }else{
+            } else {
                 carsPolicy.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
 
             }
@@ -1967,10 +1889,10 @@ public class TestService {
 
             carsPolicy.setPolicyAmendment(0);
         } else {
-            if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+            if (policyVehicle.getPolicy().getEndorsementNo().equals("0")) {
                 carsPolicy.setPolicyAmendment(-1);
 
-            }else{
+            } else {
                 carsPolicy.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
 
             }
@@ -2016,16 +1938,11 @@ public class TestService {
         }
 
 
-
-
-
-
-
-        if(policyVehicle.getVehicle().getDealerRepair()==null){
+        if (policyVehicle.getVehicle().getDealerRepair() == null) {
             carsPolicy.setPolicyAgencyRepair("");// dealer repair Y N
 
-        }else{
-            if (policyVehicle.getVehicle().getDealerRepair() ) {
+        } else {
+            if (policyVehicle.getVehicle().getDealerRepair()) {
                 carsPolicy.setPolicyAgencyRepair("Y");// dealer repair Y N
             } else {
                 carsPolicy.setPolicyAgencyRepair("N");
@@ -2165,7 +2082,7 @@ public class TestService {
     }
 
     public String updatePolicyCar(PolicyVehicle policyVehicle, String productId, String branchId, String clientId,
-                                  String brokerId, String subLine, Collection<CarsPolicy> carsPolicyToSearchList, String insuranceId, String subLineCode, boolean blackListed, String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes, String endorsementSubTypeCode, String policyRootId, String policyId, String certifID, String insuredID, String insuredFirstName, String insuredCode1, String insuredPhoneNumber,String businessType)
+                                  String brokerId, String subLine, Collection<CarsPolicy> carsPolicyToSearchList, String insuranceId, String subLineCode, boolean blackListed, String endorsementTypeDes, String endorsementTypeCode, String endorsementSubTypeDes, String endorsementSubTypeCode, String policyRootId, String policyId, String certifID, String insuredID, String insuredFirstName, String insuredCode1, String insuredPhoneNumber, String businessType)
             throws Exception {
         CarsPolicy carsPolicyLoad = carsPolicyToSearchList.iterator().next();
 
@@ -2206,7 +2123,6 @@ public class TestService {
         }
 
 
-
         carsPolicyToSave.setPolicyTowFlag(policyVehicle.getVehicle().getCarTowAllowed());
 
         carsPolicyToSave.setPolicySumInsCurrencyRate(policyVehicle.getPolicy().getsIExchangeRate());
@@ -2219,7 +2135,7 @@ public class TestService {
         carsPolicyToSave.setPolicyPremiumCurrency(curr);
         carsPolicyToSave.setPolicyPremiumCurrencyRate(policyVehicle.getPolicy().getPremExchangeRate());
         carsPolicyToSave.setPolicyEndorsementTypeDesc(endorsementTypeDes);
-        System.out.println("update endorsementTypeCode "+ endorsementTypeCode);
+        System.out.println("update endorsementTypeCode " + endorsementTypeCode);
         carsPolicyToSave.setPolicyEndorsementTypeCode(endorsementTypeCode);
         carsPolicyToSave.setPolicyEndorsSubTypeCode(endorsementSubTypeCode);
         carsPolicyToSave.setPolicyBlacklistSetBy(policyVehicle.getPolicy().getSetBy());
@@ -2227,20 +2143,17 @@ public class TestService {
         carsPolicyToSave.setPolicyBlackListedNote(policyVehicle.getPolicy().getNote());
         carsPolicyToSave.setPolicyBlackListedReason(policyVehicle.getPolicy().getReason());
 
-if(policyVehicle.getVehicle()!=null){
-if(policyVehicle.getVehicle().getCovers()!=null){
-        policyVehicle.getVehicle().getCovers().forEach(covers -> {
-            if(!Utility.isEmpty(covers.getTpaCoverTypeCode())){
-            if(covers.getTpaCoverTypeCode().equals("6")){
-                carsPolicyToSave.setPolicyTowFlag("Y");
-            }}
-        });
-}
-}
-
-
-
-
+        if (policyVehicle.getVehicle() != null) {
+            if (policyVehicle.getVehicle().getCovers() != null) {
+                policyVehicle.getVehicle().getCovers().forEach(covers -> {
+                    if (!Utility.isEmpty(covers.getTpaCoverTypeCode())) {
+                        if (covers.getTpaCoverTypeCode().equals("6")) {
+                            carsPolicyToSave.setPolicyTowFlag("Y");
+                        }
+                    }
+                });
+            }
+        }
 
 
         carsPolicyToSave.setPolicyEndorsSubTypeDesc(endorsementSubTypeDes);
@@ -2283,18 +2196,16 @@ if(policyVehicle.getVehicle().getCovers()!=null){
             carsPolicyToSave.setPolicyCar(1);
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
-            if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+            if (policyVehicle.getPolicy().getEndorsementNo().equals("0")) {
                 carsPolicyToSave.setPolicyAmendment(-1);
 
-            }else{
+            } else {
                 carsPolicyToSave.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
 
             }
         } else {
             carsPolicyToSave.setPolicyAmendment(0);
         }
-
-
 
 
         StringBuilder policyClauses = new StringBuilder();
@@ -2345,61 +2256,47 @@ if(policyVehicle.getVehicle().getCovers()!=null){
 //        }
 
 
-
         if (!Utility.isEmpty(endorsementTypeCode)) {
             String endorsementTypeCodeeDecoded = Utility
-                    .getPropStringValuesWithNotFound("decode." +endorsementTypeCode);
-            if(endorsementTypeCodeeDecoded!=null){
-                System.out.println("endorsementTypeCodeeDecoded "+endorsementTypeCodeeDecoded);
+                    .getPropStringValuesWithNotFound("decode." + endorsementTypeCode);
+            if (endorsementTypeCodeeDecoded != null) {
+                System.out.println("endorsementTypeCodeeDecoded " + endorsementTypeCodeeDecoded);
                 carsPolicyToSave.setPolicyAction(endorsementTypeCodeeDecoded);
-            }
-            else{
+            } else {
                 System.out.println("endorsementTypeCodeeDecoded not found ");
                 carsPolicyToSave.setPolicyAction("M");
             }
 
 
         } else {
-            if (!Utility.isEmpty(businessType)){
+            if (!Utility.isEmpty(businessType)) {
 
 
                 String businessTypeDecoded = Utility
-                        .getPropStringValuesWithNotFound("decode." +businessType);
-                if(businessTypeDecoded!=null){
-                    System.out.println("businessTypeDecoded "+businessTypeDecoded);
+                        .getPropStringValuesWithNotFound("decode." + businessType);
+                if (businessTypeDecoded != null) {
+                    System.out.println("businessTypeDecoded " + businessTypeDecoded);
                     carsPolicyToSave.setPolicyAction(businessTypeDecoded);
-                }
-                else{
+                } else {
                     System.out.println("businessTypeDecoded not found ");
                     carsPolicyToSave.setPolicyAction("M");
                 }
 
 
-            }else{
+            } else {
                 if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
                     String actionTypeDecoded = Utility
                             .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
                     carsPolicyToSave.setPolicyAction(actionTypeDecoded);
-                }else{
+                } else {
                     saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
                             insuranceCode, null);
                 }
 
 
-
-
-
-
             }
 
         }
-
-
-
-
-
-
-
 
 
 //		else {
@@ -2434,18 +2331,16 @@ if(policyVehicle.getVehicle().getCovers()!=null){
         // carsPolicy.setPolicyPlan(dataTransferPolicyLoaded.getPolicyPlan());
         // carsPolicy.setPolicyEndors1(dataTransferPolicyLoaded.getPolicyEndorsement1());
         // carsPolicy.setPolicyEndors2(dataTransferPolicyLoaded.getPolicyEndorsement2());
-        if(policyVehicle.getVehicle().getDealerRepair()==null){
+        if (policyVehicle.getVehicle().getDealerRepair() == null) {
             carsPolicyToSave.setPolicyAgencyRepair("");// dealer repair Y N
 
-        }else{
+        } else {
             if (policyVehicle.getVehicle().getDealerRepair()) {
                 carsPolicyToSave.setPolicyAgencyRepair("Y");// dealer repair Y N
             } else {
                 carsPolicyToSave.setPolicyAgencyRepair("N");
             }
         }
-
-
 
 
         // check
@@ -2592,10 +2487,10 @@ if(policyVehicle.getVehicle().getCovers()!=null){
         }
         if (!Utility.isEmpty(policyVehicle.getPolicy().getEndorsementNo())) {
 
-            if(  policyVehicle.getPolicy().getEndorsementNo().equals("0")){
+            if (policyVehicle.getPolicy().getEndorsementNo().equals("0")) {
                 carsPolicyToSearch.setPolicyAmendment(-1);
 
-            }else{
+            } else {
                 carsPolicyToSearch.setPolicyAmendment(Integer.valueOf(policyVehicle.getPolicy().getEndorsementNo()));
 
             }
@@ -2617,7 +2512,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
     public Collection<CarsPolicy> carsPolicySearchable2(PolicyVehicle policyVehicle, String productId) {
 
         Collection<CarsPolicy> cl = db.carsPolicyRepository.findByPolicyInsuranceIdAndPolicyIdIns(insuranceCode, String.valueOf(policyVehicle.getPolicy().getPolicyID()));
-        System.out.println("size of cars "+cl.size());
+        System.out.println("size of cars " + cl.size());
 
         return cl;
     }
@@ -2633,13 +2528,13 @@ if(policyVehicle.getVehicle().getCovers()!=null){
         List<String> modelList = db.carsDtModelRepository.getDataTransferByModel(insuranceId, modelName, carMake);
 
         if (modelList.size() == 0) {
-            Optional<String> shapeId = db.carsCarShapeRepository.findShapeCode(carMake,modelName);
+            Optional<String> shapeId = db.carsCarShapeRepository.findShapeCode(carMake, modelName);
             System.out.println(shapeId);
             System.out.println("oooooooooooooooooooooooooooooooooooooooo");
             if (shapeId.isPresent()) {
                 System.out.println("SHAPE IS PRESENT");
-                Optional<CarShapeRespomse>carShapeRespomse =db.carsCarShapeRepository.findByShapeCode(shapeId.get());
-                CarsDtModel carsDtModel =new CarsDtModel() ;
+                Optional<CarShapeRespomse> carShapeRespomse = db.carsCarShapeRepository.findByShapeCode(shapeId.get());
+                CarsDtModel carsDtModel = new CarsDtModel();
                 carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
                 carsDtModel.setBrandId(carShapeRespomse.get().getBrandCode());
                 carsDtModel.setInsuranceId(insuranceId);
@@ -2649,22 +2544,21 @@ if(policyVehicle.getVehicle().getCovers()!=null){
 
 
             } else {
-                Optional<String> shapeId2 = db.carsCarShapeRepository.findShapeCode(carMake,"NOT LISTED");
+                Optional<String> shapeId2 = db.carsCarShapeRepository.findShapeCode(carMake, "NOT LISTED");
                 if (shapeId2.isPresent()) {
                     System.out.println("SHAPE IS PRESENT but model not present ");
-                    System.out.println("shape Id "+ shapeId2.get());
-                    Optional<CarShapeRespomse>carShapeRespomse =db.carsCarShapeRepository.findByShapeCode(shapeId2.get());
-                    CarsDtModel carsDtModel =new CarsDtModel() ;
+                    System.out.println("shape Id " + shapeId2.get());
+                    Optional<CarShapeRespomse> carShapeRespomse = db.carsCarShapeRepository.findByShapeCode(shapeId2.get());
+                    CarsDtModel carsDtModel = new CarsDtModel();
                     carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
                     carsDtModel.setBrandId(carShapeRespomse.get().getBrandCode());
                     carsDtModel.setInsuranceId(insuranceId);
                     lista.add(carsDtModel);
                     System.out.println("added to lista");
-                    insertDTModel(insuranceId, modelName,carMake);
+                    insertDTModel(insuranceId, modelName, carMake);
 
 
                 }
-
 
 
                 //  insertDTModel(insuranceId, modelName,carMake);
@@ -2673,37 +2567,27 @@ if(policyVehicle.getVehicle().getCovers()!=null){
         }
 
 
-        if (modelList.size()>0) {
+        if (modelList.size() > 0) {
 
 
             String idss = modelList.get(0);
 
             Optional<CarsDtModel> qmpQuestLoaded = db.carsDtModelRepository.findById(idss);
             if (qmpQuestLoaded.isPresent()) {
-                if(qmpQuestLoaded.get().getTrademarkId()!=null) {
+                if (qmpQuestLoaded.get().getTrademarkId() != null) {
                     System.out.println("modelisted finded and trademark not null" + qmpQuestLoaded.get().getTrademarkId());
                     lista.add(qmpQuestLoaded.get());
-                }
-                else{
+                } else {
                     System.out.println("modelisted finded and trademark null" + qmpQuestLoaded.get().getTrademarkId());
 
 
-
-
-
-
-
-
-
-
-
-                    Optional<String> shapeId = db.carsCarShapeRepository.findShapeCode(carMake,modelName);
+                    Optional<String> shapeId = db.carsCarShapeRepository.findShapeCode(carMake, modelName);
                     System.out.println(shapeId);
                     System.out.println("oooooooooooooooooooooooooooooooooooooooo");
                     if (shapeId.isPresent()) {
                         System.out.println("SHAPE IS PRESENT but trademark null");
-                        Optional<CarShapeRespomse>carShapeRespomse =db.carsCarShapeRepository.findByShapeCode(shapeId.get());
-                        CarsDtModel carsDtModel =new CarsDtModel() ;
+                        Optional<CarShapeRespomse> carShapeRespomse = db.carsCarShapeRepository.findByShapeCode(shapeId.get());
+                        CarsDtModel carsDtModel = new CarsDtModel();
                         carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
                         carsDtModel.setBrandId(carShapeRespomse.get().getBrandCode());
                         carsDtModel.setInsuranceId(insuranceId);
@@ -2713,12 +2597,12 @@ if(policyVehicle.getVehicle().getCovers()!=null){
 
 
                     } else {
-                        Optional<String> shapeId2 = db.carsCarShapeRepository.findShapeCode(carMake,"NOT LISTED");
+                        Optional<String> shapeId2 = db.carsCarShapeRepository.findShapeCode(carMake, "NOT LISTED");
                         if (shapeId2.isPresent()) {
                             System.out.println("SHAPE IS PRESENT but model not present but trademark null ");
-                            System.out.println("shape Id "+ shapeId2.get());
-                            Optional<CarShapeRespomse>carShapeRespomse =db.carsCarShapeRepository.findByShapeCode(shapeId2.get());
-                            CarsDtModel carsDtModel =new CarsDtModel() ;
+                            System.out.println("shape Id " + shapeId2.get());
+                            Optional<CarShapeRespomse> carShapeRespomse = db.carsCarShapeRepository.findByShapeCode(shapeId2.get());
+                            CarsDtModel carsDtModel = new CarsDtModel();
                             carsDtModel.setTrademarkId(carShapeRespomse.get().getTrademarkCode());
                             carsDtModel.setBrandId(carShapeRespomse.get().getBrandCode());
                             carsDtModel.setInsuranceId(insuranceId);
@@ -2729,24 +2613,9 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         }
 
 
-
                         //  insertDTModel(insuranceId, modelName,carMake);
 
                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                 }
@@ -2754,11 +2623,10 @@ if(policyVehicle.getVehicle().getCovers()!=null){
         }
 
 
-
         return lista;
     }
 
-    public CarsDtModel insertDTModel(String insuranceId, String modelName,String makeCode ) {
+    public CarsDtModel insertDTModel(String insuranceId, String modelName, String makeCode) {
         CarsDtModel carsDtModel = new CarsDtModel();
         carsDtModel.setId(UUID.randomUUID().toString());
         carsDtModel.setInsuranceId(insuranceId);
@@ -2948,10 +2816,6 @@ if(policyVehicle.getVehicle().getCovers()!=null){
             }
 
 
-
-
-
-
 //			else {
 //				saveMessage(policyNo, "Tpa Cover Type Code", "Missing Field", "CARS_COVER", insuranceCode,
 //						certificateNo);
@@ -2978,18 +2842,17 @@ if(policyVehicle.getVehicle().getCovers()!=null){
             }
 
             String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
-            if(  validatePolicyCoverType.equals("false")){
-                if(Utility.isEmpty(carsCoverOpt.get().getCoverType())){
+            if (validatePolicyCoverType.equals("false")) {
+                if (Utility.isEmpty(carsCoverOpt.get().getCoverType())) {
                     carsCoverOpt.get().setCoverType(cover.getTpaCoverTypeCode());
                 }
 
-            }else{
+            } else {
 
                 if (!Utility.isEmpty(cover.getTpaCoverTypeCode())) {
                     carsCoverOpt.get().setCoverType(cover.getTpaCoverTypeCode());
                 }
             }
-
 
 
             carsCoverOpt.get().setCoverDescription(desc);
@@ -3047,15 +2910,6 @@ if(policyVehicle.getVehicle().getCovers()!=null){
             }
 
 
-
-
-
-
-
-
-
-
-
 //			else {
 //				saveMessage(policyNo, "Tpa SubCover Type Code", "Missing Field", "CARS_COVER", insuranceCode,
 //						certificateNo);
@@ -3081,17 +2935,16 @@ if(policyVehicle.getVehicle().getCovers()!=null){
             carsCoverOpt.get().setCoverDescription(subCovers.getSubCoverDesc());
 
 
-
 //            if (!Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
 //                carsCoverOpt.get().setCoverType(subCovers.getTpaSubCoverTypeCode());
 //            }
             String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
-            if(  validatePolicyCoverType.equals("false")){
-                if(Utility.isEmpty(carsCoverOpt.get().getCoverType())){
+            if (validatePolicyCoverType.equals("false")) {
+                if (Utility.isEmpty(carsCoverOpt.get().getCoverType())) {
                     carsCoverOpt.get().setCoverType(subCovers.getTpaSubCoverTypeCode());
                 }
 
-            }else{
+            } else {
 
                 if (!Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
                     carsCoverOpt.get().setCoverType(subCovers.getTpaSubCoverTypeCode());
@@ -3099,17 +2952,8 @@ if(policyVehicle.getVehicle().getCovers()!=null){
             }
 
 
-
-
             carsCoverOpt.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
             carsCoverOpt.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
-
-
-
-
-
-
-
 
 
             db.carsCoverRepository.save(carsCoverOpt.get());
@@ -3119,71 +2963,113 @@ if(policyVehicle.getVehicle().getCovers()!=null){
 
     }
 
-    public void insertCarsCover(Covers cover, SubCovers subCover, String carCoverCode, String carId, String CoverCode,
-                                String subCoverCode,Long coverOrder) {
+    public void insertCarsCover(Covers cover, SubCovers subCover, String carCoverCode, String carId, String coverCode,
+                                String subCoverCode, Long coverOrder) {
+SendingMail sendingMail = new SendingMail();
+
         if (cover != null) {
-            CarsPolicyCover carsPolicyCoverToInsert = new CarsPolicyCover();
-            carsPolicyCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
-            // carsPolicyCoverToInsert.setPolicyCoversCover(CoverCode + ".");
-            carsPolicyCoverToInsert.setPolicyCoversCover(carCoverCode);
-            carsPolicyCoverToInsert.setPolicyCoversCoverId(CoverCode);
-
-            carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
-
-            carsPolicyCoverToInsert.setPolicyCoversOrder(((double) cover.getCoverOrder()));
+            int coversExist = db.carsPolicyCoverRepository.findIfCoversExist(coverCode, carId);
+            if (coversExist>0) {
+                saveMessage(policyNo, "Cover:" + cover.getCoverCode() + " " + cover.getCoverDesc(), "Duplicate Cover",
+                        "CARS_COVER", insuranceCode, null);
 
 
 
+                try {
+                    sendingMail.run(companyName + " duplicate Covers in  " + policyNo,
+                            "Cover:" + cover.getCoverCode() + " " + cover.getCoverDesc()+" has been duplicated \n \n This Email Is Informative");
 
-            carsPolicyCoverToInsert.setPolicyCoversDeductible((double) cover.getDeductibleFlatAmount());
-            carsPolicyCoverToInsert.setPolicyCoversLimitClaim(cover.getCoverLimitClaim());
-            System.out.println("cover limit" + cover.getCoverLimitClaim());
-            carsPolicyCoverToInsert.setPolicyCoversCountLimit(cover.getCoverCountLimit());
-            carsPolicyCoverToInsert.setPolicyCoversDeductible100((double) cover.getDeductiblePercentage());
-            // carsPolicyCoverToInsert.setPolicyCoversPercentage(Float.toString(cover.getDeductiblePercentage()));
-            carsPolicyCoverToInsert.setPolicyCoversPercentage(cover.getDeductibleType());
-            carsPolicyCoverToInsert.setPolicyCoversCarId(carId);
-            // carsPolicyCoverToInsert.setPolicyCoversCoverId(insuranceCode+"."+cover.getCoverCode());
-            // carsPolicyCoverToInsert.setPolicyCoversCoverId(carCoverId);jean
-            // batchCover = dataTransferCoverContractLoaded.getScriptName();
-            carsPolicyCoverToInsert.setSysVersionNumber(0);
-            carsPolicyCoverToInsert.setSysCreatedBy(CREATED_BY_QUARTZ);
-            carsPolicyCoverToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
-            carsPolicyCoverToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
-            carsPolicyCoverToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-            db.carsPolicyCoverRepository.save(carsPolicyCoverToInsert);
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+
+
+
+
+
+
+
+            }
+            {
+                CarsPolicyCover carsPolicyCoverToInsert = new CarsPolicyCover();
+                carsPolicyCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
+                // carsPolicyCoverToInsert.setPolicyCoversCover(CoverCode + ".");
+                carsPolicyCoverToInsert.setPolicyCoversCover(carCoverCode);
+                carsPolicyCoverToInsert.setPolicyCoversCoverId(coverCode);
+
+                carsPolicyCoverToInsert.setPolicyCoversSumInsured((long) cover.getSumInsured());
+
+                carsPolicyCoverToInsert.setPolicyCoversOrder(((double) cover.getCoverOrder()));
+
+
+                carsPolicyCoverToInsert.setPolicyCoversDeductible((double) cover.getDeductibleFlatAmount());
+                carsPolicyCoverToInsert.setPolicyCoversLimitClaim(cover.getCoverLimitClaim());
+                System.out.println("cover limit" + cover.getCoverLimitClaim());
+                carsPolicyCoverToInsert.setPolicyCoversCountLimit(cover.getCoverCountLimit());
+                carsPolicyCoverToInsert.setPolicyCoversDeductible100((double) cover.getDeductiblePercentage());
+                // carsPolicyCoverToInsert.setPolicyCoversPercentage(Float.toString(cover.getDeductiblePercentage()));
+                carsPolicyCoverToInsert.setPolicyCoversPercentage(cover.getDeductibleType());
+                carsPolicyCoverToInsert.setPolicyCoversCarId(carId);
+                // carsPolicyCoverToInsert.setPolicyCoversCoverId(insuranceCode+"."+cover.getCoverCode());
+                // carsPolicyCoverToInsert.setPolicyCoversCoverId(carCoverId);jean
+                // batchCover = dataTransferCoverContractLoaded.getScriptName();
+                carsPolicyCoverToInsert.setSysVersionNumber(0);
+                carsPolicyCoverToInsert.setSysCreatedBy(CREATED_BY_QUARTZ);
+                carsPolicyCoverToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                carsPolicyCoverToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                carsPolicyCoverToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                db.carsPolicyCoverRepository.save(carsPolicyCoverToInsert);
+
+            }
         }
         if (subCover != null) {
-            CarsPolicyCover carsPolicySubCoverToInsert = new CarsPolicyCover();
-            carsPolicySubCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
-            carsPolicySubCoverToInsert.setPolicyCoversOrder(Double.valueOf(coverOrder + "." + subCover.getSubCoverOrder()));
-
-            carsPolicySubCoverToInsert.setPolicyCoversCover(CoverCode + "." + subCover.getSubCoverCode());
-            carsPolicySubCoverToInsert.setPolicyCoversCoverId(subCoverCode);
-
-            carsPolicySubCoverToInsert.setPolicyCoversSumInsured((long) subCover.getSubCoverSumInsured());
-
-            carsPolicySubCoverToInsert.setPolicyCoversDeductible((double) subCover.getSubCoverDeductibleFlatAmount());
-            carsPolicySubCoverToInsert
-                    .setPolicyCoversDeductible100((double) subCover.getSubCoverDeductiblePercentage());
-            // carsPolicySubCoverToInsert.setPolicyCoversPercentage(Float.toString(subCover.getSubCoverDeductiblePercentage()));
+            Integer subCoverExist = db.carsPolicyCoverRepository.findIfCoversExist(subCoverCode, carId);
+            if (subCoverExist>0) {
 
 
-            carsPolicySubCoverToInsert.setPolicyCoversLimitClaim(subCover.getSubCoverLimitClaim());
+                try {
+                    sendingMail.run(companyName + " duplicate SubCovers in  " + policyNo,
+                            " SubCover :" + subCoverCode + " in Cover : " + coverCode+" has been duplicated \n \n This Email Is Informative");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+            } else {
 
 
-            carsPolicySubCoverToInsert.setPolicyCoversCountLimit(subCover.getSubCoverCountLimit());
-            carsPolicySubCoverToInsert.setPolicyCoversPercentage(subCover.getSubCoverDeductibleType());
-            carsPolicySubCoverToInsert.setPolicyCoversCarId(carId);
+                CarsPolicyCover carsPolicySubCoverToInsert = new CarsPolicyCover();
+                carsPolicySubCoverToInsert.setPolicyCoversId(UUID.randomUUID().toString());
+                carsPolicySubCoverToInsert.setPolicyCoversOrder(Double.valueOf(coverOrder + "." + subCover.getSubCoverOrder()));
 
-            // carsPolicyCoverToInsert.setPolicyCoversCoverId(carCoverId);jean
-            // batchCover = dataTransferCoverContractLoaded.getScriptName();
-            carsPolicySubCoverToInsert.setSysVersionNumber(0);
-            carsPolicySubCoverToInsert.setSysCreatedBy(CREATED_BY_QUARTZ);
-            carsPolicySubCoverToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
-            carsPolicySubCoverToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
-            carsPolicySubCoverToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-            db.carsPolicyCoverRepository.save(carsPolicySubCoverToInsert);
+                carsPolicySubCoverToInsert.setPolicyCoversCover(coverCode + "." + subCover.getSubCoverCode());
+                carsPolicySubCoverToInsert.setPolicyCoversCoverId(subCoverCode);
+
+                carsPolicySubCoverToInsert.setPolicyCoversSumInsured( subCover.getSubCoverSumInsured());
+
+                carsPolicySubCoverToInsert.setPolicyCoversDeductible((double) subCover.getSubCoverDeductibleFlatAmount());
+                carsPolicySubCoverToInsert
+                        .setPolicyCoversDeductible100((double) subCover.getSubCoverDeductiblePercentage());
+                // carsPolicySubCoverToInsert.setPolicyCoversPercentage(Float.toString(subCover.getSubCoverDeductiblePercentage()));
+
+
+                carsPolicySubCoverToInsert.setPolicyCoversLimitClaim(subCover.getSubCoverLimitClaim());
+
+
+                carsPolicySubCoverToInsert.setPolicyCoversCountLimit(subCover.getSubCoverCountLimit());
+                carsPolicySubCoverToInsert.setPolicyCoversPercentage(subCover.getSubCoverDeductibleType());
+                carsPolicySubCoverToInsert.setPolicyCoversCarId(carId);
+
+                // carsPolicyCoverToInsert.setPolicyCoversCoverId(carCoverId);jean
+                // batchCover = dataTransferCoverContractLoaded.getScriptName();
+                carsPolicySubCoverToInsert.setSysVersionNumber(0);
+                carsPolicySubCoverToInsert.setSysCreatedBy(CREATED_BY_QUARTZ);
+                carsPolicySubCoverToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                carsPolicySubCoverToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                carsPolicySubCoverToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                db.carsPolicyCoverRepository.save(carsPolicySubCoverToInsert);
+            }
         }
     }
 
@@ -3653,10 +3539,10 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         if (Utility.isEmpty(covers.getTpaCoverTypeCode())) {
                             //todo  today
                             String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
-                            if(  validatePolicyCoverType.equals("false")){
-                                Optional<CarsCover> carsCoverOptional= db.carsCoverRepository.findByCoverCodeAndCoverInsurance(covers.getCoverCode(),Integer.parseInt(insuranceCode));
-                                if(carsCoverOptional.isPresent()){
-                                    if (Utility.isEmpty(carsCoverOptional.get().getCoverType())){
+                            if (validatePolicyCoverType != null && validatePolicyCoverType.equals("false")) {
+                                Optional<CarsCover> carsCoverOptional = db.carsCoverRepository.findByCoverCodeAndCoverInsurance(covers.getCoverCode(), Integer.parseInt(insuranceCode));
+                                if (carsCoverOptional.isPresent()) {
+                                    if (Utility.isEmpty(carsCoverOptional.get().getCoverType())) {
                                         error.append(" Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
                                                 + " , cover code " + covers.getCoverCode() +
                                                 " and cover name " + covers.getCoverDesc() +
@@ -3669,7 +3555,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                                                 + " is missing ", insuranceCode, "CARS_COVER", "Informative Missing");
                                     }
 
-                                }else {
+                                } else {
                                     error.append(" Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
                                             + " , cover code " + covers.getCoverCode() +
                                             " and cover name " + covers.getCoverDesc() +
@@ -3682,7 +3568,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                                             + " is missing ", insuranceCode, "CARS_COVER", "Informative Missing");
                                 }
 
-                            }else{
+                            } else {
                                 error.append(" Tpa Cover Type Code in Vehicle Certificate Number " + certificateNo
                                         + " , cover code " + covers.getCoverCode() +
                                         " and cover name " + covers.getCoverDesc() +
@@ -3695,9 +3581,6 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                                         + " is missing ", insuranceCode, "CARS_COVER", "Informative Missing");
 
                             }
-
-
-
 
 
                             // saveMessage(policyNo, "Tpa Cover Type Code", "Missing Field", "CARS_COVER",
@@ -3755,21 +3638,15 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                                 }
 
 
-
-
-
-
-
                                 if (Utility.isEmpty(subCovers.getTpaSubCoverTypeCode())) {
-
 
 
                                     String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
 
-                                    if(  validatePolicyCoverType.equals("false")){
-                                        Optional<CarsCover> carsCoverOptional= db.carsCoverRepository.findByCoverCodeAndCoverInsurance(covers.getCoverCode()+"."+subCovers.getSubCoverCode(),Integer.parseInt(insuranceCode));
-                                        if(carsCoverOptional.isPresent()){
-                                            if (Utility.isEmpty(carsCoverOptional.get().getCoverType())){
+                                    if (validatePolicyCoverType != null && validatePolicyCoverType.equals("false")) {
+                                        Optional<CarsCover> carsCoverOptional = db.carsCoverRepository.findByCoverCodeAndCoverInsurance(covers.getCoverCode() + "." + subCovers.getSubCoverCode(), Integer.parseInt(insuranceCode));
+                                        if (carsCoverOptional.isPresent()) {
+                                            if (Utility.isEmpty(carsCoverOptional.get().getCoverType())) {
                                                 error.append(" Tpa SubCover Type Code in Vehicle Certificate Number "
                                                         + certificateNo +
                                                         " , cover code " + covers.getCoverCode() +
@@ -3783,7 +3660,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                                                         insuranceCode, "CARS_COVER", "Informative Missing");
                                             }
 
-                                        }else {
+                                        } else {
                                             error.append(" Tpa SubCover Type Code in Vehicle Certificate Number "
                                                     + certificateNo +
                                                     " , cover code " + covers.getCoverCode() +
@@ -3797,7 +3674,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                                                     insuranceCode, "CARS_COVER", "Informative Missing");
                                         }
 
-                                    }else{
+                                    } else {
                                         error.append(" Tpa SubCover Type Code in Vehicle Certificate Number "
                                                 + certificateNo +
                                                 " , cover code " + covers.getCoverCode() +
@@ -3813,34 +3690,9 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                                     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                     // saveMessage(policyNo, "Tpa Cover Type Code", "Missing Field", "CARS_COVER",
                                     // insuranceCode,
                                     // certificateNo);
-
-
 
 
                                 }
@@ -3884,141 +3736,109 @@ if(policyVehicle.getVehicle().getCovers()!=null){
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public ResponseEntity<String> blackWhiteListing(PolicyListhing policyListhing) {
 
         String response = "";
-        Optional<CarsDtParams>  carsDtParamsOptional=db.carsDtParamsRepository.findByParamsIdAndInsuranceId(policyListhing.getProfileTypeId(),policyListhing.getInsuranceId());
+        Optional<CarsDtParams> carsDtParamsOptional = db.carsDtParamsRepository.findByParamsIdAndInsuranceId(policyListhing.getProfileTypeId(), policyListhing.getInsuranceId());
         carsDtParamsOptional.ifPresent(carsDtParams -> policyListhing.setProfileTypeId(carsDtParams.getParamsCeCode()));
 
 
-
-        ResponseEntity res=new ResponseEntity(response, HttpStatus.OK);
+        ResponseEntity res = new ResponseEntity(response, HttpStatus.OK);
         if (policyListhing.getProfileTypeId().equals("BROKER")) {
             Optional<CarsBroker> brk = db.carsBrokerRepository.findByBrokerReferenceOrBrokerNumAndInsuranceId(
                     policyListhing.getInsuranceId(), policyListhing.getProfileId());
-        if(brk.isPresent()){
+            if (brk.isPresent()) {
 
 
-            Optional<CarsBlackList> carsBrokerblackList = db.carsBlackListRepository.findTopByBlBrokerIdOrderBySysUpdatedDateDesc(brk.get().getBrokerId());
+                Optional<CarsBlackList> carsBrokerblackList = db.carsBlackListRepository.findTopByBlBrokerIdOrderBySysUpdatedDateDesc(brk.get().getBrokerId());
 
 
-            if (carsBrokerblackList.isPresent()) {
+                if (carsBrokerblackList.isPresent()) {
 
-                if ((policyListhing.getBlacklisted() && carsBrokerblackList.get().getBlStatus().equals("IN")) || (!policyListhing.getBlacklisted() && carsBrokerblackList.get().getBlStatus().equals("OU"))) {
+                    if ((policyListhing.getBlacklisted() && carsBrokerblackList.get().getBlStatus().equals("IN")) || (!policyListhing.getBlacklisted() && carsBrokerblackList.get().getBlStatus().equals("OU"))) {
 
-                    carsBrokerblackList.get().setBlSetBy(policyListhing.getSetBy());
-                    if (policyListhing.getBlacklisted()) {
-                        carsBrokerblackList.get().setBlStatus("IN");
-                    }
-
-                    if (!policyListhing.getBlacklisted()) {
-                        carsBrokerblackList.get().setBlStatus("OU");
-                    }
-
-                    carsBrokerblackList.get().setBlReason(policyListhing.getReason());
-                    carsBrokerblackList.get().setBlNote(policyListhing.getNote());
-                    if (!Utility.isEmpty(policyListhing.getSetOn())) {
-                        try {
-
-                            Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
-                            carsBrokerblackList.get().setBlDate(new Timestamp(setOnn.getTime()));
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                            response = "error in date format dd-MM-yyyy ";
-
-                            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                        carsBrokerblackList.get().setBlSetBy(policyListhing.getSetBy());
+                        if (policyListhing.getBlacklisted()) {
+                            carsBrokerblackList.get().setBlStatus("IN");
                         }
+
+                        if (!policyListhing.getBlacklisted()) {
+                            carsBrokerblackList.get().setBlStatus("OU");
+                        }
+
+                        carsBrokerblackList.get().setBlReason(policyListhing.getReason());
+                        carsBrokerblackList.get().setBlNote(policyListhing.getNote());
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
+                            try {
+
+                                Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
+                                carsBrokerblackList.get().setBlDate(new Timestamp(setOnn.getTime()));
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                                response = "error in date format dd-MM-yyyy ";
+
+                                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                            }
+                        }
+
+                        carsBrokerblackList.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
+                        carsBrokerblackList.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                        response = "Broker Black Listing Status Updated";
+                        res = new ResponseEntity(response, HttpStatus.OK);
+                    } else {
+
+
+                        CarsBlackList carsBlackList = new CarsBlackList();
+                        carsBlackList.setBlId(UUID.randomUUID().toString());
+                        carsBlackList.setBlInsuranceId(carsBrokerblackList.get().getBlInsuranceId());
+                        carsBlackList.setBlBrokerId(carsBrokerblackList.get().getBlBrokerId());
+                        carsBlackList.setBlFamilyName(carsBrokerblackList.get().getBlFamilyName());
+
+
+                        if (policyListhing.getBlacklisted()) {
+                            carsBlackList.setBlStatus("IN");
+                        }
+
+                        if (!policyListhing.getBlacklisted()) {
+                            carsBlackList.setBlStatus("OU");
+                        }
+
+                        carsBlackList.setBlReason(policyListhing.getReason());
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
+                            try {
+                                Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
+                                carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+
+                                response = "error in date format dd-MM-yyyy ";
+
+                                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                            }
+                        }
+
+                        carsBlackList.setBlNote(policyListhing.getNote());
+
+                        carsBlackList.setBlSetBy(policyListhing.getSetBy());
+                        carsBlackList.setSysVersionNumber(0);
+                        carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
+                        carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                        carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                        carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                        db.carsBlackListRepository.save(carsBlackList);
+
+
+                        response = "Broker Black white  listed Added State";
+
+                        res = new ResponseEntity(response, HttpStatus.CREATED);
+
+
                     }
 
-                    carsBrokerblackList.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
-                    carsBrokerblackList.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
-                    response = "Broker Black Listing Status Updated";
-                    res = new ResponseEntity(response, HttpStatus.OK);
+
                 } else {
-
-
-                    CarsBlackList carsBlackList = new CarsBlackList();
-                    carsBlackList.setBlId(UUID.randomUUID().toString());
-                    carsBlackList.setBlInsuranceId(carsBrokerblackList.get().getBlInsuranceId());
-                    carsBlackList.setBlBrokerId(carsBrokerblackList.get().getBlBrokerId());
-                    carsBlackList.setBlFamilyName(carsBrokerblackList.get().getBlFamilyName());
-
-
-                    if (policyListhing.getBlacklisted()) {
-                        carsBlackList.setBlStatus("IN");
-                    }
-
-                    if (!policyListhing.getBlacklisted()) {
-                        carsBlackList.setBlStatus("OU");
-                    }
-
-                    carsBlackList.setBlReason(policyListhing.getReason());
-                    if (!Utility.isEmpty(policyListhing.getSetOn())) {
-                        try {
-                            Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
-                            carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-
-                            response = "error in date format dd-MM-yyyy ";
-
-                            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
-                        }
-                    }
-
-                    carsBlackList.setBlNote(policyListhing.getNote());
-
-                    carsBlackList.setBlSetBy(policyListhing.getSetBy());
-                    carsBlackList.setSysVersionNumber(0);
-                    carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
-                    carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
-                    carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
-                    carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-                    db.carsBlackListRepository.save(carsBlackList);
-
-
-                    response = "Broker Black white  listed Added State";
-
-                    res = new ResponseEntity(response, HttpStatus.CREATED);
-
-
-                }
-
-
-            } else {
-
-
 
 
                     System.out.println("new Cars black list");
@@ -4068,90 +3888,118 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                     res = new ResponseEntity(response, HttpStatus.CREATED);
 
 
-
+                }
+            } else {
+                response = "BROKER NOT FOUND";
+                res = new ResponseEntity(response, HttpStatus.NOT_FOUND);
             }
-        }
-        else {
-            response = "BROKER NOT FOUND";
-            res = new ResponseEntity(response, HttpStatus.NOT_FOUND);
-        }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        else if (policyListhing.getProfileTypeId().equals("INSURED")) {
+        } else if (policyListhing.getProfileTypeId().equals("INSURED")) {
 
             Optional<CarsClient> carsClient = db.carsClientRepository
                     .findByClientReferenceOrClientNum1AndInsuranceId(policyListhing.getInsuranceId(), policyListhing.getProfileId());
             if (carsClient.isPresent()) {
 
 
+                Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(carsClient.get().getClientNum1(), policyListhing.getInsuranceId());
+                if (carsBlackListOptional.isPresent()) {
 
-            Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findTopByClientNumAndBlInsuranceIdOrderBySysUpdatedDateDesc(carsClient.get().getClientNum1(), policyListhing.getInsuranceId());
-            if (carsBlackListOptional.isPresent()) {
+                    if ((policyListhing.getBlacklisted() && carsBlackListOptional.get().getBlStatus().equals("IN")) || (!policyListhing.getBlacklisted() && carsBlackListOptional.get().getBlStatus().equals("OU"))) {
 
-                if ((policyListhing.getBlacklisted() && carsBlackListOptional.get().getBlStatus().equals("IN")) || (!policyListhing.getBlacklisted() && carsBlackListOptional.get().getBlStatus().equals("OU"))) {
-
-                    carsBlackListOptional.get().setBlSetBy(policyListhing.getSetBy());
-                    if (policyListhing.getBlacklisted()) {
-                        carsBlackListOptional.get().setBlStatus("IN");
-                    }
-
-                    if (!policyListhing.getBlacklisted()) {
-                        carsBlackListOptional.get().setBlStatus("OU");
-                    }
-                    carsBlackListOptional.get().setBlReason(policyListhing.getReason());
-                    carsBlackListOptional.get().setBlNote(policyListhing.getNote());
-                    carsBlackListOptional.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
-                    carsBlackListOptional.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
-                    if (!Utility.isEmpty(policyListhing.getSetOn())) {
-                        try {
-                            Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
-                            carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
-
-                        } catch (ParseException e) {
-
-                            e.printStackTrace();
-                            response = "error in date format dd-MM-yyyy ";
-
-                            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                        carsBlackListOptional.get().setBlSetBy(policyListhing.getSetBy());
+                        if (policyListhing.getBlacklisted()) {
+                            carsBlackListOptional.get().setBlStatus("IN");
                         }
-                    }
-                    db.carsBlackListRepository.save(carsBlackListOptional.get());
 
-                    response = "CLIENT Black Listing Status Updated";
-                    res = new ResponseEntity(response, HttpStatus.OK);
+                        if (!policyListhing.getBlacklisted()) {
+                            carsBlackListOptional.get().setBlStatus("OU");
+                        }
+                        carsBlackListOptional.get().setBlReason(policyListhing.getReason());
+                        carsBlackListOptional.get().setBlNote(policyListhing.getNote());
+                        carsBlackListOptional.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
+                        carsBlackListOptional.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
+                            try {
+                                Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
+                                carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
+
+                            } catch (ParseException e) {
+
+                                e.printStackTrace();
+                                response = "error in date format dd-MM-yyyy ";
+
+                                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                            }
+                        }
+                        db.carsBlackListRepository.save(carsBlackListOptional.get());
+
+                        response = "CLIENT Black Listing Status Updated";
+                        res = new ResponseEntity(response, HttpStatus.OK);
+                    } else {
+
+
+                        CarsBlackList carsBlackList = new CarsBlackList();
+                        carsBlackList.setBlId(UUID.randomUUID().toString());
+                        carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
+                        carsBlackList.setClientNum(carsBlackListOptional.get().getClientNum());
+                        carsBlackList.setBlFirstName(carsBlackListOptional.get().getBlFirstName());
+                        carsBlackList.setBlFatherName(carsBlackListOptional.get().getBlFatherName());
+                        carsBlackList.setBlFamilyName(carsBlackListOptional.get().getBlFamilyName());
+
+                        carsBlackList.setBlCar("INS");
+
+                        carsBlackList.setBlNote(policyListhing.getNote());
+                        carsBlackList.setBlReason(policyListhing.getReason());
+
+
+                        if (policyListhing.getBlacklisted()) {
+                            carsBlackList.setBlStatus("IN");
+                        }
+
+                        if (!policyListhing.getBlacklisted()) {
+                            carsBlackList.setBlStatus("OU");
+                        }
+
+
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
+                            try {
+                                Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
+                                carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
+
+                            } catch (ParseException e) {
+
+                                e.printStackTrace();
+                                response = "error in date format dd-MM-yyyy ";
+
+                                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                            }
+                        }
+
+
+                        carsBlackList.setBlSetBy(policyListhing.getSetBy());
+
+                        carsBlackList.setSysVersionNumber(0);
+                        carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
+                        carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                        carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                        carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+
+
+                        db.carsBlackListRepository.save(carsBlackList);
+
+                        response = "CLIENT Black LisTING CREATED";
+                        res = new ResponseEntity(response, HttpStatus.OK);
+
+                    }
                 } else {
 
 
                     CarsBlackList carsBlackList = new CarsBlackList();
                     carsBlackList.setBlId(UUID.randomUUID().toString());
                     carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                    carsBlackList.setClientNum(carsBlackListOptional.get().getClientNum());
-                    carsBlackList.setBlFirstName(carsBlackListOptional.get().getBlFirstName());
-                    carsBlackList.setBlFatherName(carsBlackListOptional.get().getBlFatherName());
-                    carsBlackList.setBlFamilyName(carsBlackListOptional.get().getBlFamilyName());
+                    carsBlackList.setClientNum(carsClient.get().getClientNum1());
+                    carsBlackList.setBlFirstName(carsClient.get().getClientFirstName());
+                    carsBlackList.setBlFatherName(carsClient.get().getClientFatherName());
+                    carsBlackList.setBlFamilyName(carsClient.get().getClientFamilyName());
 
                     carsBlackList.setBlCar("INS");
 
@@ -4167,6 +4015,11 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         carsBlackList.setBlStatus("OU");
                     }
 
+                    carsBlackList.setSysVersionNumber(0);
+                    carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
+                    carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                    carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                    carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
                     if (!Utility.isEmpty(policyListhing.getSetOn())) {
@@ -4175,7 +4028,6 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                             carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
 
                         } catch (ParseException e) {
-
                             e.printStackTrace();
                             response = "error in date format dd-MM-yyyy ";
 
@@ -4183,216 +4035,111 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         }
                     }
 
-
-
-
-
                     carsBlackList.setBlSetBy(policyListhing.getSetBy());
-
-                    carsBlackList.setSysVersionNumber(0);
-                    carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
-                    carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
-                    carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
-                    carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-
-
                     db.carsBlackListRepository.save(carsBlackList);
 
                     response = "CLIENT Black LisTING CREATED";
                     res = new ResponseEntity(response, HttpStatus.OK);
 
+
                 }
+
             } else {
-
-
-                CarsBlackList carsBlackList = new CarsBlackList();
-                carsBlackList.setBlId(UUID.randomUUID().toString());
-                carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                carsBlackList.setClientNum(carsClient.get().getClientNum1());
-                carsBlackList.setBlFirstName(carsClient.get().getClientFirstName());
-                carsBlackList.setBlFatherName(carsClient.get().getClientFatherName());
-                carsBlackList.setBlFamilyName(carsClient.get().getClientFamilyName());
-
-                carsBlackList.setBlCar("INS");
-
-                carsBlackList.setBlNote(policyListhing.getNote());
-                carsBlackList.setBlReason(policyListhing.getReason());
-
-
-                if (policyListhing.getBlacklisted()) {
-                    carsBlackList.setBlStatus("IN");
-                }
-
-                if (!policyListhing.getBlacklisted()) {
-                    carsBlackList.setBlStatus("OU");
-                }
-
-                carsBlackList.setSysVersionNumber(0);
-                carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
-                carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
-                carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
-                carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-
-
-                if (!Utility.isEmpty(policyListhing.getSetOn())) {
-                    try {
-                        Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
-                        carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                        response = "error in date format dd-MM-yyyy ";
-
-                        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
-                    }
-                }
-
-                carsBlackList.setBlSetBy(policyListhing.getSetBy());
-                db.carsBlackListRepository.save(carsBlackList);
-
-                response = "CLIENT Black LisTING CREATED";
-                res = new ResponseEntity(response, HttpStatus.OK);
-
-
+                response = "CLIENT NOT FOUND";
+                res = new ResponseEntity(response, HttpStatus.NOT_FOUND);
             }
-
-        } else {
-            response = "CLIENT NOT FOUND";
-            res= new ResponseEntity(response, HttpStatus.NOT_FOUND);
-        }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        else if (policyListhing.getProfileTypeId().equals("TP")) {
+        } else if (policyListhing.getProfileTypeId().equals("TP")) {
             Optional<CarsClient> carsClient = db.carsClientRepository
                     .findByClientReferenceOrClientNum1AndInsuranceId(policyListhing.getInsuranceId(), policyListhing.getProfileId());
             if (carsClient.isPresent()) {
 
 
+                Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findTopByBlFirstNameAndBlFatherNameAndBlFamilyNameOrderBySysUpdatedDateDesc(policyListhing.getProfileFirstName().toUpperCase(Locale.ROOT), policyListhing.getProfileFatherName().toUpperCase(Locale.ROOT), policyListhing.getProfileLastName().toUpperCase(Locale.ROOT));
+                if (carsBlackListOptional.isPresent()) {
+                    if ((policyListhing.getBlacklisted() && carsBlackListOptional.get().getBlStatus().equals("IN")) || (!policyListhing.getBlacklisted() && carsBlackListOptional.get().getBlStatus().equals("OU"))) {
 
-            Optional<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findTopByBlFirstNameAndBlFatherNameAndBlFamilyNameOrderBySysUpdatedDateDesc(policyListhing.getProfileFirstName().toUpperCase(Locale.ROOT),policyListhing.getProfileFatherName().toUpperCase(Locale.ROOT),policyListhing.getProfileLastName().toUpperCase(Locale.ROOT));
-            if (carsBlackListOptional.isPresent()) {
-                if ((policyListhing.getBlacklisted()&&  carsBlackListOptional.get().getBlStatus().equals("IN"))||(!policyListhing.getBlacklisted()&&  carsBlackListOptional.get().getBlStatus().equals("OU"))) {
-
-                    carsBlackListOptional.get().setBlSetBy(policyListhing.getSetBy());
-                    if (policyListhing.getBlacklisted()) {
-                        carsBlackListOptional.get().setBlStatus("IN");
-                    }
-
-                    if (!policyListhing.getBlacklisted()) {
-                        carsBlackListOptional.get().setBlStatus("OU");
-                    }
-                    carsBlackListOptional.get().setBlReason(policyListhing.getReason());
-                    carsBlackListOptional.get().setBlNote(policyListhing.getNote());
-                    carsBlackListOptional.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
-                    carsBlackListOptional.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
-                    if(!Utility.isEmpty(policyListhing.getSetOn())) {
-
-                        try {
-                            Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
-                            carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                            response = "error in date format dd-MM-yyyy ";
-
-                            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                        carsBlackListOptional.get().setBlSetBy(policyListhing.getSetBy());
+                        if (policyListhing.getBlacklisted()) {
+                            carsBlackListOptional.get().setBlStatus("IN");
                         }
-                    }
-                    db.carsBlackListRepository.save(carsBlackListOptional.get());
 
-                    response = "CLIENT Black Listing Status Updated";
-                    res = new ResponseEntity(response, HttpStatus.OK);
-                }
-                else{
-
-
-                    CarsBlackList carsBlackList = new CarsBlackList();
-                    carsBlackList.setBlId(UUID.randomUUID().toString());
-                    carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
-                    carsBlackList.setClientNum(carsClient.get().getClientNum1());
-                    carsBlackList.setBlFirstName(carsClient.get().getClientFirstName());
-                    carsBlackList.setBlFatherName(carsClient.get().getClientFatherName());
-                    carsBlackList.setBlFamilyName(carsClient.get().getClientFamilyName());
-                    carsBlackList.setBlCar("TP");
-
-                    carsBlackList.setBlNote(policyListhing.getNote());
-                    carsBlackList.setBlReason(policyListhing.getReason());
-
-
-                    if (policyListhing.getBlacklisted()) {
-                        carsBlackList.setBlStatus("IN");
-                    }
-
-                    if (!policyListhing.getBlacklisted()) {
-                        carsBlackList.setBlStatus("OU");
-                    }
-
-                    carsBlackList.setSysVersionNumber(0);
-                    carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
-                    carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
-                    carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
-                    carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-
-
-                    if(!Utility.isEmpty(policyListhing.getSetOn())){
-                        try {
-                            Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
-                            carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
-
-                        } catch (ParseException e) {
-
-                            e.printStackTrace();
-                            response = "error in date format dd-MM-yyyy ";
-
-                            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                        if (!policyListhing.getBlacklisted()) {
+                            carsBlackListOptional.get().setBlStatus("OU");
                         }
+                        carsBlackListOptional.get().setBlReason(policyListhing.getReason());
+                        carsBlackListOptional.get().setBlNote(policyListhing.getNote());
+                        carsBlackListOptional.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
+                        carsBlackListOptional.get().setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
+
+                            try {
+                                Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
+                                carsBlackListOptional.get().setBlDate(new Timestamp(setOnn.getTime()));
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                                response = "error in date format dd-MM-yyyy ";
+
+                                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                            }
+                        }
+                        db.carsBlackListRepository.save(carsBlackListOptional.get());
+
+                        response = "CLIENT Black Listing Status Updated";
+                        res = new ResponseEntity(response, HttpStatus.OK);
+                    } else {
+
+
+                        CarsBlackList carsBlackList = new CarsBlackList();
+                        carsBlackList.setBlId(UUID.randomUUID().toString());
+                        carsBlackList.setBlInsuranceId(policyListhing.getInsuranceId());
+                        carsBlackList.setClientNum(carsClient.get().getClientNum1());
+                        carsBlackList.setBlFirstName(carsClient.get().getClientFirstName());
+                        carsBlackList.setBlFatherName(carsClient.get().getClientFatherName());
+                        carsBlackList.setBlFamilyName(carsClient.get().getClientFamilyName());
+                        carsBlackList.setBlCar("TP");
+
+                        carsBlackList.setBlNote(policyListhing.getNote());
+                        carsBlackList.setBlReason(policyListhing.getReason());
+
+
+                        if (policyListhing.getBlacklisted()) {
+                            carsBlackList.setBlStatus("IN");
+                        }
+
+                        if (!policyListhing.getBlacklisted()) {
+                            carsBlackList.setBlStatus("OU");
+                        }
+
+                        carsBlackList.setSysVersionNumber(0);
+                        carsBlackList.setSysCreatedBy(CREATED_BY_QUARTZ);
+                        carsBlackList.setSysUpdatedBy(CREATED_BY_QUARTZ);
+                        carsBlackList.setSysCreatedDate(new Timestamp(new Date().getTime()));
+                        carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+
+
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
+                            try {
+                                Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
+                                carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
+
+                            } catch (ParseException e) {
+
+                                e.printStackTrace();
+                                response = "error in date format dd-MM-yyyy ";
+
+                                return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+                            }
+                        }
+
+                        carsBlackList.setBlSetBy(policyListhing.getSetBy());
+                        db.carsBlackListRepository.save(carsBlackList);
+
+                        response = "CLIENT Black LisTING CREATED change status";
+                        res = new ResponseEntity(response, HttpStatus.OK);
+
                     }
-
-                    carsBlackList.setBlSetBy(policyListhing.getSetBy());
-                    db.carsBlackListRepository.save(carsBlackList);
-
-                    response = "CLIENT Black LisTING CREATED change status";
-                    res= new ResponseEntity(response, HttpStatus.OK);
-
-                }
-            } else {
-
-
-
+                } else {
 
 
                     CarsBlackList carsBlackList = new CarsBlackList();
@@ -4424,7 +4171,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                     carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                    if(!Utility.isEmpty(policyListhing.getSetOn())){
+                    if (!Utility.isEmpty(policyListhing.getSetOn())) {
                         try {
                             Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                             carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -4441,30 +4188,23 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                     db.carsBlackListRepository.save(carsBlackList);
 
                     response = "CLIENT Black LisTING CREATED  ";
-                    res= new ResponseEntity(response, HttpStatus.OK);
+                    res = new ResponseEntity(response, HttpStatus.OK);
 
-            }
-            }
-            else {
+                }
+            } else {
                 response = "CLIENT  TP NOT FOUND";
-                res= new ResponseEntity(response, HttpStatus.NOT_FOUND);
+                res = new ResponseEntity(response, HttpStatus.NOT_FOUND);
             }
 
-        }
+        } else if (policyListhing.getProfileTypeId().equals("E") || policyListhing.getProfileTypeId().equals("G") || policyListhing.getProfileTypeId().equals("A") || policyListhing.getProfileTypeId().equals("L") || policyListhing.getProfileTypeId().equals("H")) {
 
+            Optional<CarsDtSupplier> carsDtSupplierOptional = db.carsDtSupplierRepository.findByInsIdAndInsSupplierCode(policyListhing.getInsuranceId(), policyListhing.getProfileId());
+            if (carsDtSupplierOptional.isPresent()) {
 
-
-
-
-        else if (policyListhing.getProfileTypeId().equals("E")||policyListhing.getProfileTypeId().equals("G")||policyListhing.getProfileTypeId().equals("A")||policyListhing.getProfileTypeId().equals("L")||policyListhing.getProfileTypeId().equals("H")) {
-
-            Optional<CarsDtSupplier> carsDtSupplierOptional = db.carsDtSupplierRepository.findByInsIdAndInsSupplierCode(policyListhing.getInsuranceId(),policyListhing.getProfileId());
-            if(carsDtSupplierOptional.isPresent()){
-
-                List <CarsBlackList> carsBlackListOptional=       db.carsBlackListRepository.findByBlSupplierIdAndBlInsuranceId(carsDtSupplierOptional.get().getCeCode(),policyListhing.getInsuranceId());
-                System.out.println("supplier size is "+carsBlackListOptional.size());
-                if(carsBlackListOptional.size()>0){
-                    if ((policyListhing.getBlacklisted()&&  carsBlackListOptional.get(0).getBlStatus().equals("IN"))||(!policyListhing.getBlacklisted()&&  carsBlackListOptional.get(0).getBlStatus().equals("OU"))) {
+                List<CarsBlackList> carsBlackListOptional = db.carsBlackListRepository.findByBlSupplierIdAndBlInsuranceId(carsDtSupplierOptional.get().getCeCode(), policyListhing.getInsuranceId());
+                System.out.println("supplier size is " + carsBlackListOptional.size());
+                if (carsBlackListOptional.size() > 0) {
+                    if ((policyListhing.getBlacklisted() && carsBlackListOptional.get(0).getBlStatus().equals("IN")) || (!policyListhing.getBlacklisted() && carsBlackListOptional.get(0).getBlStatus().equals("OU"))) {
                         carsBlackListOptional.get(0).setBlSetBy(policyListhing.getSetBy());
                         if (policyListhing.getBlacklisted()) {
                             carsBlackListOptional.get(0).setBlStatus("IN");
@@ -4475,7 +4215,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         }
                         carsBlackListOptional.get(0).setBlReason(policyListhing.getReason());
                         carsBlackListOptional.get(0).setBlNote(policyListhing.getNote());
-                        if(!Utility.isEmpty(policyListhing.getSetOn())) {
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
 
                             try {
                                 Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
@@ -4493,14 +4233,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         db.carsBlackListRepository.save(carsBlackListOptional.get(0));
                         response = "supplier black white listed  updated";
                         res = new ResponseEntity(response, HttpStatus.OK);
-                    }
-
-
-
-                    else{
-
-
-
+                    } else {
 
 
                         CarsBlackList carsBlackList = new CarsBlackList();
@@ -4510,7 +4243,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         carsBlackList.setBlFirstName(carsBlackListOptional.get(0).getBlFirstName());
                         carsBlackList.setBlFatherName(carsBlackListOptional.get(0).getBlFatherName());
                         carsBlackList.setBlFamilyName(carsBlackListOptional.get(0).getBlFamilyName());
-                        Optional<CarsSupplier> carsSupplierOptional=db.carsSupplierRepository.findById(carsDtSupplierOptional.get().getCeCode());
+                        Optional<CarsSupplier> carsSupplierOptional = db.carsSupplierRepository.findById(carsDtSupplierOptional.get().getCeCode());
                         carsSupplierOptional.ifPresent(carsBlackList::setBlSupplier);
 
                         carsBlackList.setBlNote(policyListhing.getNote());
@@ -4532,7 +4265,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                        if(!Utility.isEmpty(policyListhing.getSetOn())){
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
                             try {
                                 Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                                 carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -4556,17 +4289,12 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                     }
 
 
-                }
+                } else {
+
+                    Optional<CarsSupplier> carsSupplierOptional = db.carsSupplierRepository.findById(carsDtSupplierOptional.get().getCeCode());
 
 
-
-                else
-                {
-
-                    Optional<CarsSupplier> carsSupplierOptional=db.carsSupplierRepository.findById(carsDtSupplierOptional.get().getCeCode());
-
-
-                    if(carsSupplierOptional.isPresent()) {
+                    if (carsSupplierOptional.isPresent()) {
 
 
                         CarsBlackList carsBlackList = new CarsBlackList();
@@ -4597,7 +4325,7 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                         carsBlackList.setSysUpdatedDate(new Timestamp(new Date().getTime()));
 
 
-                        if(!Utility.isEmpty(policyListhing.getSetOn())){
+                        if (!Utility.isEmpty(policyListhing.getSetOn())) {
                             try {
                                 Date setOnn = new SimpleDateFormat("dd-MM-yyyy").parse(policyListhing.getSetOn());
                                 carsBlackList.setBlDate(new Timestamp(setOnn.getTime()));
@@ -4620,30 +4348,19 @@ if(policyVehicle.getVehicle().getCovers()!=null){
                 }
 
 
-
-
-            }
-
-
-            else{
+            } else {
                 response = "INS CODE NOT FOUND";
-                res=new  ResponseEntity(response, HttpStatus.NOT_FOUND);
+                res = new ResponseEntity(response, HttpStatus.NOT_FOUND);
 
             }
 
         }
 
 
-
-
-
-
         return res;
 
 
     }
-
-
 
 
 }

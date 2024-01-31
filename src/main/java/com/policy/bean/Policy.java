@@ -219,20 +219,17 @@ public class Policy implements Serializable {
 	
 	private String mopNote;
 
-	private Optional<String> businessType ;
+	private String businessType ;
 
 
 
 	@Valid
 	private List<Vehicles> vehicles;
 
-	public Optional<String> getBusinessType() {
+	public String getBusinessType() {
 		return businessType;
 	}
 
-	public void setBusinessType(Optional<String> businessType) {
-		this.businessType = businessType;
-	}
 
 	public BigDecimal getPremExchangeRate() {
 		return premExchangeRate;
@@ -698,6 +695,7 @@ public class Policy implements Serializable {
 		this.mopNote = mopNote;
 	}
 
-
-
+	public void setBusinessType(String businessType) {
+		this.businessType = businessType;
+	}
 }

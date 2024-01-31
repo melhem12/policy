@@ -9,8 +9,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "CARS_DT_SUPPLIER")
-public class CarsDtSupplier  implements Serializable {
-    private static final long serialVersionUID = 2912313135903388401L;
+public class CarsDtSupplier  extends BaseEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Column(name = "CE_CODE", length = 502)
     private String ceCode;
     @Id

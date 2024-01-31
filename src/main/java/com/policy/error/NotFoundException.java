@@ -9,6 +9,7 @@ public class NotFoundException extends ApiBaseException {
         super(message);
     }
 
+
     @Override
     public HttpStatus getStatusCode() {
         return HttpStatus.NOT_FOUND;
