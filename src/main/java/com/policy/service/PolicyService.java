@@ -25,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -40,9 +39,9 @@ import com.policy.config.SendingMail2;
 import com.policy.config.Utility;
 
 @Service
-public class TestService {
+public class PolicyService {
 
-    Logger logger = LoggerFactory.getLogger(TestService.class);
+    Logger logger = LoggerFactory.getLogger(PolicyService.class);
 
     @Autowired
     public DB db;
@@ -53,7 +52,7 @@ public class TestService {
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "10";
+    public static String insuranceCode = "11";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -460,13 +459,15 @@ public class TestService {
             e.printStackTrace(pw);
             String sStackTrace = sw.toString();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-//				SendingMail sendingMail = new SendingMail();
-//				try {
-//					sendingMail.run("Banker Policy Upload Error on policy Number "+policyNo ,sStackTrace);
-//				} catch (Exception ee) {
-//					ee.printStackTrace();
-//				//	logger.error(e);
-//				}
+//            SendingMail sendingMail = new SendingMail();
+//            sendingMail.run(companyName + " Policy Upload policy " + policies.getPolicies().get(0).getPolicyNo(), body);//				SendingMail sendingMail = new SendingMail();
+            try {
+                SendingMail sendingMail = new SendingMail();
+                sendingMail.run(companyName + " Upload Error on policy Number " + policyNo, sStackTrace);
+            } catch (Exception ee) {
+                ee.printStackTrace();
+                //	logger.error(e);
+            }
             // TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             logger.error(e.toString());
             carsDtPolicyTransferLogService.insertTransferLog("Unsuccessful", insuranceCode, null, policyIdFromJson, policyNo);
@@ -822,6 +823,9 @@ public class TestService {
                 carsClientNew.setClientInsuranceId(clientInsuranceId);
                 carsClientNew.setClientFamilyName(lastInsuredName);
                 carsClientNew.setClientFatherName(fatherInsuredName);
+                carsClientNew.setClientFirstName(firstInsuredName);
+
+
                 if (fatherInsuredName == null) {
                     carsClientNew.setClientFatherName("");
 
@@ -829,9 +833,14 @@ public class TestService {
                 if (lastInsuredName == null) {
                     carsClientNew.setClientFamilyName("");
                 }
+                if (firstInsuredName == null) {
+                    carsClientNew.setClientFirstName("");
+                }
 
+                if (Utility.isEmpty(firstInsuredName) && Utility.isEmpty(fatherInsuredName) && Utility.isEmpty(lastInsuredName)) {
+                    carsClientNew.setClientFamilyName(printName);
+                }
 
-                carsClientNew.setClientFirstName(firstInsuredName);
                 // insuredPhoneNumber = insuredPhoneNumber.replace("-", "");
                 carsClientNew.setClientMobilePhone(insuredPhoneNumber);
                 carsClientNew.setSysVersionNumber(0);
@@ -922,6 +931,22 @@ public class TestService {
                 carsClient.get().setClientFamilyName(lastInsuredName);
                 carsClient.get().setClientFatherName(fatherInsuredName);
                 carsClient.get().setClientFirstName(firstInsuredName);
+                if (fatherInsuredName == null) {
+                    carsClient.get().setClientFatherName("");
+
+                }
+                if (lastInsuredName == null) {
+                    carsClient.get().setClientFamilyName("");
+                }
+                if (firstInsuredName == null) {
+                    carsClient.get().setClientFirstName("");
+                }
+
+                if (Utility.isEmpty(firstInsuredName) && Utility.isEmpty(fatherInsuredName) && Utility.isEmpty(lastInsuredName)) {
+                    carsClient.get().setClientFamilyName(printName);
+                }
+
+
                 carsClient.get().setClientReference(String.valueOf(clientId));
 //carsClient.get().setClientNum1();
 
@@ -2180,9 +2205,6 @@ public class TestService {
         }
 
 
-
-
-
         carsPolicyToSave.setPolicyHolderPhone(insuredPhoneNumber);
 //		String actionTypeOriginale = DataTransferHeaderFileFactory.getService().getHeaderStateOriginal(
 //				dataTransferPolicyLoaded.getPolicyProduct(), dataTransferPolicyLoaded.getPolicyNumber(),
@@ -2728,6 +2750,8 @@ public class TestService {
                 carsPolicyWordingDToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
                 carsPolicyWordingDToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
                 carsPolicyWordingDToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+                carsPolicyWordingHToInsert.setPolicyId(policyId);
+
                 db.carsPolicyWordingDRepository.save(carsPolicyWordingDToInsert);
             } else {
 
@@ -2744,6 +2768,7 @@ public class TestService {
                     carsPolicyWordingDToInsert.setPolicyWordingDLine(Integer.valueOf(clause.getOrder()));
                     carsPolicyWordingDToInsert.setSysVersionNumber(0);
                     carsPolicyWordingDToInsert.setSysCreatedBy(CREATED_BY_QUARTZ);
+                    carsPolicyWordingHToInsert.setPolicyId(policyId);
                     carsPolicyWordingDToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
                     carsPolicyWordingDToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
                     carsPolicyWordingDToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));

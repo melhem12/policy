@@ -1,6 +1,9 @@
 package com.policy.config;
 
+import org.springframework.scheduling.annotation.Async;
+
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -14,7 +17,8 @@ import javax.mail.internet.MimeMessage.RecipientType;
  */
 public class SendingMail {
 
-	public void run(String response, String visaNumber) throws Exception {
+	@Async
+	public CompletableFuture<Void> run(String response, String visaNumber) throws Exception {
 
 		int counter = 1;
 		System.out.println("MessageBody -------------> " + visaNumber);
@@ -46,6 +50,7 @@ public class SendingMail {
 			e.printStackTrace();
 
 		}
+		return CompletableFuture.completedFuture(null);
 
 	}
 
