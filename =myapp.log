@@ -26,7 +26,7 @@
 2022-05-21 11:31:22.732  INFO 7572 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-05-21 11:31:22.732  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2022-05-21 11:31:22.733  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-05-21 11:31:29.090 ERROR 7572 --- [http-nio-8083-exec-1] com.policy.service.TestService           : java.lang.Exception: Error :
+2022-05-21 11:31:29.090 ERROR 7572 --- [http-nio-8083-exec-1] com.policy.service.PolicyService           : java.lang.Exception: Error :
 2022-05-21 11:33:26.392  INFO 7572 --- [Thread-36] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-21 11:33:26.394  INFO 7572 --- [Thread-36] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
 2022-05-21 11:33:26.429  INFO 7572 --- [Thread-36] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
@@ -58,7 +58,7 @@
 2022-05-21 11:33:29.985  INFO 7572 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-05-21 11:33:29.985  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2022-05-21 11:33:29.987  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2022-05-21 11:33:30.350 ERROR 7572 --- [http-nio-8083-exec-1] com.policy.service.TestService           : java.lang.Exception: Error :
+2022-05-21 11:33:30.350 ERROR 7572 --- [http-nio-8083-exec-1] com.policy.service.PolicyService           : java.lang.Exception: Error :
 2022-05-21 11:33:35.329  INFO 7572 --- [RMI TCP Connection(13)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
 2022-05-21 11:33:35.345  INFO 7572 --- [RMI TCP Connection(13)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-21 11:33:35.345  INFO 7572 --- [RMI TCP Connection(13)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
@@ -96,7 +96,7 @@
 2022-05-21 11:33:47.904  INFO 14804 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-05-21 11:33:47.905  INFO 14804 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2022-05-21 11:33:47.906  INFO 14804 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-05-21 11:33:48.351 ERROR 14804 --- [http-nio-8083-exec-1] com.policy.service.TestService           : java.lang.Exception: Error :
+2022-05-21 11:33:48.351 ERROR 14804 --- [http-nio-8083-exec-1] com.policy.service.PolicyService           : java.lang.Exception: Error :
 2022-05-21 11:34:19.172  INFO 14804 --- [Thread-6] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-21 11:34:19.175  INFO 14804 --- [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-05-21 11:34:19.186  INFO 14804 --- [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

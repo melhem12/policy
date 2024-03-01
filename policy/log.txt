@@ -782,8 +782,8 @@ ORA-12514, TNS:listener does not currently know of service requested in connect 
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.10.jar:5.3.10]
 	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:750) ~[spring-aop-5.3.10.jar:5.3.10]
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:692) ~[spring-aop-5.3.10.jar:5.3.10]
-	at com.policy.service.TestService$$EnhancerBySpringCGLIB$$ea021714.policyUpload(<generated>) ~[classes/:na]
-	at com.policy.controller.testController.policyUpload1(testController.java:1598) ~[classes/:na]
+	at com.policy.service.PolicyService$$EnhancerBySpringCGLIB$$ea021714.policyUpload(<generated>) ~[classes/:na]
+	at com.policy.controller.PolicyController.policyUpload1(testController.java:1598) ~[classes/:na]
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[na:na]
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
@@ -879,7 +879,7 @@ ORA-12514, TNS:listener does not currently know of service requested in connect 
 2022-05-21 11:06:30.751  INFO 5752 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-05-21 11:06:30.751  INFO 5752 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2022-05-21 11:06:30.759  INFO 5752 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
-2022-05-21 11:07:40.378 ERROR 5752 --- [http-nio-8083-exec-3] com.policy.service.TestService           : java.lang.Exception: Error :
+2022-05-21 11:07:40.378 ERROR 5752 --- [http-nio-8083-exec-3] com.policy.service.PolicyService           : java.lang.Exception: Error :
 2022-05-21 11:12:41.903  INFO 5752 --- [Thread-8] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-21 11:12:41.904  INFO 5752 --- [Thread-8] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
 2022-05-21 11:12:41.916  INFO 5752 --- [Thread-8] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
@@ -911,7 +911,7 @@ ORA-12514, TNS:listener does not currently know of service requested in connect 
 2022-05-21 11:28:34.811  INFO 7572 --- [http-nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-05-21 11:28:34.811  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2022-05-21 11:28:34.812  INFO 7572 --- [http-nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-05-21 11:28:35.114 ERROR 7572 --- [http-nio-8083-exec-1] com.policy.service.TestService           : java.lang.Exception: Error :
+2022-05-21 11:28:35.114 ERROR 7572 --- [http-nio-8083-exec-1] com.policy.service.PolicyService           : java.lang.Exception: Error :
 2022-05-21 11:30:58.831  INFO 7572 --- [Thread-25] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-05-21 11:30:58.831  INFO 7572 --- [Thread-25] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
 2022-05-21 11:30:58.839  INFO 7572 --- [Thread-25] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.

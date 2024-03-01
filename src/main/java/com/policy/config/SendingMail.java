@@ -17,15 +17,15 @@ import javax.mail.internet.MimeMessage.RecipientType;
  */
 public class SendingMail {
 
-	@Async
-	public CompletableFuture<Void> run(String response, String visaNumber) throws Exception {
+//	@Async
+public void run(String response, String visaNumber) throws Exception {
 
 		int counter = 1;
 		System.out.println("MessageBody -------------> " + visaNumber);
 		Message message = new MimeMessage(getSession());
 		String recipients = Utility.getPropStringValues("mail.to");
 		String[] list = recipients.split(",");
-		message.addFrom(new InternetAddress[] { new InternetAddress(Utility.getPropStringValues("mail.from")) });
+		message.addFrom(new InternetAddress[]{new InternetAddress(Utility.getPropStringValues("mail.from"))});
 		if (response != null && !"".equals(response)
 				&& "Policy Validator Trademark Erros".toString().equals(response)) {
 			message.addRecipient(RecipientType.TO, new InternetAddress(Utility.getPropStringValues("mail.toShape")));
@@ -50,9 +50,11 @@ public class SendingMail {
 			e.printStackTrace();
 
 		}
-		return CompletableFuture.completedFuture(null);
-
 	}
+
+//		return CompletableFuture.completedFuture(null);
+
+
 
 	private Session getSession() {
 

@@ -64,13 +64,13 @@
 2022-11-16 13:14:15.596  INFO 13500 --- [http-nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-11-16 13:14:15.596  INFO 13500 --- [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2022-11-16 13:14:15.598  INFO 13500 --- [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-11-16 13:19:02.962  INFO 13500 --- [http-nio-8084-exec-10] com.policy.controller.testController     : Inside Validation
-2022-11-16 13:19:03.668 ERROR 13500 --- [http-nio-8084-exec-10] com.policy.service.TestService           : java.lang.Exception: Error:
-2022-11-16 13:35:25.973  INFO 13500 --- [http-nio-8084-exec-6] com.policy.controller.testController     : Inside Validation
-2022-11-16 13:35:47.145 ERROR 13500 --- [http-nio-8084-exec-6] com.policy.service.TestService           : java.lang.Exception: Error:
-2022-11-16 13:36:54.849  INFO 13500 --- [http-nio-8084-exec-8] com.policy.controller.testController     : Inside Validation
-2022-11-16 13:37:15.970 ERROR 13500 --- [http-nio-8084-exec-8] com.policy.service.TestService           : java.lang.Exception: Error:
-2022-11-16 13:38:16.048  INFO 13500 --- [http-nio-8084-exec-3] com.policy.controller.testController     : Inside Validation
-2022-11-16 13:38:37.156 ERROR 13500 --- [http-nio-8084-exec-3] com.policy.service.TestService           : java.lang.Exception: Error:
-2022-11-16 13:41:18.365  INFO 13500 --- [http-nio-8084-exec-1] com.policy.controller.testController     : Inside Validation
-2022-11-16 13:41:39.524 ERROR 13500 --- [http-nio-8084-exec-1] com.policy.service.TestService           : java.lang.Exception: Error:
+2022-11-16 13:19:02.962  INFO 13500 --- [http-nio-8084-exec-10] com.policy.controller.PolicyController     : Inside Validation
+2022-11-16 13:19:03.668 ERROR 13500 --- [http-nio-8084-exec-10] com.policy.service.PolicyService           : java.lang.Exception: Error:
+2022-11-16 13:35:25.973  INFO 13500 --- [http-nio-8084-exec-6] com.policy.controller.PolicyController     : Inside Validation
+2022-11-16 13:35:47.145 ERROR 13500 --- [http-nio-8084-exec-6] com.policy.service.PolicyService           : java.lang.Exception: Error:
+2022-11-16 13:36:54.849  INFO 13500 --- [http-nio-8084-exec-8] com.policy.controller.PolicyController     : Inside Validation
+2022-11-16 13:37:15.970 ERROR 13500 --- [http-nio-8084-exec-8] com.policy.service.PolicyService           : java.lang.Exception: Error:
+2022-11-16 13:38:16.048  INFO 13500 --- [http-nio-8084-exec-3] com.policy.controller.PolicyController     : Inside Validation
+2022-11-16 13:38:37.156 ERROR 13500 --- [http-nio-8084-exec-3] com.policy.service.PolicyService           : java.lang.Exception: Error:
+2022-11-16 13:41:18.365  INFO 13500 --- [http-nio-8084-exec-1] com.policy.controller.PolicyController     : Inside Validation
+2022-11-16 13:41:39.524 ERROR 13500 --- [http-nio-8084-exec-1] com.policy.service.PolicyService           : java.lang.Exception: Error:

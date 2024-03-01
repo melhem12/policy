@@ -1,19 +1,15 @@
 package com.policy.service;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.policy.bean.*;
+import com.policy.config.SendingMail;
+import com.policy.config.SendingMail2;
+import com.policy.config.Utility;
 import com.policy.entity.*;
+import com.policy.repository.CarsPolicyJsonRepository;
+import com.policy.repository.DB;
 import com.policy.response.CarShapeRespomse;
 import com.policy.response.VehicleResponse;
 import org.jsoup.Jsoup;
@@ -29,17 +25,26 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.policy.repository.DB;
-import com.policy.config.SendingMail;
-import com.policy.config.SendingMail2;
-import com.policy.config.Utility;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class PolicyService {
+//    @PersistenceContext
+//    private EntityManager entityManager;
 
     Logger logger = LoggerFactory.getLogger(PolicyService.class);
 
@@ -49,7 +54,12 @@ public class PolicyService {
     public CarsErrorlogService carsErrorlogService;
 
     @Autowired
+    ObjectMapper objectMapper;
+
+    @Autowired
     public CarsDtPolicyTransferLogService carsDtPolicyTransferLogService;
+    @Autowired
+    CarsPolicyJsonRepository carsPolicyJsonRepository;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
     public static String insuranceCode = "11";
@@ -62,6 +72,7 @@ public class PolicyService {
     String SublineId = null;
     String policyRootId = null;
     String companyName;
+    int counter = 0;
 
 
     private SimpleJdbcCall simpleJdbcCall;
@@ -94,6 +105,9 @@ public class PolicyService {
 
 
     }
+
+
+//    public CompletableFuture<ResponseEntity<Policies>> policyUpload(Policies policies) {
 
 
     //	@javax.transaction.Transactional(propagation = Propagation.REQUIRED)
@@ -157,6 +171,7 @@ public class PolicyService {
 
 
                     if (policy.getEndorsementTypeCode().equals("C") && policy.getVehicles().size() == 0) {
+                        logger.info("cacncelation policy " + policyNo);
                         Date policyExpDate = db.carsPolicyRepository.policyExpDate(policy.getPolicyNo().toString(), policy.getBranchCode(), insuranceCode);
 //                        if(policyExpDate!=null) {
 //                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -447,26 +462,40 @@ public class PolicyService {
 
                 }
             }
+
             carsDtPolicyTransferLogService.insertTransferLog("Successful", insuranceCode, null, policyIdFromJson, policyNo);
+//            entityManager.flush();
+//            entityManager.clear();
+
             return new ResponseEntity(policies, HttpStatus.CREATED);
 
         } catch (
 
                 Exception e) {
+            counter++;
+            if (counter == 1) {
+                policyUpload(policies);
+            }
+
+            logger.error(policyNo + " " + e.getMessage());
             e.printStackTrace();
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             String sStackTrace = sw.toString();
+            logger.error(sStackTrace);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 //            SendingMail sendingMail = new SendingMail();
 //            sendingMail.run(companyName + " Policy Upload policy " + policies.getPolicies().get(0).getPolicyNo(), body);//				SendingMail sendingMail = new SendingMail();
             try {
                 SendingMail sendingMail = new SendingMail();
-                sendingMail.run(companyName + " Upload Error on policy Number " + policyNo, sStackTrace);
+
+                ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+                String json = ow.writeValueAsString(policies);
+                sendingMail.run(companyName + " Upload Error on policy Number " + policyNo, e.getMessage() + "\n " + json);
             } catch (Exception ee) {
                 ee.printStackTrace();
-                //	logger.error(e);
+                logger.error(ee.toString());
             }
             // TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             logger.error(e.toString());
@@ -850,7 +879,7 @@ public class PolicyService {
                 carsClientNew.setSysUpdatedDate(new Timestamp(new Date().getTime()));
                 // carsClientNew.setClientP
                 db.carsClientRepository.save(carsClientNew);
-
+                logger.info("cars client of policy No " + policyNo + " inserted client id " + carsClientNew.getClientId());
                 validateInsuranceBlackList(clientCode, clientInsuranceId, firstInsuredName, fatherInsuredName,
                         lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy, blackListed);
 
@@ -950,14 +979,6 @@ public class PolicyService {
                 carsClient.get().setClientReference(String.valueOf(clientId));
 //carsClient.get().setClientNum1();
 
-                if (fatherInsuredName == null) {
-                    carsClient.get().setClientFatherName("");
-
-                }
-                if (lastInsuredName == null) {
-                    carsClient.get().setClientFamilyName("");
-                }
-
 
                 //    carsClient.get().setClientMobilePhone(insuredPhoneNumber);
                 carsClient.get().setSysUpdatedBy(CREATED_BY_QUARTZ);
@@ -967,7 +988,7 @@ public class PolicyService {
                         lastInsuredName, reason, note, insBlackSetOn, insBlackSetBy, blackListed);
 
                 db.carsClientRepository.save(carsClient.get());
-
+                logger.info("cars client of policy No " + policyNo + " updated client id " + carsClient.get().getClientId());
                 return carsClient.get();
             }
         }
@@ -1099,6 +1120,8 @@ public class PolicyService {
                 System.out.println("client balckList saved");
 
                 db.carsBlackListRepository.save(carsBlackList);
+                logger.info(" InsuranceBlackList of  policy No " + policyNo, " added  blid  " + carsBlackList.getBlId());
+
             }
         }
 
@@ -1201,6 +1224,7 @@ public class PolicyService {
                 System.out.println("client balckList saved");
 
                 db.carsBlackListRepository.save(carsBlackList);
+                logger.info(" InsuranceBlackList of  policy No " + policyNo, " updated  blid   " + carsBlackList.getBlId());
 
 
             }
@@ -1557,6 +1581,7 @@ public class PolicyService {
         carsPolicyCar.setCarCertifdBlackListedReason(vehicles.getCertificateReason());
         carsPolicyCar.setCarCertifdBlackListedNote(vehicles.getCertificateNote());
         db.carsPolicyCarRepository.save(carsPolicyCar);
+        logger.info("insert cars policy car  of " + policyNo + "and carId " + carsPolicyCar.getCarId());
         // CarsPolicyCarFactory.getService().insert(carsPolicyCar);
         return carsPolicyCar.getCarId();
     }
@@ -1689,6 +1714,7 @@ public class PolicyService {
         carsPolicyCarToSave.setSysUpdatedBy(CREATED_BY_QUARTZ);
         carsPolicyCarToSave.setSysUpdatedDate(new Timestamp(new Date().getTime()));
         db.carsPolicyCarRepository.save(carsPolicyCarToSave);
+        logger.info("update cars policy car  of " + policyNo + "and carId " + carsPolicyCarToSave.getCarId());
 
         return carsPolicyCarToSave.getCarId();
     }
@@ -1787,7 +1813,19 @@ public class PolicyService {
                 carsPolicy.setPolicyAction(endorsementTypeCodeeDecoded);
             } else {
                 System.out.println("endorsementTypeCodeeDecoded not found ");
-                carsPolicy.setPolicyAction("M");
+//                carsPolicy.setPolicyAction("M");
+
+                if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
+                    String actionTypeDecoded = Utility
+                            .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
+                    carsPolicy.setPolicyAction(actionTypeDecoded);
+                } else {
+                    saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
+                            insuranceCode, null);
+                }
+
+
+
             }
 
 
@@ -2111,6 +2149,7 @@ public class PolicyService {
         carsPolicy.setSysUpdatedDate(new Timestamp(new Date().getTime()));
         db.carsPolicyRepository.save(carsPolicy);
         System.out.println("insertCarPolicyCar");
+        logger.info("insert  policy car  of " + policyNo + " and policy Id  " + carsPolicy.getPolicyId());
         return carsPolicy.getPolicyId();
     }
 
@@ -2307,6 +2346,18 @@ public class PolicyService {
             } else {
                 System.out.println("endorsementTypeCodeeDecoded not found ");
                 carsPolicyToSave.setPolicyAction("M");
+
+
+
+                if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {
+                    String actionTypeDecoded = Utility
+                            .getPropStringValues("decode." + policyVehicle.getVehicle().getCarStatus());
+                    carsPolicyToSave.setPolicyAction(actionTypeDecoded);
+                } else {
+                    saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
+                            insuranceCode, null);
+                }
+
             }
 
 
@@ -2486,6 +2537,7 @@ public class PolicyService {
 //		} else {
 //			db.carsPolicyRepository.save(carsPolicyToSave);
 //		}
+        logger.info("update  policy car  of " + policyNo + " and policy Id  " + carsPolicyToSave.getPolicyId());
 
         return carsPolicyToSave.getPolicyId();
     }
@@ -2726,6 +2778,7 @@ public class PolicyService {
         carsPolicyWordingHToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
         carsPolicyWordingHToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
         carsPolicyWordingHToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
+        logger.info("policy wording h inserted  of " + policyNo);
         db.carsPolicyWordingHRepository.save(carsPolicyWordingHToInsert);
 
 
@@ -2750,7 +2803,8 @@ public class PolicyService {
                 carsPolicyWordingDToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
                 carsPolicyWordingDToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
                 carsPolicyWordingDToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-                carsPolicyWordingHToInsert.setPolicyId(policyId);
+//                carsPolicyWordingHToInsert.setPolicyId(policyId);
+                logger.info("policy wording d inserted  of " + policyNo);
 
                 db.carsPolicyWordingDRepository.save(carsPolicyWordingDToInsert);
             } else {
@@ -2773,6 +2827,7 @@ public class PolicyService {
                     carsPolicyWordingDToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
                     carsPolicyWordingDToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
                     db.carsPolicyWordingDRepository.save(carsPolicyWordingDToInsert);
+                    logger.info("policy wording d inserted  rec 2 of " + policyNo);
                     //    strings.add(clause.getContent().substring(index, Math.min(index + 3900,clause.getContent().length())));
                     index += 3501;
                 }
@@ -2842,6 +2897,7 @@ public class PolicyService {
             // carsCover.setCoverCode("test");
             if (!Utility.isEmpty(cover.getCoverDesc())) {
                 desc = cover.getCoverDesc().replace("•", "*");
+                desc = desc.replace("?", "*");
             }
             carsCover.setCoverDescription(desc);
             // carsCover.setCoverID(cover.getCoverID().toString());
@@ -2884,6 +2940,7 @@ public class PolicyService {
             desc = cover.getCoverDesc();
             if (!Utility.isEmpty(cover.getCoverDesc())) {
                 desc = cover.getCoverDesc().replace("•", "*");
+                desc = desc.replace("?", "*");
             }
 
             String validatePolicyCoverType = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".validatePolicyCoverType");
@@ -2967,7 +3024,8 @@ public class PolicyService {
             carsCover.setSysCreatedDate(new Timestamp(new Date().getTime()));
             carsCover.setSysUpdatedDate(new Timestamp(new Date().getTime()));
             // carsProducts.setSysCreatedBy(new Timestamp(new Date().getTime()));
-            System.out.println("nfokhooooooooooooooo");
+            logger.info(" carsCover s of policy No " + policyNo + " inserted     Cover  id " + carsCover.getCoverID());
+
             db.carsCoverRepository.save(carsCover);
 //todo
             saveMessage(policyNo, "SubCover :" + subCovers.getSubCoverCode() + " " + subCovers.getSubCoverDesc(),
@@ -3002,6 +3060,8 @@ public class PolicyService {
 
 
             db.carsCoverRepository.save(carsCoverOpt.get());
+            logger.info(" carsCover  of policy No " + policyNo + " inserted  sub   Cover  id " + carsCoverOpt.get().getCoverID());
+
 
         }
         return carsCoverOpt.get().getCoverID();
@@ -3058,8 +3118,10 @@ public class PolicyService {
                 carsPolicyCoverToInsert.setSysUpdatedBy(CREATED_BY_QUARTZ);
                 carsPolicyCoverToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
                 carsPolicyCoverToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
-                db.carsPolicyCoverRepository.save(carsPolicyCoverToInsert);
 
+
+                db.carsPolicyCoverRepository.save(carsPolicyCoverToInsert);
+                logger.info(" carsPolicyCover of policy No " + policyNo + " inserted  policy Cover  id " + carsPolicyCoverToInsert.getPolicyCoversId());
             }
         }
         if (subCover != null) {
@@ -3108,6 +3170,8 @@ public class PolicyService {
                 carsPolicySubCoverToInsert.setSysCreatedDate(new Timestamp(new Date().getTime()));
                 carsPolicySubCoverToInsert.setSysUpdatedDate(new Timestamp(new Date().getTime()));
                 db.carsPolicyCoverRepository.save(carsPolicySubCoverToInsert);
+                logger.info(" carsPolicy sub Cover of policy No " + policyNo + " inserted  policy sub  Cover  id " + carsPolicySubCoverToInsert.getPolicyCoversId());
+
             }
         }
     }
@@ -3492,12 +3556,16 @@ public class PolicyService {
 
 
                         if (Utility.isEmpty(clauses.getContent())) {
-                            error.append(" content in clauses  with  clauses  Id  " + clauses.getClauseID() + " certificate Number " + certificateNo + " and policy Id " + policyId + " is missing "
-                                    + " *This message is Informative* \n \n");
-                            carsErrorlogService.insertError(
-                                    companyName + " Policy Upload policy " + Identifier + " content   in clauses  Certificate Number "
-                                            + certificateNo + "and clause Id " + clauses.getClauseID() + " is missing ",
-                                    insuranceCode, "CARS_POLICY_CAR", "Informative Missing");
+                            String value = db.carsPolicyRepository.findConfigByKey(insuranceCode + ".emailValidateClauses");
+
+                            if (value != null && value.equals("true")) {
+                                error.append(" content in clauses  with  clauses  Id  " + clauses.getClauseID() + " certificate Number " + certificateNo + " and policy Id " + policyId + " is missing "
+                                        + " *This message is Informative* \n \n");
+                                carsErrorlogService.insertError(
+                                        companyName + " Policy Upload policy " + Identifier + " content   in clauses  Certificate Number "
+                                                + certificateNo + "and clause Id " + clauses.getClauseID() + " is missing ",
+                                        insuranceCode, "CARS_POLICY_CAR", "Informative Missing");
+                            }
                             // saveMessage(policyNo, "Car Year", "Missing Field", "CARS_POLICY_CAR",
                             // insuranceCode,
                             // vehicles.getCertificateNo());
@@ -4401,5 +4469,43 @@ public class PolicyService {
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void savePolicyJson(Policies policies) throws Exception {
+        CarsPolicyJson carsPolicyJson = new CarsPolicyJson();
+        carsPolicyJson.setSysCreatedDate(LocalDateTime.now());
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(policies);
+        carsPolicyJson.setData(json);
+        carsPolicyJson.setSubject(policies.getPolicies().get(0).getPolicyNo());
 
+        carsPolicyJsonRepository.save(carsPolicyJson);
+
+    }
+
+    public void getJsonPolyFromTable() throws Exception {
+        if (carsPolicyJsonRepository.getPoliciesCount() > 0) {
+            CarsPolicyJson carsPolicyJson = getPolicyJson();
+            Policies policies = objectMapper.readValue(carsPolicyJson.getData(),
+                    Policies.class);
+            try {
+                policyUpload(policies);
+                carsPolicyJson.setStatus("ELABORATED");
+
+            } catch (Exception exception) {
+                carsPolicyJson.setStatus("ERROR");
+
+            }
+
+            carsPolicyJsonRepository.save(carsPolicyJson);
+            getJsonPolyFromTable();
+
+        }
+
+
+    }
+
+    public CarsPolicyJson getPolicyJson() {
+        return carsPolicyJsonRepository.getPolicyJson().orElse(null);
+
+    }
 }

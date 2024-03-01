@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +38,39 @@ public class PolicyController {
     public static String insuranceCode = "10";
 
 
+//    @PostMapping("/uploadPolicy")
+//    @Async
+//    public ResponseEntity<Policies> policyUpload(@Validated @RequestBody Policies policies) throws Exception {
+//        try {
+//            logger.info("Inside Validation");
+////            policyService.policyUpload(policies);
+////            return new ResponseEntity(HttpStatus.CREATED);
+//       return policyService.policyUpload(policies);
+//
+//
+//        } catch (
+//
+//                Exception e) {
+//            e.printStackTrace();
+//            StringWriter sw = new StringWriter();
+//            PrintWriter pw = new PrintWriter(sw);
+//            e.printStackTrace(pw);
+//            String sStackTrace = sw.toString();
+//            logger.error("failed", sStackTrace);
+//            return new ResponseEntity(sStackTrace, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//
+//    }
+
+
     @PostMapping("/uploadPolicy")
-    @Async
     public ResponseEntity<Policies> policyUpload(@Validated @RequestBody Policies policies) throws Exception {
         try {
             logger.info("Inside Validation");
-            return policyService.policyUpload(policies);
+            policyService.savePolicyJson(policies);
+            return new ResponseEntity<>(policies, HttpStatus.CREATED);
+//            return policyService.policyUpload(policies);
+
 
         } catch (
 
