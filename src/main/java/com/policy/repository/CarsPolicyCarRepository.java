@@ -21,7 +21,7 @@ public interface CarsPolicyCarRepository extends JpaRepository<CarsPolicyCar,Str
             "   POLICY_ID_INS  \"certifId\" ," +
             "  SHAPE_ID,  CAR_MODEL_TO_PRINT   \"ModelToPrint\",      CAR_YEAR  \"CarYear\", " +
             "    CAR_PLATE_CHAR  \"CarPlatePrefix\",    CAR_PLATE_NUM  \"CarPlateNumber\",  " +
-            "   CAR_USAGE  \"CarUsage\",       CAR_CHASSIS       \"CarChassis\",     CAR_ENGINE  \"CarEngine\", " +
+            "   CAR_USAGE  \"CarUsage\",       CAR_CHASSIS       \"CarChassis\",     CAR_ENGINE  \"CarEngine\",  CAR_TRADEMARK_DESC  \"carTradeMarkDesc\",  CAR_BRAND_DESC  \"carBrandDesc\" , " +
 
             "         'C' \"CarStatus\"   FROM CARS_POLICY AL,CARS_POLICY_CAR VL,CARS_PRODUCTS PL," +
             " CARS_INSURANCE I WHERE AL.POLICY_ID =VL.POLICY_ID AND  PL.PRODUCTS_ID=AL.POLICY_PRODUCTS_ID    " +

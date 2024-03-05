@@ -71,8 +71,9 @@ public interface VehicleResponse {
     @Value("#{target.certifId}")
     BigInteger getCertifId();
 
+    @Value("#{target.carTradeMarkDesc}")
+    String getCarTradeMarkDesc();
 
-
-
-
+    @Value("#{target.carBrandDesc}")
+    String getCarBrandDesc();
 }

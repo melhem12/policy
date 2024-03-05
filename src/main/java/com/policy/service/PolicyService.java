@@ -62,7 +62,7 @@ public class PolicyService {
     CarsPolicyJsonRepository carsPolicyJsonRepository;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "11";
+    public static String insuranceCode = "10";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -214,20 +214,24 @@ public class PolicyService {
                                     vehicles.setDateExpiry(policy.getPolDateExpiry());
 
                                 }
+                                vehicles.setCarModel(savedVehicle.getCarTradeMarkDesc());
 
                                 db.carsClientRepository.findById(savedVehicle.getCarInsuredID()).ifPresent(
                                         carsClient -> {
                                             vehicles.setCarInsuredCode(carsClient.getClientNum1());
+                                            vehicles.setCarinsuredfirstName(carsClient.getClientFirstName());
+                                            vehicles.setCarinsuredfatherName(carsClient.getClientFatherName());
+                                            vehicles.setCarinsuredlastName(carsClient.getClientFamilyName());
                                             vehicles.setCarInsuredID(Integer.parseInt(carsClient.getClientReference()));
                                         }
                                 );
 
 
-                                vehicles.setCarMake(savedVehicle.getCarMake());
-                                vehicles.setCarMakeCode(savedVehicle.getCarMakeCode());
-                                vehicles.setCarMakeID(savedVehicle.getCarMakeID());
+                                vehicles.setCarMake(savedVehicle.getCarBrandDesc());
+//                                vehicles.setCarMakeCode(savedVehicle.getCarMakeCode());
+//                                vehicles.setCarMakeID(savedVehicle.getCarMakeID());
                                 //  vehicles.setCarModelID(savedVehicle.getCarModelID());
-                                vehicles.setCarModelCode(savedVehicle.getCarModelCode());
+//                                vehicles.setCarModelCode(savedVehicle.getCarModelCode());
                                 vehicles.setModelToPrint(savedVehicle.getModelToPrint());
                                 vehicles.setCarYear(savedVehicle.getCarYear());
                                 vehicles.setCarPlateNumber(savedVehicle.getCarPlateNumber());
