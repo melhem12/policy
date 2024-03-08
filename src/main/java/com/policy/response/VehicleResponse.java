@@ -76,4 +76,19 @@ public interface VehicleResponse {
 
     @Value("#{target.carBrandDesc}")
     String getCarBrandDesc();
+
+
+    @Value("#{target.carValue}")
+    String getCarValue();
+
+    @Value("#{target.carBeneficiaryDesc}")
+    String getCarBeneficiaryDesc();
+
+    @Value("#{target.carDealerWorkShopName}")
+    String getCarDealerWorkShopName();
+
+
+    @Value("#{target.policyAgencyRepair}")
+    String getPolicyAgencyRepair();
+
 }

@@ -62,7 +62,7 @@ public class PolicyService {
     CarsPolicyJsonRepository carsPolicyJsonRepository;
     public static String CREATED_BY_QUARTZ = "Transfer";
     public static int i = 0;
-    public static String insuranceCode = "10";
+    public static String insuranceCode = "11";
     String policyNo = null;
     String policyId = null;
     String policyIdFromJson = null;
@@ -196,6 +196,23 @@ public class PolicyService {
                                 vehicles.setPolicyID(policy.getPolicyID());
                                 vehicles.setCertificateBlacklisted(false);
                                 vehicles.setCarChassis(savedVehicle.getCarChassis());
+
+                                vehicles.setDealerWorkshopName(savedVehicle.getCarDealerWorkShopName());
+                                if (Utility.isEmpty(savedVehicle.getPolicyAgencyRepair())) {
+                                    vehicles.setDealerRepair(null);
+
+                                } else {
+                                    if (savedVehicle.getPolicyAgencyRepair().equals("Y")) {
+                                        vehicles.setDealerRepair(true);
+                                    }
+                                    if (savedVehicle.getPolicyAgencyRepair().equals("N")) {
+                                        vehicles.setDealerRepair(false);
+                                    }
+                                }
+                                vehicles.setCarBeneficiary(savedVehicle.getCarBeneficiaryDesc());
+                                vehicles.setCarInsVal(savedVehicle.getCarValue());
+
+
 
                                 vehicles.setCarEngine(savedVehicle.getCarEngine());
                                 vehicles.setCarStatus(savedVehicle.getCarStatus());
@@ -1816,6 +1833,8 @@ public class PolicyService {
                 System.out.println("endorsementTypeCodeeDecoded " + endorsementTypeCodeeDecoded);
                 carsPolicy.setPolicyAction(endorsementTypeCodeeDecoded);
             } else {
+
+
                 System.out.println("endorsementTypeCodeeDecoded not found ");
 //                carsPolicy.setPolicyAction("M");
 
@@ -1827,7 +1846,6 @@ public class PolicyService {
                     saveMessage(policyVehicle.getPolicy().getPolicyNo(), " Business Type", "Missing Field", "CARS_POLICY",
                             insuranceCode, null);
                 }
-
 
 
             }
@@ -2350,7 +2368,6 @@ public class PolicyService {
             } else {
                 System.out.println("endorsementTypeCodeeDecoded not found ");
                 carsPolicyToSave.setPolicyAction("M");
-
 
 
                 if (!Utility.isEmpty(policyVehicle.getVehicle().getCarStatus())) {

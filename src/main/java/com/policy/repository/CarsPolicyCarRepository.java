@@ -15,7 +15,9 @@ import java.util.List;
 @Repository
 @EnableJpaRepositories
 public interface CarsPolicyCarRepository extends JpaRepository<CarsPolicyCar,String> {
-    @Query(value=" SELECT DISTINCT    POLICY_CAR   \"CertificateNo\",   POLICY_CLIENT  \"CarInsuredCode\",   POLICY_CLIENT_ID  \"CarInsuredID\",     CAR_BRAND_DESC     \"CarMake\",    BRAND_ID   \"CarMakeID\",      CAR_BRAND_CODE   \"CarMakeCode\",     CAR_TRADEMARK_CODE   \"CarModelCode\" , " +
+    @Query(value=" SELECT DISTINCT    POLICY_CAR   \"CertificateNo\",   POLICY_CLIENT  \"CarInsuredCode\",   POLICY_CLIENT_ID  \"CarInsuredID\",     CAR_BRAND_DESC     \"CarMake\",    BRAND_ID   \"CarMakeID\",      CAR_BRAND_CODE   \"CarMakeCode\",   " +
+            "  CAR_TRADEMARK_CODE   \"CarModelCode\" , CAR_VALUE \"carValue\" , CAR_BENEFICIARY_DESC \"carBeneficiaryDesc\" ,  " +
+            " POLICY_AGENCY_REPAIR  \"policyAgencyRepair\" , CAR_DEALER_WORKSHOP_NAME  \"carDealerWorkShopName\" , " +
 
             "       TRADEMARK_ID   \"CarModelID\"," +
             "   POLICY_ID_INS  \"certifId\" ," +

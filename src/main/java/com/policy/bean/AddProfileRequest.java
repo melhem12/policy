@@ -36,7 +36,7 @@ public class AddProfileRequest implements Serializable {
     private String supplierMobilePhone;
 
 
-    @NotBlank(message = "Supplier Network Name cannot blank")
+//    @NotBlank(message = "Supplier Network Name cannot blank")
     private String supplierNetwork;
 
 

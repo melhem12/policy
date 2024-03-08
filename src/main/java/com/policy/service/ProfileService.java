@@ -100,8 +100,13 @@ public class ProfileService {
         carsSupplier.setSupplierHomePhone(addProfileRequest.getSupplierLandPhone());
 
         carsSupplier.setSupplierMobilePhone(addProfileRequest.getSupplierMobilePhone());
+if(Utility.isEmpty(addProfileRequest.getSupplierNetwork())){
+    carsSupplier.setSupplierOutNetwork("Y");
 
-        carsSupplier.setSupplierOutNetwork(addProfileRequest.getSupplierNetwork());
+} else {
+    carsSupplier.setSupplierOutNetwork(addProfileRequest.getSupplierNetwork());
+
+}
 
         carsSupplier.setSysCreatedBy(username);
         carsSupplier.setSysCreatedDate(LocalDateTime.now());
@@ -194,7 +199,15 @@ public class ProfileService {
 
             carsSupplier.setSupplierMobilePhone(addProfileRequest.getSupplierMobilePhone());
 
-            carsSupplier.setSupplierOutNetwork(addProfileRequest.getSupplierNetwork());
+            if(Utility.isEmpty(addProfileRequest.getSupplierNetwork())){
+                carsSupplier.setSupplierOutNetwork("Y");
+
+            } else {
+                carsSupplier.setSupplierOutNetwork(addProfileRequest.getSupplierNetwork());
+
+            }
+
+
             carsSupplier.setSysUpdatedBy(username);
             carsSupplier.setSysUpdatedDate(LocalDateTime.now());
             carsSupplier.setSysVersionNumber(1L);
